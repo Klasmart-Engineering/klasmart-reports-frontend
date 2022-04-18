@@ -1,0 +1,40 @@
+{
+  "compilerOptions": {
+    "baseUrl": "./",
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "jsx": "react",
+    "module": "CommonJS",
+    "noImplicitAny": true,
+    "outDir": "./dist/types/",
+    "paths": {
+      "@/*": [
+        "src/*"
+      ],
+      "tests/*": [
+        "tests/*"
+      ]
+    },
+    "resolveJsonModule": true,
+    "skipLibCheck": true,
+    "strict": true,
+    "strictNullChecks": true,
+    "target": "es2016"
+  },
+  "include": [
+    "src/**/*.js",
+    "src/**/*.jsx",
+    "src/**/*.ts",
+    "src/**/*.tsx"
+  ],
+  "exclude": [
+    "**/*.stories.js",
+    "**/*.stories.jsx",
+    "**/*.stories.ts",
+    "**/*.stories.tsx",
+    "**/*.test.js",
+    "**/*.test.jsx",
+    "**/*.test.ts",
+    "**/*.test.tsx"
+  ]
+}

@@ -1,0 +1,12 @@
+**/dist
+**/node_modules
+**/webpack-stats.html
+coverage
+.idea/
+**/.DS_Store
+.vscode
+.jest-test-results.json
+
+.prettierrc
+.env
+coverage

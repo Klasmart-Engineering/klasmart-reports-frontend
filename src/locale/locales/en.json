@@ -1,0 +1,6 @@
+{
+  "about.greeting": "Hello, {name}",
+  "about.header": "This is an about page",
+  "child.label": "ListItem",
+  "parent.label": "List"
+}
