@@ -1,6 +1,8 @@
 import StoreProvider from "../src/store/Provider";
 import LocaleProvider from "../src/locale/Provider";
 import UserServiceProvider from "../src/api/user-service/Provider";
+import ThemeProvider from "../src/theme/Provider";
+
 
 export const parameters = {
   actions: { argTypesRegex: "^on[A-Z].*" },
@@ -57,7 +59,9 @@ const withProviders = (Story, context) => {
         <UserServiceProvider>
             <StoreProvider>
                 <LocaleProvider locale={locale}>
+                <ThemeProvider>
                     <Story {...context} />
+                  </ThemeProvider>
                 </LocaleProvider>
             </StoreProvider>
         </UserServiceProvider>

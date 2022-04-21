@@ -6,7 +6,7 @@ const { execSync } = require("child_process");
 module.exports = {
   "stories": [
     "../src/**/*.stories.mdx",
-    "../src/**/*.stories.@(ts|tsx)"
+    "../src/**/*.stories.@(ts|tsx)",
   ],
   "addons": [
     "@storybook/addon-links",

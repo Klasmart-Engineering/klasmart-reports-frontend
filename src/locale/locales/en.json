@@ -2,5 +2,10 @@
   "about.greeting": "Hello, {name}",
   "about.header": "This is an about page",
   "child.label": "ListItem",
-  "parent.label": "List"
+  "parent.label": "List",
+  "home.pendingAssessments.title": "All Time",
+  "class.type.homeFun": "Home Fun",
+  "class.type.class": "Class",
+  "class.type.live": "Live",
+  "class.type.study": "Study"
 }
