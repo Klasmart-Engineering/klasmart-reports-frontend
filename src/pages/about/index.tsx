@@ -8,9 +8,9 @@ interface AboutPageProps {
 }
 
 // @ts-expect-error
-const List = React.lazy(() => import('reports/List'));
-// @ts-expect-error
-const ListItem = React.lazy(() => import('reports/ListItem'));
+// const List = React.lazy(() => import('reports/List'));
+// // @ts-expect-error
+// const ListItem = React.lazy(() => import('reports/ListItem'));
 
 export default function AboutPage (props: AboutPageProps) {
     const [ state, setState ] = useState(true);
@@ -32,16 +32,16 @@ export default function AboutPage (props: AboutPageProps) {
                             <h1 style={{backgroundColor: `red`}}>Something went wrong.</h1>
                         }>
                             <React.Suspense fallback={<div>Whaddap yo</div>}>
-                                <List
+                                {/* <List
                                     header="Nice woop woop"
                                     items={[]}
-                                />
+                                /> */}
                             </React.Suspense>
                         </ErrorBoundary>
                     ) : (
                         <ErrorBoundary FallbackComponent={<h1 style={{backgroundColor: `blue`}}>Something went wrong.</h1>}>
                             <React.Suspense fallback={<div>Whaddap yo</div>}>
-                                <ListItem title="Some cool title"/>
+                                {/* <ListItem title="Some cool title"/> */}
                             </React.Suspense>
                         </ErrorBoundary>
                     )}

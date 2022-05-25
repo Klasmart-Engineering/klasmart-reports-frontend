@@ -1,15 +1,15 @@
 import "webpack-dev-server";
 import pkg from "./package.json";
 import { execSync } from "child_process";
-import DotEnv from "dotenv-webpack";
-import path from "path";
-import webpack from "webpack";
 import { CleanWebpackPlugin } from "clean-webpack-plugin";
 import CopyWebpackPlugin from "copy-webpack-plugin";
+import DotEnv from "dotenv-webpack";
 import HtmlWebpackPlugin from "html-webpack-plugin";
+import path from "path";
+import webpack from "webpack";
 
 const webpackConfig = (env: any, args: any): webpack.Configuration => ({
-    mode: env.mode === `development` ? 'development' : 'production',
+    mode: `production`,
     devtool: env.mode === `development` ? `eval-cheap-module-source-map` : `source-map`,
     output: {
         filename: `[name].js`,
@@ -67,27 +67,53 @@ const webpackConfig = (env: any, args: any): webpack.Configuration => ({
     plugins: [
         new CleanWebpackPlugin(),
         new webpack.container.ModuleFederationPlugin({
-            "name": "reports",
+            name: `reports`,
+            filename: `remoteEntry.js`,
             exposes: {
-                "./AboutPage": "@/pages/about",
-                "./List": "@/components/List",
-                "./ListItem": "@/components/ListItem"
+                "./NextClass": `@/components/StudentDashboard/NextClass/NextClass`,
             },
-            remotes: {
-                reports: `reports@${process.env.REPORTS_DOMAIN_URL}/remoteEntry.js`,
-            },
-            shared: {
+            shared : {
                 ...pkg.dependencies,
                 react: {
-                    eager: true,
                     singleton: true,
-                    requiredVersion: pkg.dependencies['react'],
+                    requiredVersion: pkg.dependencies[`react`],
                 },
                 'react-dom': {
-                    eager: true,
                     singleton: true,
-                    requiredVersion: pkg.dependencies['react-dom'],
-                }
+                    requiredVersion: pkg.dependencies[`react-dom`],
+                },
+                'react-cookie': {
+                    singleton: true,
+                },
+                '@mui/icons-material': {
+                    singleton: true,
+                },
+                '@mui/lab': {
+                    singleton: true,
+                },
+                '@mui/material': {
+                    singleton: true,
+                },
+                '@mui/styles': {
+                    singleton: true,
+                },
+                '@kl-engineering/reports-api-client': {
+                    singleton: true,
+                },
+                '@kl-engineering/kidsloop-px': {
+                    singleton: true,
+                },
+                lodash: {
+                    singleton: true,
+                },
+                '@emotion/styled': {
+                    singleton: true,
+                    requiredVersion: pkg.dependencies[`@emotion/styled`],
+                },
+                '@emotion/react': {
+                    singleton: true,
+                    requiredVersion: pkg.dependencies[`@emotion/react`],
+                },
             },
         }),
         new webpack.EnvironmentPlugin({

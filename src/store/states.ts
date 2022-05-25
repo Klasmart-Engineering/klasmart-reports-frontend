@@ -1,8 +1,8 @@
-import { atom } from "recoil";
 import { DEFAULT_LOCALE } from "../locale/utils";
-import { recoilPersist } from 'recoil-persist';
+import { env } from "@/config/index";
 import { Cookies } from "react-cookie";
-import { env } from "@/config";
+import { atom } from "recoil";
+import { recoilPersist } from 'recoil-persist';
 
 const cookies = new Cookies();
 
@@ -15,14 +15,14 @@ const { persistAtom: cookiePersistAtom } = recoilPersist({
                     path: `/`,
                     domain: env.cookieDomain,
                 });
-            })
+            });
         },
         getItem: (key) => cookies.get(key) ?? null,
-    }
-})
+    },
+});
 
 export const localeState = atom<string>({
     key: `locale`,
     default: DEFAULT_LOCALE,
     effects: [ cookiePersistAtom ],
-})
+});
