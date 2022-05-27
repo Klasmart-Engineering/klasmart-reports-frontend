@@ -72,6 +72,8 @@ const webpackConfig = (env: any, args: any): webpack.Configuration => ({
             exposes: {
                 "./LearningOutcomeSummary": `@/components/StudentDashboard/LearningOutcomeSummary/LearningOutcomeSummary`,
                 "./CompletionWidget": `@/components/StudentDashboard/Completion/CompletionWidget`,
+                "./AchievementWidget": `@/components/StudentDashboard/Achievement/AchievementWidget`,
+                "./StudentAttendance": `@/components/StudentDashboard/StudentAttendance/StudentAttendance`,
             },
             shared : {
                 react: {

@@ -19,5 +19,13 @@
   "home.student.completionWidget.totalAssignment": "Total assignment",
   "home.student.completionWidget.containerTitleLabel": "Completion",
   "home.student.completionWidget.containerUrlLabel": "View all completions",
-  "home.student.completionWidget.title": "This week"
+  "home.student.completionWidget.title": "This week",
+  "home.student.achievementWidget.legendAchieved": "Achieved",
+  "home.student.achievementWidget.legendPending": "Pending",
+  "home.student.achievementWidget.legendNotAchieved": "Not Achieved",
+  "home.student.achievementWidget.containerTitleLabel": "Achievements",
+  "home.student.achievementWidget.containerUrlLabel": "View all achievements",
+  "home.student.achievementWidget.title": "Last 7 Days",
+  "home.student.achievementWidget.containerHeading": "Total Learning Outcomes",
+  "home.student.attendanceWidget.legend": "Average attendance for 1 week"
 }

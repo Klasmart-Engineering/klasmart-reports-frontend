@@ -83,6 +83,7 @@
     "@visx/responsive": "^2.10.0",
     "@visx/scale": "^2.2.2",
     "@visx/shape": "^2.10.0",
+    "@visx/xychart": "^2.10.0",
     "apollo-upload-client": "17.0.0",
     "crypto-hash": "2.0.1",
     "graphql": "16.3.0",
