@@ -74,6 +74,7 @@ const webpackConfig = (env: any, args: any): webpack.Configuration => ({
                 "./CompletionWidget": `@/components/StudentDashboard/Completion/CompletionWidget`,
                 "./AchievementWidget": `@/components/StudentDashboard/Achievement/AchievementWidget`,
                 "./StudentAttendance": `@/components/StudentDashboard/StudentAttendance/StudentAttendance`,
+                "./AdaptiveLearningWidget": `@/components/StudentDashboard/AdaptiveLearning/AdaptiveLearningWidget`,
             },
             shared : {
                 react: {

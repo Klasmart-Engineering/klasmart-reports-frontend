@@ -27,5 +27,16 @@
   "home.student.achievementWidget.containerUrlLabel": "View all achievements",
   "home.student.achievementWidget.title": "Last 7 Days",
   "home.student.achievementWidget.containerHeading": "Total Learning Outcomes",
-  "home.student.attendanceWidget.legend": "Average attendance for 1 week"
+  "home.student.attendanceWidget.legend": "Average attendance for 1 week",
+  "home.student.adaptiveLearningWidget.skill1": "Writing",
+  "home.student.adaptiveLearningWidget.skill2": "Speaking",
+  "home.student.adaptiveLearningWidget.skill3": "Reading",
+  "home.student.adaptiveLearningWidget.badaBoost": "Learning Boost",
+  "home.student.adaptiveLearningWidget.totalReviews": "Total Auto Reviews",
+  "home.student.adaptiveLearningWidget.skillsImproved": "Skills Improved",
+  "home.student.adaptiveLearningWidget.skills": "Skills",
+  "home.student.adaptiveLearningWidget.classes": "Classes",
+  "home.student.adaptiveLearningWidget.legendWithReview": "With Review",
+  "home.student.adaptiveLearningWidget.legendWithoutReview": "Without Auto Review",
+  "home.student.adaptiveLearningWidget.legendTitle": "Top 3 improved skills"
 }
