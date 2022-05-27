@@ -70,10 +70,10 @@ const webpackConfig = (env: any, args: any): webpack.Configuration => ({
             name: `reports`,
             filename: `remoteEntry.js`,
             exposes: {
-                "./NextClass": `@/components/StudentDashboard/NextClass/NextClass`,
+                "./LearningOutcomeSummary": `@/components/StudentDashboard/LearningOutcomeSummary/LearningOutcomeSummary`,
+                "./CompletionWidget": `@/components/StudentDashboard/Completion/CompletionWidget`,
             },
             shared : {
-                ...pkg.dependencies,
                 react: {
                     singleton: true,
                     requiredVersion: pkg.dependencies[`react`],
@@ -85,6 +85,10 @@ const webpackConfig = (env: any, args: any): webpack.Configuration => ({
                 'react-cookie': {
                     singleton: true,
                 },
+                'react-intl': {
+                    singleton: true,
+                    requiredVersion: pkg.dependencies[`react-intl`],
+                },
                 '@mui/icons-material': {
                     singleton: true,
                 },
@@ -93,6 +97,7 @@ const webpackConfig = (env: any, args: any): webpack.Configuration => ({
                 },
                 '@mui/material': {
                     singleton: true,
+                    requiredVersion: pkg.dependencies[`@mui/material`],
                 },
                 '@mui/styles': {
                     singleton: true,

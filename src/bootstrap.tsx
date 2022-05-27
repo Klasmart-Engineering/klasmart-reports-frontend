@@ -1,27 +1,29 @@
 
 import ThemeProvider from "../src/theme/provider";
-import NextClass from "./components/StudentDashboard/NextClass/NextClass";
 import LocaleProvider from "./locale/Provider";
 import StoreProvider from "./store/Provider";
 import React from "react";
 import ReactDOM from "react-dom";
-import CmsApiClientProvider from "@/Providers/CmsApiClient";
+import LearningOutcomeSummary from "./components/StudentDashboard/LearningOutcomeSummary/LearningOutcomeSummary";
+import { GlobalStateProvider } from "@kl-engineering/frontend-state";
 
 function main () {
     const div = document.getElementById(`app`);
     ReactDOM
-        .render(<App />, div);
+        .render(
+            <GlobalStateProvider cookieDomain={process.env.COOKIE_DOMAIN ?? ``}>
+                <App />
+            </GlobalStateProvider>
+        , div);
 }
 
 const App = () => (
     <StoreProvider>
-        <CmsApiClientProvider>
             <LocaleProvider locale={`en`}>
                 <ThemeProvider>
-                    <NextClass />
+                    <LearningOutcomeSummary />
                 </ThemeProvider>
             </LocaleProvider>
-        </CmsApiClientProvider>
     </StoreProvider>
     );
 
