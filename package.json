@@ -80,6 +80,7 @@
     "@visx/grid": "^2.10.0",
     "@visx/group": "^2.10.0",
     "@visx/legend": "^2.10.0",
+    "@visx/marker": "^2.10.0",
     "@visx/responsive": "^2.10.0",
     "@visx/scale": "^2.2.2",
     "@visx/shape": "^2.10.0",
@@ -87,6 +88,7 @@
     "apollo-upload-client": "17.0.0",
     "crypto-hash": "2.0.1",
     "graphql": "16.3.0",
+    "image-webpack-loader": "^8.1.0",
     "lodash": "4.17.21",
     "query-string": "^7.1.1",
     "react": "17.0.2",
@@ -95,6 +97,7 @@
     "react-intl": "5.24.6",
     "react-intl-formatted-duration": "^4.0.0",
     "react-resize-detector": "7.0.0",
+    "react-swipeable-views": "^0.14.0",
     "recoil": "0.6.1",
     "recoil-persist": "4.0.0",
     "webpack": "5.70.0"
