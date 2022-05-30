@@ -38,5 +38,22 @@
   "home.student.adaptiveLearningWidget.classes": "Classes",
   "home.student.adaptiveLearningWidget.legendWithReview": "With Review",
   "home.student.adaptiveLearningWidget.legendWithoutReview": "Without Auto Review",
-  "home.student.adaptiveLearningWidget.legendTitle": "Top 3 improved skills"
+  "home.student.adaptiveLearningWidget.legendTitle": "Top 3 improved skills",
+  "home.attendance.title": "Last 7 days",
+  "home.attendance.legendHigh": "High attendance",
+  "home.attendance.legendMedium": "Medium attendance",
+  "home.attendance.legendLow": "Low attendance",
+  "home.attendance.pie.low": "Students with low attendance",
+  "home.contentStatus.learningMaterialLabel": "Learning Material",
+  "home.contentStatus.totalApprovedLabel": "Total Approved",
+  "home.contentStatus.totalPendingLabel": "Total Pending",
+  "home.contentStatus.totalRejectedLabel": "Total Rejected",
+  "home.contentStatus.timeFrame": "All time",
+  "home.teacherLoad.totalClassesLabel": "Total Classes",
+  "home.teacherLoad.totalClassesTimeFrame": "All time",
+  "home.teacherLoad.totalStudentsLabel": "Total Students",
+  "home.teacherLoad.totalStudentsTimeFrame": "All time",
+  "home.teacherLoad.upcomingClassesLabel": "Upcoming Classes",
+  "home.teacherLoad.upcomingClassesTimeFrame": "Next 7 days",
+  "home.pendingAssessments.title": "All time"
 }

@@ -76,6 +76,10 @@ const webpackConfig = (env: any, args: any): webpack.Configuration => ({
                 "./StudentAttendance": `@/components/StudentDashboard/StudentAttendance/StudentAttendance`,
                 "./AdaptiveLearningWidget": `@/components/StudentDashboard/AdaptiveLearning/AdaptiveLearningWidget`,
                 "./AdaptiveLearningJourneyWidget": `@/components/StudentDashboard/AdaptiveLearningJourney/AdaptiveLearningJourney`,
+                "./AttendanceRate": `@/components/TeacherDashboard/AttendanceRate/AttendanceRate`,
+                "./ContentStatus": `@/components/TeacherDashboard/ContentStatus/ContentStatus`,
+                "./TeacherLoad": `@/components/TeacherDashboard/TeacherLoadWidget/TeacherLoadWidget`,
+                "./PendingAssessments": `@/components/TeacherDashboard/PendingAssessments/PendingAssessments`,
             },
             shared : {
                 react: {
