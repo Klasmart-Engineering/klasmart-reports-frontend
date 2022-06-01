@@ -1,3 +1,4 @@
+import { currentOrganizationState, useGlobalStateValue } from "@kl-engineering/frontend-state";
 import { useGetStudentAssignmentCompletion } from "@kl-engineering/reports-api-client";
 import { FiberManualRecord } from "@mui/icons-material";
 import {
@@ -132,33 +133,25 @@ const useStyles = makeStyles(((theme: Theme) => createStyles({
 export default function CompletionWidget() {
     const intl = useIntl();
     const classes = useStyles();
-    // const currentOrganization = useCurrentOrganization();
-    // const organizationId = currentOrganization?.id ?? ``;
-    // const {
-    //     data,
-    //     isLoading: isAssignmentCompletionLoading,
-    //     error: isAssignmentCompletionError,
-    //     refetch,
-    // } = useGetStudentAssignmentCompletion({
-    //     org: organizationId,
-    // });
-    // const completionData = useMemo(() => {
-    //     if (!data?.successful) return;
-    //     const info = data.info;
-    //     return {
-    //         ...info,
-    //         completed_perc: info.completed_perc * 100,
-    //         incomplete_perc: info.incomplete_perc * 100,
-    //     };
-    // }, [ data ]);
-
-    const completionData = {
-        total: 6,
-        completed: 5,
-        incomplete: 1,
-        completed_perc: 83,
-        incomplete_perc: 17
-    }
+    const currentOrganization = useGlobalStateValue(currentOrganizationState);
+    const organizationId = currentOrganization?.id ?? ``;
+    const {
+        data,
+        isLoading: isAssignmentCompletionLoading,
+        error: isAssignmentCompletionError,
+        refetch,
+    } = useGetStudentAssignmentCompletion({
+        org: organizationId,
+    });
+    const completionData = useMemo(() => {
+        if (!data?.successful) return;
+        const info = data.info;
+        return {
+            ...info,
+            completed_perc: Math.round(info.completed_perc * 100),
+            incomplete_perc: Math.round(info.incomplete_perc * 100),
+        };
+    }, [ data ]);
 
     return (
         <>

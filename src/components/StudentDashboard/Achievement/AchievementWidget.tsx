@@ -22,6 +22,8 @@ import {
     FormattedMessage,
     useIntl,
 } from "react-intl";
+import { currentOrganizationState, useGlobalStateValue } from "@kl-engineering/frontend-state";
+
 
 const useStyles = makeStyles((theme: Theme) => createStyles({
     widgetContent: {
@@ -91,59 +93,17 @@ export default function AchievementWidget() {
     const classes = useStyles();
     const theme = useTheme();
     const [total, setTotal] = useState(0);
-    // const currentOrganization = useCurrentOrganization();
-    // const organizationId = currentOrganization?.id ?? ``;
-    // const {
-    //     data,
-    //     isFetching: isachievementDataFetching,
-    //     error: isachievementDataError,
-    //     refetch: achievementDataRefetch,
-    // } = useGetStudentLearningOutcome({
-    //     org: organizationId,
-    // });
-    const data = {
-        "info": {
-            "learning_outcomes": {
-                "achieved": 60,
-                "not_achieved": 34,
-                "not_covered": 12
-            },
-            "skills": [
-                {
-                    "skill": "84b8f87a-7b61-4580-a190-a9ce3fe90dd3",
-                    "skill_name": "Speech & Language Skills",
-                    "achieved": 25,
-                    "not_achieved": 12,
-                    "total": 37
-                },
-                {
-                    "skill": "2d5ea951-836c-471e-996e-76823a992689",
-                    "skill_name": "Motor Skills",
-                    "achieved": 18,
-                    "not_achieved": 7,
-                    "total": 25
-                },
-                {
-                    "skill": "1080d319-8ce7-4378-9c71-a5019d6b9386",
-                    "skill_name": "Speech & Language Skills",
-                    "achieved": 1,
-                    "not_achieved": 1,
-                    "total": 2
-                },
-                {
-                    "skill": "c12f363a-633b-4080-bd2b-9ced8d034379",
-                    "skill_name": "Cognitive Skills",
-                    "achieved": 7,
-                    "not_achieved": 2,
-                    "total": 9
-                }
-            ]
-        },
-        "lastupdate": 1653634657,
-        "expiry": 1653636457,
-        "successful": true
-    };
-
+    const currentOrganization = useGlobalStateValue(currentOrganizationState);
+    const organizationId = currentOrganization?.id ?? ``;
+    const {
+        data,
+        isFetching: isachievementDataFetching,
+        error: isachievementDataError,
+        refetch: achievementDataRefetch,
+    } = useGetStudentLearningOutcome({
+        org: organizationId,
+    });
+    
     const [ achievementData, setAchievementData ] = useState<AchievementData[]>([]);
     useEffect(() => {
         const { learning_outcomes } = data?.info || {};
@@ -167,7 +127,7 @@ export default function AchievementWidget() {
         ];
         setAchievementData(generatedAchievementData);
         setTotal(sumBy(generatedAchievementData, (item) => item.count));
-    }, []);
+    }, [ data ]);
     // const reload = () => {
     //     achievementDataRefetch();
     // };

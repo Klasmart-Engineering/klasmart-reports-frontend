@@ -13,6 +13,7 @@ import {
     FormattedMessage,
     useIntl,
 } from "react-intl";
+import { currentOrganizationState, useGlobalStateValue } from "@kl-engineering/frontend-state";
 
 const useStyles = makeStyles(((theme: Theme) => createStyles({
     widgetContent: {
@@ -75,29 +76,18 @@ const useStyles = makeStyles(((theme: Theme) => createStyles({
 
 export default function ContentStatusWidget () {
     const classes = useStyles();
-    // const intl = useIntl();
-    // const currentOrganization = useCurrentOrganization();
-    // const organizationId = currentOrganization?.id ?? ``;
+    const intl = useIntl();
+    const currentOrganization = useGlobalStateValue(currentOrganizationState);
+    const organizationId = currentOrganization?.id ?? ``;
 
-    // const {
-    //     data,
-    //     isFetching,
-    //     error,
-    //     refetch,
-    // } = useGetContentTeacher({
-    //     org: organizationId,
-    // });
-
-    const data = {
-        "info": {
-            "total": 9,
-            "draft": 4,
-            "published": 5
-        },
-        "lastupdate": 1653900103,
-        "expiry": 1653901903,
-        "successful": true
-    }
+    const {
+        data,
+        isFetching,
+        error,
+        refetch,
+    } = useGetContentTeacher({
+        org: organizationId,
+    });
 
     const formattedData = useMemo(() => {
         if (!data) return;

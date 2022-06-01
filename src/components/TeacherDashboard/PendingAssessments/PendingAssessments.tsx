@@ -13,6 +13,7 @@ import {
     FormattedMessage,
     useIntl,
 } from "react-intl";
+import { currentOrganizationState, useGlobalStateValue } from "@kl-engineering/frontend-state";
 
 const useStyles = makeStyles((theme:Theme) => createStyles({
     widgetContent: {
@@ -67,37 +68,17 @@ const useStyles = makeStyles((theme:Theme) => createStyles({
 export default function PendingAssessmentsWidget () {
     const intl = useIntl();
     const classes = useStyles();
-    // const currentOrganization = useCurrentOrganization();
-    // const organizationId = currentOrganization?.id ?? ``;
+    const currentOrganization = useGlobalStateValue(currentOrganizationState);
+    const organizationId = currentOrganization?.id ?? ``;
 
-    // const {
-    //     data,
-    //     isFetching,
-    //     error,
-    //     refetch,
-    // } = useGetPendingAssignments({
-    //     org: organizationId,
-    // });
-
-    const data = {
-        "info": [
-            {
-                "class_type": "class",
-                "count": 14
-            },
-            {
-                "class_type": "live",
-                "count": 25
-            },
-            {
-                "class_type": "homework",
-                "count": 4
-            }
-        ],
-        "lastupdate": 1653905657,
-        "expiry": 1653907457,
-        "successful": true
-    };
+    const {
+        data,
+        isFetching,
+        error,
+        refetch,
+    } = useGetPendingAssignments({
+        org: organizationId,
+    });
 
     const formattedData = useMemo(() => {
         if (!data) return [];

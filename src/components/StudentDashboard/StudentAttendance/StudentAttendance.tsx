@@ -24,6 +24,7 @@ import {
     FormattedMessage,
     useIntl,
 } from "react-intl";
+import { currentOrganizationState, useGlobalStateValue } from "@kl-engineering/frontend-state";
 
 const useStyles = makeStyles((theme: Theme) => createStyles({
     widgetContent: {
@@ -61,67 +62,26 @@ interface Props {
 export default function StudentAttendanceWidget (props: Props) {
     const intl = useIntl();
     const classes = useStyles();
-    // const currentOrganization = useCurrentOrganization();
-    // const organizationName = currentOrganization?.name ?? ``;
-    // const organizationId = currentOrganization?.id ?? ``;
-    // const organizationPrimaryColor = currentOrganization?.branding?.primaryColor ?? (organizationName ? utils.stringToColor(organizationName) : PRIMARY_THEME_COLOR);
-    const organizationPrimaryColor = PRIMARY_THEME_COLOR;
+    const currentOrganization = useGlobalStateValue(currentOrganizationState);
+    const organizationName = currentOrganization?.name ?? ``;
+    const organizationId = currentOrganization?.id ?? ``;
+    const organizationPrimaryColor = currentOrganization?.branding?.primaryColor ?? (organizationName ? utils.stringToColor(organizationName) : PRIMARY_THEME_COLOR);
     const [ attendanceData, setAttendanceData ] = useState<LineChartData[]>([]);
     const [ averageAttendance, setAverageAttendance ] = useState(0);
-    // const {
-    //     data,
-    //     isFetching,
-    //     error,
-    //     refetch,
-    // } = useGetStudentAttendanceRate({
-    //     org: organizationId,
-    // });
-
-    const data = {
-        "info": [
-            {
-                "class_date": "2020-01-18",
-                "rate": 0.7
-            },
-            {
-                "class_date": "2020-01-19",
-                "rate": 0.05
-            },
-            {
-                "class_date": "2020-01-20",
-                "rate": 0.7
-            },
-            {
-                "class_date": "2020-01-21",
-                "rate": 0.85
-            },
-            {
-                "class_date": "2020-01-22",
-                "rate": 0.75
-            },
-            {
-                "class_date": "2020-01-23",
-                "rate": 0.85
-            },
-            {
-                "class_date": "2020-01-24",
-                "rate": 0.8
-            },
-            {
-                "class_date": "2020-01-25",
-                "rate": 0.6
-            }
-        ],
-        "lastupdate": 1653637685,
-        "expiry": 1653639485,
-        "successful": true
-    }
+    const {
+        data,
+        isFetching,
+        error,
+        refetch,
+    } = useGetStudentAttendanceRate({
+        org: organizationId,
+    });
 
     useEffect(() => {
         if(!data?.info) return;
         setAttendanceData(data.info);
         setAverageAttendance(Math.round((data.info.reduce((rate, current) => rate + current.rate, 0) / data.info.length) * 100));
-    }, []);
+    }, [ data ]);
 
     return (
             <Box className={classes.widgetContent}>

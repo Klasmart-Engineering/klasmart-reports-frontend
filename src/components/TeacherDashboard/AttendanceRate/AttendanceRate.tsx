@@ -23,6 +23,7 @@ import {
     FormattedMessage,
     useIntl,
 } from "react-intl";
+import { currentOrganizationState, useGlobalStateValue } from "@kl-engineering/frontend-state";
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -60,29 +61,17 @@ export default function AttendanceRateWidget () {
     const classes = useStyles();
     const width = useWidth();
     const defaultView = width !== `xs`;
-    // const currentOrganization = useCurrentOrganization();
-    // const organizationId = currentOrganization?.id ?? ``;
+    const currentOrganization = useGlobalStateValue(currentOrganizationState);
+    const organizationId = currentOrganization?.id ?? ``;
     
-    // const {
-    //     data,
-    //     isFetching,
-    //     error,
-    //     refetch,
-    // } = useGetClassAttendanceRateGroup({
-    //     org: organizationId,
-    // });
-
-    const data = {
-        "info": {
-            "grp1": 0.6,
-            "grp2": 0.2,
-            "grp3": 0.2,
-            "grp1count": 6
-        },
-        "lastupdate": 1653898842,
-        "expiry": 1653900642,
-        "successful": true
-    }
+    const {
+        data,
+        isFetching,
+        error,
+        refetch,
+    } = useGetClassAttendanceRateGroup({
+        org: organizationId,
+    });
 
     const dataLabels: ClassAttendanceLegendLabels = {
         high: intl.formatMessage({
@@ -99,8 +88,7 @@ export default function AttendanceRateWidget () {
     const formattedData = useMemo(() => {
         if (!data) return [];
         return attendanceRateDataFormatter(data, theme, dataLabels);
-    }, [ dataLabels ]);
-
+    }, [ data, dataLabels ]);
 
     return (
             <>
