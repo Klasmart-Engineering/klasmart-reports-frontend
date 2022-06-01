@@ -2,6 +2,8 @@ import StoreProvider from "../src/store/Provider";
 import LocaleProvider from "../src/locale/Provider";
 import UserServiceProvider from "../src/api/user-service/Provider";
 import ThemeProvider from "../src/theme/provider";
+import CmsApiClientProvider from "../src/providers/CmsApiClient";
+import ReportsApiClientProvider from "../src/providers/ReportsApiClient";
 
 export const parameters = {
   actions: { argTypesRegex: "^on[A-Z].*" },
@@ -55,15 +57,19 @@ export const globalTypes = {
 const withProviders = (Story, context) => {
     const { locale } = context.globals;
     return (
-        <UserServiceProvider>
-            <StoreProvider>
+      <UserServiceProvider>
+          <StoreProvider>
+            <ReportsApiClientProvider>
+              <CmsApiClientProvider>
                 <LocaleProvider locale={locale}>
                   <ThemeProvider>
-                      <Story {...context} />
+                    <Story {...context} />
                   </ThemeProvider>
                 </LocaleProvider>
-            </StoreProvider>
-        </UserServiceProvider>
+              </CmsApiClientProvider>
+            </ReportsApiClientProvider>
+          </StoreProvider>
+            </UserServiceProvider>
     )
 }
 export const decorators = [ withProviders ];
