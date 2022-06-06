@@ -23,6 +23,7 @@ import {
     useIntl,
 } from "react-intl";
 import { currentOrganizationState, useGlobalStateValue } from "@kl-engineering/frontend-state";
+import WidgetWrapper from "@/components/WidgetWrapper/WidgetWrapper";
 
 
 const useStyles = makeStyles((theme: Theme) => createStyles({
@@ -103,8 +104,8 @@ export default function AchievementWidget() {
     } = useGetStudentLearningOutcome({
         org: organizationId,
     });
-    
-    const [ achievementData, setAchievementData ] = useState<AchievementData[]>([]);
+
+    const [achievementData, setAchievementData] = useState<AchievementData[]>([]);
     useEffect(() => {
         const { learning_outcomes } = data?.info || {};
         if (!learning_outcomes) return;
@@ -127,59 +128,66 @@ export default function AchievementWidget() {
         ];
         setAchievementData(generatedAchievementData);
         setTotal(sumBy(generatedAchievementData, (item) => item.count));
-    }, [ data ]);
-    // const reload = () => {
-    //     achievementDataRefetch();
-    // };
+    }, [data]);
+    const reload = () => {
+        achievementDataRefetch();
+    };
 
     return (
-        <div className={classes.widgetContent}>
-            <div className={classes.titleWrapper}>
-                <FiberManualRecord className={classes.bullet} />
-                <Typography className={classes.title}>
-                    <FormattedMessage id="home.student.achievementWidget.title" />
-                </Typography>
-            </div>
-            {achievementData?.length &&
-                <List>
-                    <Typography className={classes.heading}>
-                        <FormattedMessage id="home.student.achievementWidget.containerHeading" />
+        <WidgetWrapper
+            loading={isachievementDataFetching}
+            error={isachievementDataError}
+            reload={reload}
+            noData={!data?.successful}
+        >
+            <div className={classes.widgetContent}>
+                <div className={classes.titleWrapper}>
+                    <FiberManualRecord className={classes.bullet} />
+                    <Typography className={classes.title}>
+                        <FormattedMessage id="home.student.achievementWidget.title" />
                     </Typography>
-                    <div className={classes.break} />
-                    {achievementData?.map((item, i) => {
-                        return (
-                            <ListItem key={i}>
-                                <div
-                                    className={classes.row}
-                                    style={{
-                                        color: item.color,
-                                    }}
-                                >
+                </div>
+                {achievementData?.length &&
+                    <List>
+                        <Typography className={classes.heading}>
+                            <FormattedMessage id="home.student.achievementWidget.containerHeading" />
+                        </Typography>
+                        <div className={classes.break} />
+                        {achievementData?.map((item, i) => {
+                            return (
+                                <ListItem key={i}>
                                     <div
-                                        className={classes.text}
+                                        className={classes.row}
+                                        style={{
+                                            color: item.color,
+                                        }}
                                     >
-                                        {item.intlKey}
+                                        <div
+                                            className={classes.text}
+                                        >
+                                            {item.intlKey}
+                                        </div>
+                                        <div>
+                                            <ProgressBar
+                                                total={total}
+                                                progress={item.count}
+                                                color={item.color}
+                                                thickness={15}
+                                                backgroundColor="transparent"
+                                            />
+                                        </div>
+                                        <div
+                                            className={classes.count}
+                                        >
+                                            {item.count}
+                                        </div>
                                     </div>
-                                    <div>
-                                        <ProgressBar
-                                            total={total}
-                                            progress={item.count}
-                                            color={item.color}
-                                            thickness={15}
-                                            backgroundColor="transparent"
-                                        />
-                                    </div>
-                                    <div
-                                        className={classes.count}
-                                    >
-                                        {item.count}
-                                    </div>
-                                </div>
-                            </ListItem>);
-                    })}
-                    <div className={classes.break} />
-                </List>
-            }
-        </div>
+                                </ListItem>);
+                        })}
+                        <div className={classes.break} />
+                    </List>
+                }
+            </div>
+        </WidgetWrapper>
     );
 }

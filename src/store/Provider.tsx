@@ -1,4 +1,4 @@
-import { RecoilRoot } from "recoil"
+import { RecoilRoot } from "recoil";
 import React from "react";
 
 const StoreProvider: React.FC = (props) => {

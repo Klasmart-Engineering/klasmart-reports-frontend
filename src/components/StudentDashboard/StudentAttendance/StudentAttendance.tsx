@@ -25,6 +25,7 @@ import {
     useIntl,
 } from "react-intl";
 import { currentOrganizationState, useGlobalStateValue } from "@kl-engineering/frontend-state";
+import WidgetWrapper from "@/components/WidgetWrapper/WidgetWrapper";
 
 const useStyles = makeStyles((theme: Theme) => createStyles({
     widgetContent: {
@@ -59,15 +60,15 @@ const PRIMARY_THEME_COLOR = `#0094FF`;
 interface Props {
 }
 
-export default function StudentAttendanceWidget (props: Props) {
+export default function StudentAttendanceWidget(props: Props) {
     const intl = useIntl();
     const classes = useStyles();
     const currentOrganization = useGlobalStateValue(currentOrganizationState);
     const organizationName = currentOrganization?.name ?? ``;
     const organizationId = currentOrganization?.id ?? ``;
     const organizationPrimaryColor = currentOrganization?.branding?.primaryColor ?? (organizationName ? utils.stringToColor(organizationName) : PRIMARY_THEME_COLOR);
-    const [ attendanceData, setAttendanceData ] = useState<LineChartData[]>([]);
-    const [ averageAttendance, setAverageAttendance ] = useState(0);
+    const [attendanceData, setAttendanceData] = useState<LineChartData[]>([]);
+    const [averageAttendance, setAverageAttendance] = useState(0);
     const {
         data,
         isFetching,
@@ -78,12 +79,18 @@ export default function StudentAttendanceWidget (props: Props) {
     });
 
     useEffect(() => {
-        if(!data?.info) return;
+        if (!data?.info) return;
         setAttendanceData(data.info);
         setAverageAttendance(Math.round((data.info.reduce((rate, current) => rate + current.rate, 0) / data.info.length) * 100));
-    }, [ data ]);
+    }, [data]);
 
     return (
+        <WidgetWrapper
+            noData={!attendanceData?.length}
+            loading={isFetching}
+            error={error}
+            reload={refetch}
+        >
             <Box className={classes.widgetContent}>
                 <Box className={classes.banner}>
                     <div className="bannerLeft">
@@ -119,5 +126,6 @@ export default function StudentAttendanceWidget (props: Props) {
                     </ParentSize>
                 </Box>
             </Box>
+        </WidgetWrapper>
     );
 }

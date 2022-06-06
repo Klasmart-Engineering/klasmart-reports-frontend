@@ -1,3 +1,4 @@
+import WidgetWrapper from "@/components/WidgetWrapper/WidgetWrapper";
 import { currentOrganizationState, useGlobalStateValue } from "@kl-engineering/frontend-state";
 import { useGetStudentAssignmentCompletion } from "@kl-engineering/reports-api-client";
 import { FiberManualRecord } from "@mui/icons-material";
@@ -154,7 +155,12 @@ export default function CompletionWidget() {
     }, [ data ]);
 
     return (
-        <>
+        <WidgetWrapper
+            loading={isAssignmentCompletionLoading}
+            error={isAssignmentCompletionError}
+            noData={!data?.successful}
+            reload={refetch}
+        >
             {completionData &&
                 <div className={classes.widgetContent}>
                     <div className={classes.titleWrapper}>
@@ -239,6 +245,6 @@ export default function CompletionWidget() {
                         </div>
                     </div>
                 </div>}
-        </>
+        </WidgetWrapper>
     );
 }

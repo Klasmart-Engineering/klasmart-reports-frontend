@@ -4,6 +4,7 @@ import { ParentSize } from "@visx/responsive";
 import React from "react";
 import { useIntl } from "react-intl";
 import { currentOrganizationState, useGlobalStateValue } from "@kl-engineering/frontend-state";
+import WidgetWrapper from "@/components/WidgetWrapper/WidgetWrapper";
 
 interface Props { }
 interface UniqueSkillConversionType {
@@ -19,7 +20,7 @@ interface SkillTypeForGraph {
     notAchieved: number;
 }
 
-export default function LearningOutcomeSummary (props: Props) {
+export default function LearningOutcomeSummary(props: Props) {
     const intl = useIntl();
     const currentOrganization = useGlobalStateValue(currentOrganizationState);
     const organizationId = currentOrganization?.id ?? ``;
@@ -48,7 +49,7 @@ export default function LearningOutcomeSummary (props: Props) {
                 achieved: achieved + responseSkill.achieved,
                 not_achieved: not_achieved + responseSkill.not_achieved,
                 total: total + responseSkill.total,
-                skill: [ ...skill, responseSkill.skill ],
+                skill: [...skill, responseSkill.skill],
             };
             return skills;
         }
@@ -56,7 +57,7 @@ export default function LearningOutcomeSummary (props: Props) {
             ...skills,
             {
                 ...responseSkill,
-                skill: [ responseSkill.skill ],
+                skill: [responseSkill.skill],
             },
         ];
     }, [])
@@ -69,8 +70,14 @@ export default function LearningOutcomeSummary (props: Props) {
         })) || [];
 
     return (
+        <WidgetWrapper
+            loading={isLearingOutcomeLoading}
+            error={isLearingOutcomeError}
+            noData={!data?.successful}
+            reload={refetch}
+        >
             <ParentSize>
-                {({ width, height } : { width: number, height: number}) => (
+                {({ width, height }: { width: number, height: number }) => (
                     <BarChart
                         data={learningOutComeData}
                         width={width}
@@ -78,5 +85,6 @@ export default function LearningOutcomeSummary (props: Props) {
                     />
                 )}
             </ParentSize>
+        </WidgetWrapper>
     );
 }

@@ -19,6 +19,7 @@ import {
     useIntl,
 } from "react-intl";
 import { currentOrganizationState, useGlobalStateValue } from "@kl-engineering/frontend-state";
+import WidgetWrapper from "@/components/WidgetWrapper/WidgetWrapper";
 
 const useStyles = makeStyles(((theme: Theme) => createStyles({
     widgetContent: {
@@ -133,70 +134,82 @@ export default function TeacherLoadWidget() {
 
     }, [teacherData, schedulesData]);
 
+    const reload = () => {
+        teacherDataRefetch();
+        scheduleDataRefetch();
+    };
+
     return (
-        <div className={classes.widgetContent}>
-            <ul className={classes.list}>
-                <li className={classes.listItem}>
-                    <Typography
-                        variant="body2"
-                        className={classes.body2}
-                    >
-                        <FormattedMessage id="home.teacherLoad.totalClassesLabel" />
-                    </Typography>
-                    <Typography
-                        className={classes.count}
-                    >
-                        {totalClasses}
-                    </Typography>
-                    <Typography
-                        variant="caption"
-                        className={classes.caption}
-                        color="textSecondary"
-                    >
-                        <FormattedMessage id="home.teacherLoad.totalClassesTimeFrame" />
-                    </Typography>
-                </li>
-                <li className={classes.listItem}>
-                    <Typography
-                        variant="body2"
-                        className={classes.body2}
-                    >
-                        <FormattedMessage id="home.teacherLoad.totalStudentsLabel" />
-                    </Typography>
-                    <Typography
-                        className={classes.count}
-                    >
-                        {totalStudents}
-                    </Typography>
-                    <Typography
-                        variant="caption"
-                        className={classes.caption}
-                        color="textSecondary"
-                    >
-                        <FormattedMessage id="home.teacherLoad.totalStudentsTimeFrame" />
-                    </Typography>
-                </li>
-                <li className={classes.listItem}>
-                    <Typography
-                        variant="body2"
-                        className={classes.body2}
-                    >
-                        <FormattedMessage id="home.teacherLoad.upcomingClassesLabel" />
-                    </Typography>
-                    <Typography
-                        className={classes.count}
-                    >
-                        {upcomingClasses}
-                    </Typography>
-                    <Typography
-                        variant="caption"
-                        className={classes.caption}
-                        color="textSecondary"
-                    >
-                        <FormattedMessage id="home.teacherLoad.upcomingClassesTimeFrame" />
-                    </Typography>
-                </li>
-            </ul>
-        </div>
+        <WidgetWrapper
+            loading={isTeacherDataFetching || isSchedulesFetching}
+            error={isTeacherDataError || isScheduleError}
+            noData={!teacherData?.successful || !schedulesData?.data}
+            reload={reload}
+        >
+            <div className={classes.widgetContent}>
+                <ul className={classes.list}>
+                    <li className={classes.listItem}>
+                        <Typography
+                            variant="body2"
+                            className={classes.body2}
+                        >
+                            <FormattedMessage id="home.teacherLoad.totalClassesLabel" />
+                        </Typography>
+                        <Typography
+                            className={classes.count}
+                        >
+                            {totalClasses}
+                        </Typography>
+                        <Typography
+                            variant="caption"
+                            className={classes.caption}
+                            color="textSecondary"
+                        >
+                            <FormattedMessage id="home.teacherLoad.totalClassesTimeFrame" />
+                        </Typography>
+                    </li>
+                    <li className={classes.listItem}>
+                        <Typography
+                            variant="body2"
+                            className={classes.body2}
+                        >
+                            <FormattedMessage id="home.teacherLoad.totalStudentsLabel" />
+                        </Typography>
+                        <Typography
+                            className={classes.count}
+                        >
+                            {totalStudents}
+                        </Typography>
+                        <Typography
+                            variant="caption"
+                            className={classes.caption}
+                            color="textSecondary"
+                        >
+                            <FormattedMessage id="home.teacherLoad.totalStudentsTimeFrame" />
+                        </Typography>
+                    </li>
+                    <li className={classes.listItem}>
+                        <Typography
+                            variant="body2"
+                            className={classes.body2}
+                        >
+                            <FormattedMessage id="home.teacherLoad.upcomingClassesLabel" />
+                        </Typography>
+                        <Typography
+                            className={classes.count}
+                        >
+                            {upcomingClasses}
+                        </Typography>
+                        <Typography
+                            variant="caption"
+                            className={classes.caption}
+                            color="textSecondary"
+                        >
+                            <FormattedMessage id="home.teacherLoad.upcomingClassesTimeFrame" />
+                        </Typography>
+                    </li>
+                </ul>
+            </div>
+        </WidgetWrapper>
     );
 }

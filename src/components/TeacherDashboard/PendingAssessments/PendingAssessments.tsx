@@ -14,8 +14,9 @@ import {
     useIntl,
 } from "react-intl";
 import { currentOrganizationState, useGlobalStateValue } from "@kl-engineering/frontend-state";
+import WidgetWrapper from "@/components/WidgetWrapper/WidgetWrapper";
 
-const useStyles = makeStyles((theme:Theme) => createStyles({
+const useStyles = makeStyles((theme: Theme) => createStyles({
     widgetContent: {
         height: `100%`,
         display: `flex`,
@@ -65,7 +66,7 @@ const useStyles = makeStyles((theme:Theme) => createStyles({
     },
 }));
 
-export default function PendingAssessmentsWidget () {
+export default function PendingAssessmentsWidget() {
     const intl = useIntl();
     const classes = useStyles();
     const currentOrganization = useGlobalStateValue(currentOrganizationState);
@@ -83,21 +84,27 @@ export default function PendingAssessmentsWidget () {
     const formattedData = useMemo(() => {
         if (!data) return [];
         return pendingAssesmentsDataFormatter(data);
-    }, [ data ]);
+    }, [data]);
 
     const total: number = sumBy(formattedData, (item) => item.count);
 
     return (
+        <WidgetWrapper
+            loading={isFetching}
+            error={error}
+            noData={!data?.successful}
+            reload={refetch}
+        >
             <div className={classes.widgetContent}>
                 <div className={classes.titleWrapper}>
-                    <FiberManualRecord className={classes.bullet}/>
+                    <FiberManualRecord className={classes.bullet} />
                     <Typography className={classes.title}>
                         <FormattedMessage id="home.pendingAssessments.title" />
                     </Typography>
                 </div>
                 {formattedData &&
                     <List>
-                        {formattedData.map((item, index:number)=>{
+                        {formattedData.map((item, index: number) => {
                             return <ListItem key={index}>
                                 <div className={classes.row}>
                                     <SvgIcon
@@ -131,5 +138,6 @@ export default function PendingAssessmentsWidget () {
                     </List>
                 }
             </div>
+        </WidgetWrapper>
     );
 }

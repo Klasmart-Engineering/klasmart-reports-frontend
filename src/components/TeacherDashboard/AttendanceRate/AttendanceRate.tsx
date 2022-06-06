@@ -24,6 +24,7 @@ import {
     useIntl,
 } from "react-intl";
 import { currentOrganizationState, useGlobalStateValue } from "@kl-engineering/frontend-state";
+import WidgetWrapper from "@/components/WidgetWrapper/WidgetWrapper";
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -91,7 +92,12 @@ export default function AttendanceRateWidget () {
     }, [ data, dataLabels ]);
 
     return (
-            <>
+            <WidgetWrapper
+                loading={isFetching}
+                error={error}
+                noData={!data?.successful}
+                reload={refetch}
+            >
             <div className={classes.titleWrapper}>
                 <FiberManualRecord className={classes.icon} />
                 <Typography className={classes.title}>
@@ -116,6 +122,6 @@ export default function AttendanceRateWidget () {
                     />
             </div>
             }
-            </>
+            </WidgetWrapper>
     );
 }

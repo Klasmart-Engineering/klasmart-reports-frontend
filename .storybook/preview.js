@@ -4,6 +4,7 @@ import UserServiceProvider from "../src/api/user-service/Provider";
 import ThemeProvider from "../src/theme/provider";
 import CmsApiClientProvider from "../src/providers/CmsApiClient";
 import ReportsApiClientProvider from "../src/providers/ReportsApiClient";
+import { GlobalStateProvider } from "@kl-engineering/frontend-state";
 
 export const parameters = {
   actions: { argTypesRegex: "^on[A-Z].*" },
@@ -57,19 +58,21 @@ export const globalTypes = {
 const withProviders = (Story, context) => {
     const { locale } = context.globals;
     return (
-      <UserServiceProvider>
+        <GlobalStateProvider cookieDomain={process.env.COOKIE_DOMAIN ?? ``}>
           <StoreProvider>
-            <ReportsApiClientProvider>
-              <CmsApiClientProvider>
-                <LocaleProvider locale={locale}>
-                  <ThemeProvider>
-                    <Story {...context} />
-                  </ThemeProvider>
-                </LocaleProvider>
-              </CmsApiClientProvider>
-            </ReportsApiClientProvider>
-          </StoreProvider>
+            <UserServiceProvider>
+              <ReportsApiClientProvider>
+                <CmsApiClientProvider>
+                  <LocaleProvider locale={locale}>
+                    <ThemeProvider>
+                      <Story {...context} />
+                    </ThemeProvider>
+                  </LocaleProvider>
+                </CmsApiClientProvider>
+              </ReportsApiClientProvider>
             </UserServiceProvider>
+          </StoreProvider>
+        </GlobalStateProvider>
     )
 }
 export const decorators = [ withProviders ];

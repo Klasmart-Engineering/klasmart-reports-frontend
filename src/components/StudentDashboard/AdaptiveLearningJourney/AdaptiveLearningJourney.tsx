@@ -22,6 +22,7 @@ import React,
 } from "react";
 import { useIntl } from "react-intl";
 import { useResizeDetector } from "react-resize-detector";
+import WidgetWrapper from "@/components/WidgetWrapper/WidgetWrapper";
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -130,7 +131,7 @@ interface DataObj {
 
 interface Props { }
 
-function AdaptiveLearningJourney (props: Props) {
+function AdaptiveLearningJourney(props: Props) {
     const {
         width,
         height,
@@ -142,12 +143,12 @@ function AdaptiveLearningJourney (props: Props) {
     const classes = useStyles();
     const intl = useIntl();
     const scrollOffset = 500;
-    const [ selectedAssesmentType, setSelectedAssesmentType ] = useState(`live`);
-    const [ selectedAssesment, setSelectedAssesment ] = useState({} as DataObj | null);
-    const [ connectorSVGWidth, setConnectorSVGWidth ] = useState(0);
-    const [ connectorSVGHeight, setConnectorSVGHeight ] = useState(0);
-    const [ isVerticalMode, setIsverticalMode ] = useState(width ? width < VERTICAL_MODE_BREAKPOINT : false);
-    const [ open, setOpen ] = useState(false);
+    const [selectedAssesmentType, setSelectedAssesmentType] = useState(`live`);
+    const [selectedAssesment, setSelectedAssesment] = useState({} as DataObj | null);
+    const [connectorSVGWidth, setConnectorSVGWidth] = useState(0);
+    const [connectorSVGHeight, setConnectorSVGHeight] = useState(0);
+    const [isVerticalMode, setIsverticalMode] = useState(width ? width < VERTICAL_MODE_BREAKPOINT : false);
+    const [open, setOpen] = useState(false);
 
     const scroll = (scrollOffset: number) => {
         if (isVerticalMode) {
@@ -171,7 +172,7 @@ function AdaptiveLearningJourney (props: Props) {
 
     useEffect(() => {
         setIsverticalMode(width ? width < VERTICAL_MODE_BREAKPOINT : false);
-    }, [ width ]);
+    }, [width]);
 
     useEffect(() => {
         sliderRef.current.scrollTop = 0;
@@ -192,6 +193,14 @@ function AdaptiveLearningJourney (props: Props) {
     ]);
 
     return (
+        <WidgetWrapper
+            error={false}
+            loading={false}
+            noData={false}
+            reload={() => {
+                return;
+            }}
+        >
             <Box
                 ref={ref}
                 className={classes.root}
@@ -267,6 +276,7 @@ function AdaptiveLearningJourney (props: Props) {
                     ))}
                 </Box>
             </Box>
+        </WidgetWrapper>
     );
 }
 

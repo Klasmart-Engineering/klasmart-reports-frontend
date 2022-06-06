@@ -14,6 +14,7 @@ import {
 import { ParentSize } from "@visx/responsive";
 import React from "react";
 import { useIntl } from "react-intl";
+import WidgetWrapper from "@/components/WidgetWrapper/WidgetWrapper";
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -118,12 +119,12 @@ interface LabelProps {
 interface Props {
 }
 
-export default function AdaptiveLearningWidget (props: Props) {
+export default function AdaptiveLearningWidget(props: Props) {
     const intl = useIntl();
     const classes = useStyles();
     const theme = createTheme();
-    const legendColorRange = [ theme.palette.info.light, theme.palette.grey[500] ];
-    const chartColorRange = [ theme.palette.grey[500], theme.palette.info.light ];
+    const legendColorRange = [theme.palette.info.light, theme.palette.grey[500]];
+    const chartColorRange = [theme.palette.grey[500], theme.palette.info.light];
     // TODO: Mock data
     const data = [
         {
@@ -178,6 +179,14 @@ export default function AdaptiveLearningWidget (props: Props) {
     ];
 
     return (
+        <WidgetWrapper
+            loading={false}
+            error={undefined}
+            noData={false}
+            reload={() => {
+                return;
+            }}
+        >
             <Box className={classes.widgetContent}>
                 <ChartLegend
                     colorRange={legendColorRange}
@@ -248,5 +257,6 @@ export default function AdaptiveLearningWidget (props: Props) {
                     ))}
                 </Grid>
             </Box>
+        </WidgetWrapper>
     );
 }

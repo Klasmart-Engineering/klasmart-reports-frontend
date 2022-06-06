@@ -14,6 +14,7 @@ import {
     useIntl,
 } from "react-intl";
 import { currentOrganizationState, useGlobalStateValue } from "@kl-engineering/frontend-state";
+import WidgetWrapper from "@/components/WidgetWrapper/WidgetWrapper";
 
 const useStyles = makeStyles(((theme: Theme) => createStyles({
     widgetContent: {
@@ -38,7 +39,7 @@ const useStyles = makeStyles(((theme: Theme) => createStyles({
     list: {
         listStyle: `none`,
         padding: 0,
-        margin:0,
+        margin: 0,
         display: `flex`,
         flexDirection: `column`,
         justifyContent: `space-around`,
@@ -49,7 +50,7 @@ const useStyles = makeStyles(((theme: Theme) => createStyles({
         gridTemplateRows: `1fr`,
         gridTemplateColumns: `45% 20% 35%`,
         alignItems: `center`,
-        justifyItems:`center`,
+        justifyItems: `center`,
         '&:not(:last-child)': {
             borderBottom: `1px solid ${theme.palette.grey[200]}`,
         },
@@ -74,7 +75,7 @@ const useStyles = makeStyles(((theme: Theme) => createStyles({
     },
 })));
 
-export default function ContentStatusWidget () {
+export default function ContentStatusWidget() {
     const classes = useStyles();
     const intl = useIntl();
     const currentOrganization = useGlobalStateValue(currentOrganizationState);
@@ -92,12 +93,18 @@ export default function ContentStatusWidget () {
     const formattedData = useMemo(() => {
         if (!data) return;
         return contentStatusDataFormatter(data);
-    }, [ data ]);
+    }, [data]);
 
     return (
+        <WidgetWrapper
+            loading={isFetching}
+            error={error}
+            noData={!data?.successful}
+            reload={refetch}
+        >
             <div className={classes.widgetContent}>
                 <div className={classes.titleWrapper}>
-                    <FiberManualRecord className={classes.titleBullet}/>
+                    <FiberManualRecord className={classes.titleBullet} />
                     <Typography className={classes.title}>
                         <FormattedMessage id="home.contentStatus.timeFrame" />
                     </Typography>
@@ -171,5 +178,6 @@ export default function ContentStatusWidget () {
                     </li>
                 </ul>
             </div>
+        </WidgetWrapper>
     );
 }

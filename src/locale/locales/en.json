@@ -39,6 +39,16 @@
   "home.student.adaptiveLearningWidget.legendWithReview": "With Review",
   "home.student.adaptiveLearningWidget.legendWithoutReview": "Without Auto Review",
   "home.student.adaptiveLearningWidget.legendTitle": "Top 3 improved skills",
+  "home.student.adaptiveLearningJourney.classTitle": "Auto Review Classes",
+  "studentHome.mockData.lesson2.title": "Bada Math - Let's count",
+  "studentHome.mockData.lesson3.title": "My colors",
+  "studentHome.mockData.lesson4.title": "Good night, Teddy Bear",
+  "class.type.live": "Live",
+  "class.type.study": "Study",
+  "studentHome.mockData.lesson1.title": "A Christmas Safari",
+  "home.student.teacherFeedbackWidget.christina": "Christina",
+  "studentHome.nextClass.teacher1.givenName": "Michael",
+  "home.student.adaptiveLearningJourney.progressBarLabel": "Overall Progress",
   "home.attendance.title": "Last 7 days",
   "home.attendance.legendHigh": "High attendance",
   "home.attendance.legendMedium": "Medium attendance",
@@ -55,5 +65,8 @@
   "home.teacherLoad.totalStudentsTimeFrame": "All time",
   "home.teacherLoad.upcomingClassesLabel": "Upcoming Classes",
   "home.teacherLoad.upcomingClassesTimeFrame": "Next 7 days",
-  "home.pendingAssessments.title": "All time"
+  "home.pendingAssessments.title": "All time",
+  "home.common.error.generic.title": "Oops!",
+  "home.common.error.generic.description": "The data cannot be loaded, please try again later!",
+  "home.common.error.action": "Try Again"
 }
