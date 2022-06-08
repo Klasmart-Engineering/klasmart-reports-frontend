@@ -1,6 +1,5 @@
 import pendingAssesmentsDataFormatter from "./pendingAssesmentsDataFormatter";
 import ProgressBar from "./ProgressBar";
-// import { useCurrentOrganization } from "@/store/organizationMemberships";
 import { useGetPendingAssignments } from "@kl-engineering/reports-api-client";
 import { List, ListItem, SvgIcon, Theme, Typography } from "@mui/material";
 import createStyles from '@mui/styles/createStyles';
