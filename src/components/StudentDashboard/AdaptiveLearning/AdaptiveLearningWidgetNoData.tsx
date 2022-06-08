@@ -12,10 +12,9 @@ import {
     makeStyles,
 } from "@mui/styles";
 import { ParentSize } from "@visx/responsive";
+import NoDataMessageWrapper from "@/components/NoDataMessage/NoDataMessageWrapper";
 import React from "react";
 import { useIntl } from "react-intl";
-import WidgetWrapper from "@/components/WidgetWrapper/WidgetWrapper";
-import AdaptiveLearningNoData from "./AdaptiveLearningWidgetNoData";
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -118,7 +117,7 @@ interface LabelProps {
 interface Props {
 }
 
-export default function AdaptiveLearningWidget(props: Props) {
+export default function AdaptiveLearningNoData(props: Props) {
     const intl = useIntl();
     const classes = useStyles();
     const theme = createTheme();
@@ -178,14 +177,9 @@ export default function AdaptiveLearningWidget(props: Props) {
     ];
 
     return (
-        <WidgetWrapper
-            loading={false}
-            error={undefined}
-            noData={true}
-            reload={() => {
-                return;
-            }}
-            noDataScreen={<AdaptiveLearningNoData />}
+        <NoDataMessageWrapper
+            id="home.student.adaptiveLearning.noData"
+            defaultMessage="Keep track of how much your skills are improving with adaptive learning."
         >
             <Box className={classes.widgetContent}>
                 <ChartLegend
@@ -193,73 +187,73 @@ export default function AdaptiveLearningWidget(props: Props) {
                 />
                 <Grid container sx={{ height: `100%` }}>
 
-                <Grid
-                    item
-                    xs={12}
-                    sm={8}
-                    className={classes.chartContainer}
-                    >
-                    <ParentSize>
-                        {({ width, height }) => (
-                            <GroupedBar
-                            width={width}
-                            height={height}
-                            data={data}
-                            colorRange={chartColorRange}
-                            windowWidth={width}
-                            />
-                            )}
-                    </ParentSize>
-                </Grid>
-                <Grid
-                    item
-                    xs={12}
-                    sm={4}
-                    className={classes.labelContainer}
-                    >
-                    {labelData.map((label: LabelProps) => (
-                        <Grid
-                        key={label.dataName}
+                    <Grid
                         item
-                        xs={4}
-                        sm={12}
-                        className={classes.label}
-                        
-                        >
-                            <Box className={classes.labelTextWrapper}>
-                                <Grid
-                                    item
-                                    xs={12}
-                                    sm={5}
-                                    className={classes.labelText}
-                                    >
-                                    <Typography
-                                        variant="h1"
-                                        className={classes.labelName}
-                                        >
-                                        {label.dataName}
-                                    </Typography>
-                                </Grid>
-                                <Grid
-                                    item
-                                    xs={12}
-                                    sm={5}
-                                    className={classes.labelText}
-                                    >
-                                    <Typography
-                                        variant="h1"
-                                        className={classes.labelValue}
-                                        >
-                                        {label.value}
-                                        <span className={classes.labelType}>{label.type}</span>
-                                    </Typography>
-                                </Grid>
-                            </Box>
-                        </Grid>
-                    ))}
-                </Grid>
+                        xs={12}
+                        sm={8}
+                        className={classes.chartContainer}
+                    >
+                        <ParentSize>
+                            {({ width, height }) => (
+                                <GroupedBar
+                                    width={width}
+                                    height={height}
+                                    data={data}
+                                    colorRange={chartColorRange}
+                                    windowWidth={width}
+                                />
+                            )}
+                        </ParentSize>
                     </Grid>
+                    <Grid
+                        item
+                        xs={12}
+                        sm={4}
+                        className={classes.labelContainer}
+                    >
+                        {labelData.map((label: LabelProps) => (
+                            <Grid
+                                key={label.dataName}
+                                item
+                                xs={4}
+                                sm={12}
+                                className={classes.label}
+
+                            >
+                                <Box className={classes.labelTextWrapper}>
+                                    <Grid
+                                        item
+                                        xs={12}
+                                        sm={5}
+                                        className={classes.labelText}
+                                    >
+                                        <Typography
+                                            variant="h1"
+                                            className={classes.labelName}
+                                        >
+                                            {label.dataName}
+                                        </Typography>
+                                    </Grid>
+                                    <Grid
+                                        item
+                                        xs={12}
+                                        sm={5}
+                                        className={classes.labelText}
+                                    >
+                                        <Typography
+                                            variant="h1"
+                                            className={classes.labelValue}
+                                        >
+                                            {label.value}
+                                            <span className={classes.labelType}>{label.type}</span>
+                                        </Typography>
+                                    </Grid>
+                                </Box>
+                            </Grid>
+                        ))}
+                    </Grid>
+                </Grid>
             </Box>
-        </WidgetWrapper>
+        </NoDataMessageWrapper>
     );
 }

@@ -77,6 +77,7 @@
     "@mui/x-date-pickers": "5.0.0-alpha.1",
     "@visx/annotation": "^2.10.0",
     "@visx/axis": "^2.10.0",
+    "@visx/glyph": "^2.10.0",
     "@visx/grid": "^2.10.0",
     "@visx/group": "^2.10.0",
     "@visx/legend": "^2.10.0",

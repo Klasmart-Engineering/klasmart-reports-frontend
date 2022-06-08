@@ -166,16 +166,6 @@ export default function BarChart (props: Props) {
                 height="100%"
                 viewBox={`0 0 ${width} ${height}`}
             >
-                {/* Chart Background */}
-                <rect
-                    x={0}
-                    y={0}
-                    width={width}
-                    height={height}
-                    fill={theme.palette.common.white}
-                    rx={12}
-                />
-
                 {/* Chart Grid Lines */}
                 <GridRows
                     scale={yScale}

@@ -2,6 +2,7 @@ import WidgetWrapper from "@/components/WidgetWrapper/WidgetWrapper";
 import { currentOrganizationState, useGlobalStateValue } from "@kl-engineering/frontend-state";
 import { useGetStudentAssignmentCompletion } from "@kl-engineering/reports-api-client";
 import { FiberManualRecord } from "@mui/icons-material";
+import CompletionNoData from "./CompletionNoData";
 import {
     Theme,
     Typography,
@@ -160,6 +161,7 @@ export default function CompletionWidget() {
             error={isAssignmentCompletionError}
             noData={!data?.successful}
             reload={refetch}
+            noDataScreen={<CompletionNoData />}
         >
             {completionData &&
                 <div className={classes.widgetContent}>

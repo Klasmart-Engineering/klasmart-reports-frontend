@@ -1,5 +1,5 @@
 import ProgressBar from "./ProgressBar";
-import { useGetStudentLearningOutcome } from "@kl-engineering/reports-api-client";
+import NoDataMessageWrapper from "@/components/NoDataMessage/NoDataMessageWrapper";
 import { FiberManualRecord } from "@mui/icons-material";
 import {
     List,
@@ -22,9 +22,6 @@ import {
     FormattedMessage,
     useIntl,
 } from "react-intl";
-import { currentOrganizationState, useGlobalStateValue } from "@kl-engineering/frontend-state";
-import WidgetWrapper from "@/components/WidgetWrapper/WidgetWrapper";
-import AchievementNoData from "./AchievementNoData";
 
 
 const useStyles = makeStyles((theme: Theme) => createStyles({
@@ -90,58 +87,40 @@ export interface AchievementData {
     count: number;
     color: string;
 }
-export default function AchievementWidget() {
+export default function AchievementNoData() {
     const intl = useIntl();
     const classes = useStyles();
     const theme = useTheme();
     const [total, setTotal] = useState(0);
-    const currentOrganization = useGlobalStateValue(currentOrganizationState);
-    const organizationId = currentOrganization?.id ?? ``;
-    
-    const {
-        data,
-        isFetching: isachievementDataFetching,
-        error: isachievementDataError,
-        refetch: achievementDataRefetch,
-    } = useGetStudentLearningOutcome({
-        org: organizationId,
-    });
 
     const [achievementData, setAchievementData] = useState<AchievementData[]>([]);
     useEffect(() => {
-        const { learning_outcomes } = data?.info || {};
-        if (!learning_outcomes) return;
         const generatedAchievementData = [
             {
                 intlKey: <FormattedMessage id="home.student.achievementWidget.legendAchieved" />,
-                count: learning_outcomes.achieved,
+                count: 60,
                 color: theme.palette.info.light,
             },
             {
                 intlKey: <FormattedMessage id="home.student.achievementWidget.legendPending" />,
-                count: learning_outcomes.not_covered,
+                count: 12,
                 color: `#9473E5`,
             },
             {
                 intlKey: <FormattedMessage id="home.student.achievementWidget.legendNotAchieved" />,
-                count: learning_outcomes.not_achieved,
+                count: 34,
                 color: theme.palette.error.light,
             },
         ];
         setAchievementData(generatedAchievementData);
         setTotal(sumBy(generatedAchievementData, (item) => item.count));
-    }, [data]);
-    const reload = () => {
-        achievementDataRefetch();
-    };
+    }, []);
+
 
     return (
-        <WidgetWrapper
-            loading={isachievementDataFetching}
-            error={isachievementDataError}
-            reload={reload}
-            noData={!data?.successful}
-            noDataScreen={<AchievementNoData />}
+        <NoDataMessageWrapper 
+            id="home.student.achievement.noData"
+            defaultMessage="Need to update this message after getting figma access."
         >
             <div className={classes.widgetContent}>
                 <div className={classes.titleWrapper}>
@@ -191,6 +170,6 @@ export default function AchievementWidget() {
                     </List>
                 }
             </div>
-        </WidgetWrapper>
+        </NoDataMessageWrapper>
     );
 }

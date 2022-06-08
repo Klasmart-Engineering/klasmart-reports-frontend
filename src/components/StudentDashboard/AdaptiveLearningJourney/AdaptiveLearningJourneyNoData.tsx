@@ -7,7 +7,7 @@ import desktop from "@/assets/img/AdaptiveLearningJourney/desktop.png";
 import mobileBg from "@/assets/img/AdaptiveLearningJourney/mobileBg.png";
 import ArrowBackIosNewRoundedIcon from '@mui/icons-material/ArrowBackIosNewRounded';
 import ArrowForwardIosRoundedIcon from '@mui/icons-material/ArrowForwardIosRounded';
-import AdaptiveLearningJourneyNoData from "./AdaptiveLearningJourneyNoData";
+import NoDataMessageWrapper from "@/components/NoDataMessage/NoDataMessageWrapper";
 import { Box, Theme } from "@mui/material";
 import {
     createStyles,
@@ -132,7 +132,7 @@ interface DataObj {
 
 interface Props { }
 
-function AdaptiveLearningJourney(props: Props) {
+export default function AdaptiveLearningJourneyNoData (props: Props) {
     const {
         width,
         height,
@@ -150,7 +150,6 @@ function AdaptiveLearningJourney(props: Props) {
     const [connectorSVGHeight, setConnectorSVGHeight] = useState(0);
     const [isVerticalMode, setIsverticalMode] = useState(width ? width < VERTICAL_MODE_BREAKPOINT : false);
     const [open, setOpen] = useState(false);
-    const [noData, setNoData] = useState(true);
 
     const scroll = (scrollOffset: number) => {
         if (isVerticalMode) {
@@ -177,7 +176,6 @@ function AdaptiveLearningJourney(props: Props) {
     }, [width]);
 
     useEffect(() => {
-        if(noData) return;
         sliderRef.current.scrollTop = 0;
         sliderRef.current.scrollLeft = 0;
         bgRef.current.scrollTop = 0;
@@ -196,93 +194,86 @@ function AdaptiveLearningJourney(props: Props) {
     ]);
 
     return (
-        <WidgetWrapper
-            error={false}
-            loading={false}
-            noData={noData}
-            reload={() => {
-                return;
-            }}
-            noBackground
-            noDataScreen={<AdaptiveLearningJourneyNoData />}
-        >
-            <Box
-                ref={ref}
-                className={classes.root}
-                id={`adaptiveLearningJourney`}
-            >
-                <ArrowBackIosNewRoundedIcon
-                    className={classes.leftNavigator}
-                    onClick={() => scroll(isVerticalMode ? -(scrollOffset - 200) : -scrollOffset)}
-                />
-                <ArrowForwardIosRoundedIcon
-                    className={classes.rightNavigator}
-                    onClick={() => scroll(isVerticalMode ? scrollOffset - 200 : scrollOffset)}
-                />
-                <ProgressBar />
-                <Popup
-                    open={open}
-                    handlePopup={handlePopup}
-                    isVerticalMode={isVerticalMode}
-                    selectedAssesment={selectedAssesment}
-                    selectedAssesmentType={selectedAssesmentType}
-                />
+            <NoDataMessageWrapper
+                backdrop
+                id="home.student.adaptiveLearningJourney.noData"
+                defaultMessage="Visually follow your Adaptive learning journey with this interactive map."
+            >   
                 <Box
-                    ref={bgRef}
-                    className={classes.bgWrapper}
+                    ref={ref}
+                    className={classes.root}
+                    id={`adaptiveLearningJourney`}
                 >
-                    <img
-                        src={isVerticalMode ? mobileBg : desktop}
-                        alt="background"
-                        style={{
-                            flexGrow: 1,
-                        }}
+                    <ArrowBackIosNewRoundedIcon
+                        className={classes.leftNavigator}
+                        onClick={() => scroll(isVerticalMode ? -(scrollOffset - 200) : -scrollOffset)}
                     />
-                </Box>
-                <Box
-                    ref={sliderRef}
-                    className={classes.slider}
-                    id="slider"
-                >
-                    <LinePath
-                        levelsRef={levelsRef.current}
-                        width={width ?? 0}
-                        connectorSVGHeight={connectorSVGHeight}
-                        connectorSVGWidth={connectorSVGWidth}
-                        mockData={mockData}
+                    <ArrowForwardIosRoundedIcon
+                        className={classes.rightNavigator}
+                        onClick={() => scroll(isVerticalMode ? scrollOffset - 200 : scrollOffset)}
+                    />
+                    <ProgressBar />
+                    <Popup
+                        open={open}
+                        handlePopup={handlePopup}
                         isVerticalMode={isVerticalMode}
+                        selectedAssesment={selectedAssesment}
+                        selectedAssesmentType={selectedAssesmentType}
                     />
-                    {mockData.map((data, i) => (
-                        <Box
-                            key={data.level}
-                            className={classes.levelContainer}
-                            sx={{
-                                alignItems: data.level % 2 === 0 ? `start` : `center`,
+                    <Box
+                        ref={bgRef}
+                        className={classes.bgWrapper}
+                    >
+                        <img
+                            src={isVerticalMode ? mobileBg : desktop}
+                            alt="background"
+                            style={{
+                                flexGrow: 1,
                             }}
-                        >
-                            {data.type !== `booster` &&
-                                <LevelBox
-                                    ref={levelsRef.current[i]}
-                                    data={data}
-                                    booster={false}
-                                    currentLevel={currentLevel}
-                                    handlePopup={handlePopup}
-                                />}
+                        />
+                    </Box>
+                    <Box
+                        ref={sliderRef}
+                        className={classes.slider}
+                        id="slider"
+                    >
+                        <LinePath
+                            levelsRef={levelsRef.current}
+                            width={width ?? 0}
+                            connectorSVGHeight={connectorSVGHeight}
+                            connectorSVGWidth={connectorSVGWidth}
+                            mockData={mockData}
+                            isVerticalMode={isVerticalMode}
+                        />
+                        {mockData.map((data, i) => (
+                            <Box
+                                key={data.level}
+                                className={classes.levelContainer}
+                                sx={{
+                                    alignItems: data.level % 2 === 0 ? `start` : `center`,
+                                }}
+                            >
+                                {data.type !== `booster` &&
+                                    <LevelBox
+                                        ref={levelsRef.current[i]}
+                                        data={data}
+                                        booster={false}
+                                        currentLevel={currentLevel}
+                                        handlePopup={handlePopup}
+                                    />}
 
-                            {data.hasBooster &&
-                                <LevelBox
-                                    data={data}
-                                    booster={data.hasBooster}
-                                    currentLevel={currentLevel}
-                                    handlePopup={handlePopup}
-                                />
-                            }
-                        </Box>
-                    ))}
+                                {data.hasBooster &&
+                                    <LevelBox
+                                        data={data}
+                                        booster={data.hasBooster}
+                                        currentLevel={currentLevel}
+                                        handlePopup={handlePopup}
+                                    />
+                                }
+                            </Box>
+                        ))}
+                    </Box>
                 </Box>
-            </Box>
-        </WidgetWrapper>
+            </NoDataMessageWrapper>
     );
 }
-
-export default AdaptiveLearningJourney;

@@ -1,10 +1,10 @@
 import WidgetWrapperError from './WidgetWrapperError';
-// import WidgetWrapperNoData from './WidgetManagement/WidgetWrapperNoData';
 import {
     Box,
+    Card,
     CircularProgress,
 } from '@mui/material';
-import { Theme } from '@mui/material/styles';
+import { Theme, createTheme } from '@mui/material/styles';
 import {
     createStyles,
     makeStyles,
@@ -12,11 +12,22 @@ import {
 import React from 'react';
 
 const useStyles = makeStyles((theme: Theme) => createStyles({
-    cardWrapper: {
+    card: {
         display: `flex`,
-        flexFlow: `column`,
+        flexDirection: `column`,
+        justifyContent: `space-between`,
+        borderRadius: 10,
+        boxShadow: `none`,
         height: `100%`,
+        backgroundColor: `unset`,
+        padding: theme.spacing(2),
     },
+    noData: {
+        backgroundColor: theme.palette.grey[200],
+    },
+    noBackground: {
+        backgroundColor: `unset`,
+    }
 }));
 
 export type BaseWidgetProps = {
@@ -25,45 +36,51 @@ export type BaseWidgetProps = {
     error?: any;
     noData?: boolean;
     reload?: () => any | Promise<any>;
+    noDataScreen?: any;
+    noBackground?: boolean;
 }
 
-export default function WidgetWrapper (props: BaseWidgetProps) {
+export default function WidgetWrapper(props: BaseWidgetProps) {
     const classes = useStyles();
+    const theme = createTheme();
     const {
         children,
         loading,
         error,
         noData,
         reload,
+        noDataScreen,
+        noBackground
     } = props;
 
     return (
-        <Box className={classes.cardWrapper}>
-                <Box sx={
-                    loading ? {
-                        m: `auto`,
-                        display: `flex`,
-                        alignItems: `center`,
-                        pointerEvents: `none`,
-                    } :
-                        {
-                            height: `100%`,
-                        }
+        <Box sx={
+            loading ? {
+                m: `auto`,
+                display: `flex`,
+                alignItems: `center`,
+                justifyContent: `center`,
+                pointerEvents: `none`,
+            } :
+                {
+                    height: `100%`,
+                    position: `relative`,
                 }
-                >
-                    {loading ?
-                        <CircularProgress color="primary" />
-                        : error ?
-                            <WidgetWrapperError reload={reload} />
-                            : noData ?
-                                // <WidgetWrapperNoData />
-                                <Box>
-                                    No Data
-                                </Box>
-                                :
-                                children
-                    }
-                </Box>
+        }
+        >
+            <Card
+                className={`${classes.card} ${noData && classes.noData} ${noBackground && classes.noBackground}`}
+            >
+                {loading ?
+                    <CircularProgress color="primary" />
+                    : error ?
+                        <WidgetWrapperError reload={reload} />
+                        : noData ?
+                            noDataScreen
+                            :
+                            children
+                }
+            </Card>
         </Box>
     );
 }

@@ -1,9 +1,7 @@
 
 import XYLineChart,
 { LineChartData } from "./XYLineChart";
-// import { useCurrentOrganization } from "@/store/organizationMemberships";
-import { utils } from "@kl-engineering/kidsloop-px";
-import { useGetStudentAttendanceRate } from "@kl-engineering/reports-api-client";
+import NoDataMessageWrapper from "@/components/NoDataMessage/NoDataMessageWrapper";
 import { CalendarTodayOutlined } from '@mui/icons-material';
 import {
     Box,
@@ -25,8 +23,7 @@ import {
     useIntl,
 } from "react-intl";
 import { currentOrganizationState, useGlobalStateValue } from "@kl-engineering/frontend-state";
-import WidgetWrapper from "@/components/WidgetWrapper/WidgetWrapper";
-import StudentAttendanceNoData from "./StudentAttendenceNoData";
+import { utils } from "@kl-engineering/kidsloop-px";
 
 const useStyles = makeStyles((theme: Theme) => createStyles({
     widgetContent: {
@@ -61,37 +58,43 @@ const PRIMARY_THEME_COLOR = `#0094FF`;
 interface Props {
 }
 
-export default function StudentAttendanceWidget(props: Props) {
+export default function StudentAttendanceNoData(props: Props) {
     const intl = useIntl();
     const classes = useStyles();
     const currentOrganization = useGlobalStateValue(currentOrganizationState);
     const organizationName = currentOrganization?.name ?? ``;
-    const organizationId = currentOrganization?.id ?? ``;
     const organizationPrimaryColor = currentOrganization?.branding?.primaryColor ?? (organizationName ? utils.stringToColor(organizationName) : PRIMARY_THEME_COLOR);
     const [attendanceData, setAttendanceData] = useState<LineChartData[]>([]);
     const [averageAttendance, setAverageAttendance] = useState(0);
-    const {
-        data,
-        isFetching,
-        error,
-        refetch,
-    } = useGetStudentAttendanceRate({
-        org: organizationId,
-    });
+    const data = [
+        {
+            "class_date": "2020-01-18",
+            "rate": 0.7
+        },
+        {
+            "class_date": "2020-01-19",
+            "rate": 0.05
+        },
+        {
+            "class_date": "2020-01-20",
+            "rate": 0.7
+        },
+        {
+            "class_date": "2020-01-21",
+            "rate": 0.85
+        },
+    ];
 
     useEffect(() => {
-        if (!data?.info) return;
-        setAttendanceData(data.info);
-        setAverageAttendance(Math.round((data.info.reduce((rate, current) => rate + current.rate, 0) / data.info.length) * 100));
-    }, [data]);
+        setAttendanceData(data);
+        setAverageAttendance(Math.round((data.reduce((rate, current) => rate + current.rate, 0) / data.length) * 100));
+    }, []);
+
 
     return (
-        <WidgetWrapper
-            noData={!attendanceData?.length}
-            loading={isFetching}
-            error={error}
-            reload={refetch}
-            noDataScreen={<StudentAttendanceNoData />}
+        <NoDataMessageWrapper
+            id="home.student.attendence.noData"
+            defaultMessage="Monitor your attendance in within a two week period."
         >
             <Box className={classes.widgetContent}>
                 <Box className={classes.banner}>
@@ -123,12 +126,12 @@ export default function StudentAttendanceWidget(props: Props) {
                                 width={width}
                                 height={height}
                                 color={organizationPrimaryColor}
-                                noData={false}
+                                noData
                             />
                         )}
                     </ParentSize>
                 </Box>
             </Box>
-        </WidgetWrapper>
+        </NoDataMessageWrapper>
     );
 }

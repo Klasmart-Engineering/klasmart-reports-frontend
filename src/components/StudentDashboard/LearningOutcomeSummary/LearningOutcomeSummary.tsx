@@ -5,6 +5,7 @@ import React from "react";
 import { useIntl } from "react-intl";
 import { currentOrganizationState, useGlobalStateValue } from "@kl-engineering/frontend-state";
 import WidgetWrapper from "@/components/WidgetWrapper/WidgetWrapper";
+import LearningOutcomeSummaryNoData from "./LearningOutcomeSummaryNoData";
 
 interface Props { }
 interface UniqueSkillConversionType {
@@ -75,6 +76,7 @@ export default function LearningOutcomeSummary(props: Props) {
             error={isLearingOutcomeError}
             noData={!data?.successful}
             reload={refetch}
+            noDataScreen={<LearningOutcomeSummaryNoData />}
         >
             <ParentSize>
                 {({ width, height }: { width: number, height: number }) => (

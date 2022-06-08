@@ -1,6 +1,9 @@
 
+import { Box, lighten } from "@mui/material";
+import { HtmlLabel } from "@visx/annotation";
 import {
     Axis,
+    GlyphSeries,
     Grid,
     LineSeries,
     XYChart,
@@ -18,14 +21,16 @@ interface Props {
     width: number;
     height: number;
     color: any;
+    noData?: boolean;
 }
 
-export default function XYLineChart (props: Props) {
+export default function XYLineChart(props: Props) {
     const {
         data,
         width,
         height,
         color,
+        noData
     } = props;
 
     const intl = useIntl();
@@ -54,7 +59,7 @@ export default function XYLineChart (props: Props) {
                 top: 30,
                 bottom: 30,
                 left: 50,
-                right: 30 - widthAdjustmentForResizing,
+                right: 50 - widthAdjustmentForResizing,
             }}
             xScale={{
                 type: `time`,
@@ -81,7 +86,7 @@ export default function XYLineChart (props: Props) {
                     dx: -10,
                     dy: 5,
                 })}
-                tickFormat={(date: string | number | Date | undefined) =>{
+                tickFormat={(date: string | number | Date | undefined) => {
                     return intl.formatDate(date, {
                         month: `2-digit`,
                         day: `2-digit`,
@@ -98,10 +103,39 @@ export default function XYLineChart (props: Props) {
                     dx: -10,
                     dy: -5,
                 })}
-                tickFormat={(number: number) =>{
-                    return `${number*100}%`;
+                tickFormat={(number: number) => {
+                    return `${number * 100}%`;
                 }}
             />
+            {noData &&
+                <GlyphSeries
+                    enableEvents={false}
+                    data={[data[data.length - 1]]}
+                    dataKey={`records-glyph`}
+                    xAccessor={accessors.xAccessor}
+                    yAccessor={accessors.yAccessor}
+                    renderGlyph={(glyph) =>
+                        <HtmlLabel
+                            x={glyph.x}
+                            y={glyph.y}
+                            anchorLineStroke="none"
+                            horizontalAnchor="middle"
+                            verticalAnchor="middle"
+                        >
+                            <Box sx={{
+                                background: lighten(color, 0.5),
+                                borderRadius: `50%`,
+                                width: 40,
+                                height: 40,
+                                display: 'flex',
+                                alignItems: 'center',
+                                justifyContent: 'center',
+                            }}>
+                                <Box sx={{ background: color, borderRadius: `50%`, width: 15, height: 15 }} />
+                            </Box>
+                        </HtmlLabel>}
+                />
+            }
             <LineSeries
                 stroke={color}
                 strokeLinejoin="round"
