@@ -3,7 +3,7 @@
     "baseUrl": "./",
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
-    "jsx": "react",
+    "jsx": "react-jsx",
     "module": "CommonJS",
     "noImplicitAny": true,
     "outDir": "./dist/types/",
@@ -25,7 +25,8 @@
     "src/**/*.js",
     "src/**/*.jsx",
     "src/**/*.ts",
-    "src/**/*.tsx"
+    "src/**/*.tsx",
+    ".storybook/**/*.tsx"
   ],
   "exclude": [
     "**/*.stories.js",

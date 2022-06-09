@@ -1,7 +1,6 @@
 
 import ThemeProvider from "../src/theme/provider";
 import LocaleProvider from "./locale/Provider";
-import StoreProvider from "./store/Provider";
 import React from "react";
 import ReactDOM from "react-dom";
 import LearningOutcomeSummary from "./components/StudentDashboard/LearningOutcomeSummary/LearningOutcomeSummary";
@@ -18,13 +17,11 @@ function main() {
 }
 
 const App = () => (
-    <StoreProvider>
         <LocaleProvider locale={`en`}>
             <ThemeProvider>
                 <LearningOutcomeSummary />
             </ThemeProvider>
         </LocaleProvider>
-    </StoreProvider>
 );
 
 main();
