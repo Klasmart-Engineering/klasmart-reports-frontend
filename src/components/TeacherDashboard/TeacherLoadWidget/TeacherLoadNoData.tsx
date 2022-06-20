@@ -1,15 +1,16 @@
-import { WidgetType } from "../../models/widget.model";
-import { usePostSchedulesTimeViewList } from "@kl-engineering/cms-api-client";
-import { useClassTeacherLoad } from "@kl-engineering/reports-api-client";
+
 import {
+    Box,
     Theme,
     Typography,
+    useTheme,
 } from "@mui/material";
 import {
     createStyles,
     makeStyles,
 } from "@mui/styles";
-import {
+import React,
+{
     useEffect,
     useState,
 } from "react";
@@ -17,11 +18,7 @@ import {
     FormattedMessage,
     useIntl,
 } from "react-intl";
-import { currentOrganizationState, useGlobalStateValue } from "@kl-engineering/frontend-state";
-import TeacherLoadNoData from "./TeacherLoadNoData";
-import { HomeScreenWidgetWrapper } from "@kl-engineering/kidsloop-px";
-import WidgetWrapperError from "@/components/WidgetWrapper/WidgetWrapperError";
-import { Context } from "@/components/models/widgetContext";
+import NoDataMessageWrapper from "@/components/NoDataMessage/NoDataMessageWrapper";
 
 const useStyles = makeStyles(((theme: Theme) => createStyles({
     widgetContent: {
@@ -58,14 +55,14 @@ const useStyles = makeStyles(((theme: Theme) => createStyles({
         gridTemplateColumns: `50% 25% 25%`,
         alignItems: `center`,
         justifyItems: `center`,
-        backgroundColor: theme.palette.grey[100],
+        backgroundColor: theme.palette.grey[300],
         padding: `1.1rem 0 1.1rem 0`,
         borderRadius: `0.5rem`,
     },
     body2: {
-        fontWeight: `bold`,
+        fontWeight: 600,
         justifySelf: `start`,
-        paddingLeft: `1.5rem`,
+        marginLeft: `1.5rem`,
     },
     caption: {
         justifySelf: `start`,
@@ -78,96 +75,46 @@ const useStyles = makeStyles(((theme: Theme) => createStyles({
         color: theme.palette.info.main,
     },
 })));
-interface Props {
-    widgetContext: Context;
-}
 
-export default function TeacherLoadWidget(props: Props) {
+export default function TeacherLoadNoData() {
     const classes = useStyles();
 
-    const [totalClasses, setTotalClasses] = useState<(number)>(0);
-    const [totalStudents, setTotalStudents] = useState<(number)>(0);
-    const [upcomingClasses, setUpcomingClasses] = useState<(number)>(0);
+    const [totalClasses, setTotalClasses] = useState<(number)>(26);
+    const [totalStudents, setTotalStudents] = useState<(number)>(87);
+    const [upcomingClasses, setUpcomingClasses] = useState<(number)>(30);
     const intl = useIntl();
-    const currentOrganization = useGlobalStateValue(currentOrganizationState);
-    const organizationId = currentOrganization?.id ?? ``;
-    const { editing = false, removeWidget, layouts, widgets } = props.widgetContext;
-    const onRemove = () => removeWidget(WidgetType.ATTENDANCERATE, widgets, layouts);
-
-    const now = new Date();
-    const unixStartOfDay = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 0, 0, 0)
-        .getTime();
-    const unixNext7daysIncludeToday = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 7, 23, 59, 59)
-        .getTime();
-    const timeZoneOffset = now.getTimezoneOffset() * 60 * -1; // to make seconds
-    const {
-        data: teacherData,
-        isFetching: isTeacherDataFetching,
-        error: isTeacherDataError,
-        refetch: teacherDataRefetch,
-    } = useClassTeacherLoad({
-        org: organizationId,
-    });
-
-    const {
-        data: schedulesData,
-        isFetching: isSchedulesFetching,
-        isError: isScheduleError,
-        refetch: scheduleDataRefetch,
-    } = usePostSchedulesTimeViewList({
-        org_id: organizationId,
-        view_type: `full_view`,
-        time_at: 0, // any time is ok together with view_type=`full_view`,
-        start_at_ge: (unixStartOfDay / 1000),
-        end_at_le: (unixNext7daysIncludeToday / 1000),
-        time_zone_offset: timeZoneOffset,
-        order_by: `start_at`,
-        time_boundary: `union`,
-    }, {
-        queryOptions: {
-            enabled: !!organizationId,
-        },
-    });
-
-    useEffect(() => {
-        if (!teacherData || teacherData.info === undefined) return;
-
-        setTotalClasses(teacherData.info.reduce((sum: number, item) => { if (item.class_id !== ``) return ++sum; }, 0) || 0);
-        setTotalStudents(teacherData.info.reduce((sum: number, item) => { return sum + item.studnum; }, 0));
-
-        if (!schedulesData?.total) return;
-
-        setUpcomingClasses(schedulesData.total);
-
-    }, [teacherData, schedulesData]);
-
-    const reload = () => {
-        teacherDataRefetch();
-        scheduleDataRefetch();
-    };
+    const theme = useTheme();
 
 
     return (
-        <HomeScreenWidgetWrapper
-            label={
-                intl.formatMessage({
-                    id: `home.teacherLoad.containerTitleLabel`,
-                })
-            }
-            loading={isTeacherDataFetching || isSchedulesFetching}
-            error={isTeacherDataError || isScheduleError}
-            errorScreen={<WidgetWrapperError reload={reload} />}
-            noData={!!teacherData?.successful || !schedulesData?.data}
-            noDataScreen={<TeacherLoadNoData />}
-            editing={editing}
-            onRemove={onRemove}
+        <NoDataMessageWrapper
+            id="home.teacher.teacherLoad.noData"
+            defaultMessage="Add classes and class roster to keep track of your load."
         >
             <div className={classes.widgetContent}>
+                <Box
+                    sx={{
+                        display: `flex`,
+                        width: `100%`,
+                        position: `absolute`,
+                        alignItems: `center`,
+                        justifyContent: `space-between`,
+                        top: theme.spacing(-2),
+                    }}>
+                    <Typography fontSize={14} fontWeight={600} letterSpacing={-0.5} color={theme.palette.info.main} marginLeft={theme.spacing(6)}>List</Typography>
+                    <Typography fontSize={14} fontWeight={600} letterSpacing={-0.5} color={theme.palette.info.main}>Last Update</Typography>
+                </Box>
                 <ul className={classes.list}>
                     <li className={classes.listItem}>
                         <Typography
                             variant="body2"
-                            className={classes.body2}
+                            fontSize={16}
+                            marginLeft={`0.5rem`}
+                            fontWeight={600}
+                            padding={theme.spacing(1)}
+                            borderRadius={3}
+                            justifySelf={`start`}
+                            boxShadow={`2px 2px 10px ${theme.palette.grey[400]}`}
                         >
                             <FormattedMessage id="home.teacherLoad.totalClassesLabel" />
                         </Typography>
@@ -178,8 +125,14 @@ export default function TeacherLoadWidget(props: Props) {
                         </Typography>
                         <Typography
                             variant="caption"
-                            className={classes.caption}
                             color="textSecondary"
+                            fontSize={16}
+                            marginLeft={`0.5rem`}
+                            fontWeight={600}
+                            padding={theme.spacing(1)}
+                            borderRadius={3}
+                            justifySelf={`start`}
+                            boxShadow={`2px 2px 10px ${theme.palette.grey[400]}`}
                         >
                             <FormattedMessage id="home.teacherLoad.totalClassesTimeFrame" />
                         </Typography>
@@ -226,6 +179,6 @@ export default function TeacherLoadWidget(props: Props) {
                     </li>
                 </ul>
             </div>
-        </HomeScreenWidgetWrapper>
+        </NoDataMessageWrapper>
     );
 }

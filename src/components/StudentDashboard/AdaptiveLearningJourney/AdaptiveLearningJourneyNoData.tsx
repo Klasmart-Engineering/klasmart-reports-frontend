@@ -13,8 +13,7 @@ import {
     createStyles,
     makeStyles,
 } from "@mui/styles";
-import React,
-{
+import {
     createRef,
     useEffect,
     useMemo,
@@ -23,7 +22,6 @@ import React,
 } from "react";
 import { useIntl } from "react-intl";
 import { useResizeDetector } from "react-resize-detector";
-import WidgetWrapper from "@/components/WidgetWrapper/WidgetWrapper";
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -177,9 +175,9 @@ export default function AdaptiveLearningJourneyNoData (props: Props) {
 
     useEffect(() => {
         sliderRef.current.scrollTop = 0;
-        sliderRef.current.scrollLeft = 0;
+        sliderRef.current.scrollLeft = 500;
         bgRef.current.scrollTop = 0;
-        bgRef.current.scrollLeft = 0;
+        bgRef.current.scrollLeft = 500;
         const slider = sliderRef.current?.getBoundingClientRect();
         const lastLevelPosition = levelsRef.current[mockData.length - 1].current.getBoundingClientRect();
         setConnectorSVGWidth(lastLevelPosition?.left - slider?.left);

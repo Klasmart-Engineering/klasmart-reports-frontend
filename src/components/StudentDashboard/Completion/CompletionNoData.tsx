@@ -143,7 +143,7 @@ export default function CompletionNoData() {
     return (
         <NoDataMessageWrapper
             id="home.student.completion.noData"
-            defaultMessage="Get a summary of the completion status of all assignments from your teacher."
+            defaultMessage="Get a summary of the completion status of all assignments from your teacher"
         >
             <div className={classes.widgetContent}>
                 <div className={classes.titleWrapper}>

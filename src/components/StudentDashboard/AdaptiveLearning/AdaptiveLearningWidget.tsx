@@ -12,10 +12,12 @@ import {
     makeStyles,
 } from "@mui/styles";
 import { ParentSize } from "@visx/responsive";
-import React from "react";
 import { useIntl } from "react-intl";
-import WidgetWrapper from "@/components/WidgetWrapper/WidgetWrapper";
 import AdaptiveLearningNoData from "./AdaptiveLearningWidgetNoData";
+import { HomeScreenWidgetWrapper } from "@kl-engineering/kidsloop-px";
+import WidgetWrapperError from "@/components/WidgetWrapper/WidgetWrapperError";
+import { Context } from "@/components/models/widgetContext";
+import { WidgetType } from "@/components/models/widget.model";
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -116,14 +118,19 @@ interface LabelProps {
 }
 
 interface Props {
+    widgetContext: Context;
 }
 
 export default function AdaptiveLearningWidget(props: Props) {
+    const { widgetContext } = props;
     const intl = useIntl();
     const classes = useStyles();
     const theme = createTheme();
     const legendColorRange = [theme.palette.info.light, theme.palette.grey[500]];
     const chartColorRange = [theme.palette.grey[500], theme.palette.info.light];
+    const { editing = false, removeWidget, layouts, widgets } = widgetContext;
+    const onRemove = () => removeWidget(WidgetType.ADAPTIVELEARNING, widgets, layouts);
+
     // TODO: Mock data
     const data = [
         {
@@ -178,14 +185,18 @@ export default function AdaptiveLearningWidget(props: Props) {
     ];
 
     return (
-        <WidgetWrapper
+        <HomeScreenWidgetWrapper
+            label={intl.formatMessage({
+                id: `home.student.adaptiveLearningWidget.containerTitleLabel`,
+            })}
+            id={WidgetType.ADAPTIVELEARNING}
             loading={false}
-            error={undefined}
+            error={false}
+            errorScreen={<WidgetWrapperError reload={() => {return;}} />}
             noData={true}
-            reload={() => {
-                return;
-            }}
             noDataScreen={<AdaptiveLearningNoData />}
+            editing={editing}
+            onRemove={onRemove}
         >
             <Box className={classes.widgetContent}>
                 <ChartLegend
@@ -193,73 +204,73 @@ export default function AdaptiveLearningWidget(props: Props) {
                 />
                 <Grid container sx={{ height: `100%` }}>
 
-                <Grid
-                    item
-                    xs={12}
-                    sm={8}
-                    className={classes.chartContainer}
-                    >
-                    <ParentSize>
-                        {({ width, height }) => (
-                            <GroupedBar
-                            width={width}
-                            height={height}
-                            data={data}
-                            colorRange={chartColorRange}
-                            windowWidth={width}
-                            />
-                            )}
-                    </ParentSize>
-                </Grid>
-                <Grid
-                    item
-                    xs={12}
-                    sm={4}
-                    className={classes.labelContainer}
-                    >
-                    {labelData.map((label: LabelProps) => (
-                        <Grid
-                        key={label.dataName}
+                    <Grid
                         item
-                        xs={4}
-                        sm={12}
-                        className={classes.label}
-                        
-                        >
-                            <Box className={classes.labelTextWrapper}>
-                                <Grid
-                                    item
-                                    xs={12}
-                                    sm={5}
-                                    className={classes.labelText}
-                                    >
-                                    <Typography
-                                        variant="h1"
-                                        className={classes.labelName}
-                                        >
-                                        {label.dataName}
-                                    </Typography>
-                                </Grid>
-                                <Grid
-                                    item
-                                    xs={12}
-                                    sm={5}
-                                    className={classes.labelText}
-                                    >
-                                    <Typography
-                                        variant="h1"
-                                        className={classes.labelValue}
-                                        >
-                                        {label.value}
-                                        <span className={classes.labelType}>{label.type}</span>
-                                    </Typography>
-                                </Grid>
-                            </Box>
-                        </Grid>
-                    ))}
-                </Grid>
+                        xs={12}
+                        sm={8}
+                        className={classes.chartContainer}
+                    >
+                        <ParentSize>
+                            {({ width, height }) => (
+                                <GroupedBar
+                                    width={width}
+                                    height={height}
+                                    data={data}
+                                    colorRange={chartColorRange}
+                                    windowWidth={width}
+                                />
+                            )}
+                        </ParentSize>
                     </Grid>
+                    <Grid
+                        item
+                        xs={12}
+                        sm={4}
+                        className={classes.labelContainer}
+                    >
+                        {labelData.map((label: LabelProps) => (
+                            <Grid
+                                key={label.dataName}
+                                item
+                                xs={4}
+                                sm={12}
+                                className={classes.label}
+
+                            >
+                                <Box className={classes.labelTextWrapper}>
+                                    <Grid
+                                        item
+                                        xs={12}
+                                        sm={5}
+                                        className={classes.labelText}
+                                    >
+                                        <Typography
+                                            variant="h1"
+                                            className={classes.labelName}
+                                        >
+                                            {label.dataName}
+                                        </Typography>
+                                    </Grid>
+                                    <Grid
+                                        item
+                                        xs={12}
+                                        sm={5}
+                                        className={classes.labelText}
+                                    >
+                                        <Typography
+                                            variant="h1"
+                                            className={classes.labelValue}
+                                        >
+                                            {label.value}
+                                            <span className={classes.labelType}>{label.type}</span>
+                                        </Typography>
+                                    </Grid>
+                                </Box>
+                            </Grid>
+                        ))}
+                    </Grid>
+                </Grid>
             </Box>
-        </WidgetWrapper>
+        </HomeScreenWidgetWrapper>
     );
 }

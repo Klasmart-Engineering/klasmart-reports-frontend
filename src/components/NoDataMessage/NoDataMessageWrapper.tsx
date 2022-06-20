@@ -4,24 +4,27 @@ import {
     makeStyles,
 } from "@mui/styles";
 import { Theme, createTheme } from '@mui/material/styles';
-import { Box, Typography } from "@mui/material";
-import LightbulbIcon from '@mui/icons-material/Lightbulb';
+import { Box, Link, Typography } from "@mui/material";
 import { FormattedMessage } from "react-intl";
+import lightBulb from "@/assets/img/bulb.png";
 
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
         messageBox: {
-            width: 300,
-            height: 120,
+            width: 350,
+            padding: theme.spacing(3),
             position: `absolute`,
             display: `flex`,
             justifyContent: `center`,
             alignItems: `center`,
             flexDirection: `column`,
-            borderTopLeftRadius: 60,
+            borderTopLeftRadius: 40,
             borderBottomRightRadius: 10,
             backgroundColor: theme.palette.common.white,
+            [theme.breakpoints.down(`sm`)]: {
+                width: `80%`,
+            },
         },
         message: {
             display: `flex`,
@@ -35,12 +38,14 @@ interface Props {
     defaultMessage: string;
     children?: React.ReactNode;
     backdrop?: boolean;
+    buttonLink?: string;
+    buttonName?: string;
 }
 
 export default function NoDataMessage(props: Props) {
     const classes = useStyles();
     const theme = createTheme();
-    const { id, defaultMessage, children, backdrop } = props;
+    const { id, defaultMessage, children, backdrop, buttonLink, buttonName } = props;
 
     return (
         <Box sx={{ position: `relative`, height: `100%` }}>
@@ -84,11 +89,35 @@ export default function NoDataMessage(props: Props) {
                 }}
                 className={classes.messageBox}>
                 <Box className={classes.message}>
-                    <LightbulbIcon color="warning" />
-                    <Typography fontSize={14} fontWeight={400} sx={{ width: 220, marginLeft: theme.spacing(1) }}>
+                    <img src={lightBulb} alt="bulb" width={15}/>
+                    <Typography fontSize={14} fontWeight={400} sx={{ width: `80%`, marginLeft: theme.spacing(1) }}>
                         <FormattedMessage id={id} defaultMessage={defaultMessage} />
                     </Typography>
                 </Box>
+                {buttonLink &&
+                    <Link
+                        underline="none"
+                        href={buttonLink}
+                        sx={{
+                            backgroundColor: theme.palette.primary.main,
+                            borderRadius: 3,
+                            marginTop: theme.spacing(1),
+                            padding: theme.spacing(1, 2.5),
+                            minWidth: 150,
+                            textAlign: 'center'
+                        }}
+                    >
+                        <Typography
+                            fontWeight={400}
+                            fontSize={14}
+                            sx={{
+                                color: theme.palette.common.white,
+                            }}
+                        >
+                            {buttonName}
+                        </Typography>
+                    </Link>
+                }
             </Box>
         </Box>
     )

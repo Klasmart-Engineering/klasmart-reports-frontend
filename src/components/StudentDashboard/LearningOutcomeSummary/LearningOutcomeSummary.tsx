@@ -1,13 +1,17 @@
 import BarChart from "./BarChart";
 import { useGetStudentLearningOutcome } from "@kl-engineering/reports-api-client";
 import { ParentSize } from "@visx/responsive";
-import React from "react";
 import { useIntl } from "react-intl";
 import { currentOrganizationState, useGlobalStateValue } from "@kl-engineering/frontend-state";
-import WidgetWrapper from "@/components/WidgetWrapper/WidgetWrapper";
 import LearningOutcomeSummaryNoData from "./LearningOutcomeSummaryNoData";
+import { HomeScreenWidgetWrapper } from "@kl-engineering/kidsloop-px";
+import WidgetWrapperError from "@/components/WidgetWrapper/WidgetWrapperError";
+import { Context } from "@/components/models/widgetContext";
+import { WidgetType } from "@/components/models/widget.model";
 
-interface Props { }
+interface Props { 
+    widgetContext: Context;
+ }
 interface UniqueSkillConversionType {
     skill: string[];
     skill_name: string;
@@ -22,9 +26,12 @@ interface SkillTypeForGraph {
 }
 
 export default function LearningOutcomeSummary(props: Props) {
+    const { widgetContext } = props;
     const intl = useIntl();
     const currentOrganization = useGlobalStateValue(currentOrganizationState);
     const organizationId = currentOrganization?.id ?? ``;
+    const { editing = false, removeWidget, layouts, widgets } = widgetContext;
+    const onRemove = () => removeWidget(WidgetType.LEARNINGOUTCOME, widgets, layouts);
 
     const {
         data,
@@ -71,12 +78,18 @@ export default function LearningOutcomeSummary(props: Props) {
         })) || [];
 
     return (
-        <WidgetWrapper
+        <HomeScreenWidgetWrapper
+            label={intl.formatMessage({
+                id: `home.student.learningOutcomeWidget.containerTitleLabel`,
+            })}
+            id={WidgetType.LEARNINGOUTCOME}
             loading={isLearingOutcomeLoading}
             error={isLearingOutcomeError}
+            errorScreen={<WidgetWrapperError reload={refetch}/>}
             noData={!data?.successful}
-            reload={refetch}
             noDataScreen={<LearningOutcomeSummaryNoData />}
+            editing={editing}
+            onRemove={onRemove}
         >
             <ParentSize>
                 {({ width, height }: { width: number, height: number }) => (
@@ -87,6 +100,6 @@ export default function LearningOutcomeSummary(props: Props) {
                     />
                 )}
             </ParentSize>
-        </WidgetWrapper>
+        </HomeScreenWidgetWrapper>
     );
 }

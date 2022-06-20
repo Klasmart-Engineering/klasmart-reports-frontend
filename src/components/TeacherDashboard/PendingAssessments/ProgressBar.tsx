@@ -26,7 +26,7 @@ export default function  ProgressBar (props: Props) {
             borderRadius: thickness / 2,
         },
         colorPrimary: {
-            backgroundColor: backgroundColor ?? theme.palette.grey[200],
+            backgroundColor: backgroundColor ?? theme.palette.grey[300],
         },
         bar: {
             borderRadius: thickness / 2,

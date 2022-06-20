@@ -1,8 +1,6 @@
 
-import { WidgetType } from "../../models/widget.model";
 import contentStatusDataFormatter from "./contentStatusDataFormatter";
-import { useGetContentTeacher } from "@kl-engineering/reports-api-client";
-import { Theme, Typography } from "@mui/material";
+import { Theme, Typography, useTheme } from "@mui/material";
 import createStyles from '@mui/styles/createStyles';
 import { FiberManualRecord } from "@mui/icons-material";
 import { makeStyles } from "@mui/styles";
@@ -12,11 +10,7 @@ import {
     FormattedMessage,
     useIntl,
 } from "react-intl";
-import { currentOrganizationState, useGlobalStateValue } from "@kl-engineering/frontend-state";
-import ContentStatusNoData from "./ContentStatusNoData";
-import { HomeScreenWidgetWrapper } from "@kl-engineering/kidsloop-px";
-import WidgetWrapperError from "@/components/WidgetWrapper/WidgetWrapperError";
-import { Context } from "@/components/models/widgetContext";
+import NoDataMessageWrapper from "@/components/NoDataMessage/NoDataMessageWrapper";
 
 const useStyles = makeStyles(((theme: Theme) => createStyles({
     widgetContent: {
@@ -45,7 +39,6 @@ const useStyles = makeStyles(((theme: Theme) => createStyles({
         display: `flex`,
         flexDirection: `column`,
         justifyContent: `space-around`,
-
     },
     listItem: {
         display: `grid`,
@@ -53,8 +46,9 @@ const useStyles = makeStyles(((theme: Theme) => createStyles({
         gridTemplateColumns: `45% 20% 35%`,
         alignItems: `center`,
         justifyItems: `center`,
-        '&:not(:last-child)': {
-            borderBottom: `1px solid ${theme.palette.grey[200]}`,
+        padding: theme.spacing(0, 3),
+        '&:not(:last-child):not(:first-child)': {
+            borderBottom: `2px solid ${theme.palette.grey[300]}`,
         },
     },
     body2: {
@@ -76,52 +70,34 @@ const useStyles = makeStyles(((theme: Theme) => createStyles({
         color: theme.palette.error.light,
     },
 })));
-interface Props {
-    widgetContext: Context;
-}
 
-export default function ContentStatusWidget(props: Props) {
+export default function ContentStatusNoData() {
     const classes = useStyles();
     const intl = useIntl();
-    const currentOrganization = useGlobalStateValue(currentOrganizationState);
-    const organizationId = currentOrganization?.id ?? ``;
-    const { editing = false, removeWidget, layouts, widgets } = props.widgetContext;
-    const onRemove = () => removeWidget(WidgetType.ATTENDANCERATE, widgets, layouts);
+    const theme = useTheme();
 
-    const {
-        data,
-        isFetching,
-        error,
-        refetch,
-    } = useGetContentTeacher({
-        org: organizationId,
-    });
+    const data = {
+        "info": {
+            "total": 3,
+            "draft": 4,
+            "published": 12
+        },
+        "lastupdate": 1654762431,
+        "expiry": 1654764231,
+        "successful": true
+    }
 
     const formattedData = useMemo(() => {
         if (!data) return;
         return contentStatusDataFormatter(data);
-    }, [data]);
+    }, []);
 
     return (
-        <HomeScreenWidgetWrapper
-            label={
-                intl.formatMessage({
-                    id: `home.contentStatus.containerTitleLabel`,
-                })
-            }
-            link={{
-                url: `library/organization-content`,
-                label: intl.formatMessage({
-                    id: `home.contentStatus.containerUrlLabel`,
-                }),
-            }}
-            loading={isFetching}
-            error={error}
-            errorScreen={<WidgetWrapperError reload={refetch} />}
-            noData={!!data?.successful}
-            noDataScreen={<ContentStatusNoData />}
-            editing={editing}
-            onRemove={onRemove}
+        <NoDataMessageWrapper
+            id="home.teacher.contentStatus.noData"
+            defaultMessage="Create content, submit it, and check the status here."
+            buttonLink="#/library/organization-content"
+            buttonName={intl.formatMessage({ id : `home.teacher.contentStatus.createLessonPlan`, defaultMessage : `Create lesson plan`})}
         >
             <div className={classes.widgetContent}>
                 <div className={classes.titleWrapper}>
@@ -148,20 +124,30 @@ export default function ContentStatusWidget(props: Props) {
                             <FormattedMessage id="home.contentStatus.timeFrame" />
                         </Typography>
                     </li>
-                    <li className={classes.listItem}>
+                    <li
+                        className={classes.listItem}
+                        style={{
+                            boxShadow: `2px 2px 10px ${theme.palette.grey[400]}`,
+                            borderRadius: theme.spacing(1.5),
+                            border: `none`,
+                            padding: theme.spacing(1, 0)
+                        }}>
                         <Typography
                             variant="body2"
-                            className={classes.body2}>
+                            className={classes.body2}
+                            fontSize={20}>
                             <FormattedMessage id="home.contentStatus.totalApprovedLabel" />
                         </Typography>
                         <Typography
-                            className={classes.count}>
+                            className={classes.count}
+                            fontSize={20}>
                             {formattedData?.approved}
                         </Typography>
                         <Typography
                             variant="caption"
                             className={classes.caption}
-                            color="textSecondary">
+                            color="textSecondary"
+                            fontSize={20}>
                             <FormattedMessage id="home.contentStatus.timeFrame" />
                         </Typography>
                     </li>
@@ -199,6 +185,6 @@ export default function ContentStatusWidget(props: Props) {
                     </li>
                 </ul>
             </div>
-        </HomeScreenWidgetWrapper>
+        </NoDataMessageWrapper>
     );
 }

@@ -1,7 +1,7 @@
-import WidgetWrapper from "@/components/WidgetWrapper/WidgetWrapper";
 import { currentOrganizationState, useGlobalStateValue } from "@kl-engineering/frontend-state";
 import { useGetStudentAssignmentCompletion } from "@kl-engineering/reports-api-client";
 import { FiberManualRecord } from "@mui/icons-material";
+import { HomeScreenWidgetWrapper } from "@kl-engineering/kidsloop-px";
 import CompletionNoData from "./CompletionNoData";
 import {
     Theme,
@@ -11,12 +11,14 @@ import {
     createStyles,
     makeStyles,
 } from '@mui/styles';
-import React,
-{ useMemo } from "react";
+import { useMemo } from "react";
 import {
     FormattedMessage,
     useIntl,
 } from "react-intl";
+import { WidgetType } from "@/components/models/widget.model";
+import { Context } from "@/components/models/widgetContext"
+import WidgetWrapperError from "@/components/WidgetWrapper/WidgetWrapperError";
 
 const useStyles = makeStyles(((theme: Theme) => createStyles({
     widgetContent: {
@@ -131,12 +133,18 @@ const useStyles = makeStyles(((theme: Theme) => createStyles({
         color: theme.palette.info.light,
     },
 })));
+interface Props {
+    widgetContext: Context;
+}
 
-export default function CompletionWidget() {
+export default function CompletionWidget(props: Props) {
+    const { widgetContext } = props;
     const intl = useIntl();
     const classes = useStyles();
     const currentOrganization = useGlobalStateValue(currentOrganizationState);
     const organizationId = currentOrganization?.id ?? ``;
+    const { editing = false, removeWidget, layouts, widgets } = widgetContext;
+    const onRemove = () => removeWidget(WidgetType.COMPLETION, widgets, layouts);
     const {
         data,
         isLoading: isAssignmentCompletionLoading,
@@ -156,12 +164,20 @@ export default function CompletionWidget() {
     }, [ data ]);
 
     return (
-        <WidgetWrapper
+        <HomeScreenWidgetWrapper
+            label={
+                intl.formatMessage({
+                    id: `home.student.completionWidget.containerTitleLabel`,
+                })
+            }   
+            id={WidgetType.COMPLETION}
             loading={isAssignmentCompletionLoading}
             error={isAssignmentCompletionError}
+            errorScreen={<WidgetWrapperError reload={refetch}/>}
             noData={!data?.successful}
-            reload={refetch}
             noDataScreen={<CompletionNoData />}
+            editing={editing}
+            onRemove={onRemove}
         >
             {completionData &&
                 <div className={classes.widgetContent}>
@@ -247,6 +263,6 @@ export default function CompletionWidget() {
                         </div>
                     </div>
                 </div>}
-        </WidgetWrapper>
+        </HomeScreenWidgetWrapper>
     );
 }

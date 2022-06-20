@@ -94,7 +94,7 @@ export default function StudentAttendanceNoData(props: Props) {
     return (
         <NoDataMessageWrapper
             id="home.student.attendence.noData"
-            defaultMessage="Monitor your attendance in within a two week period."
+            defaultMessage="Monitor your attendance within a two weeks period."
         >
             <Box className={classes.widgetContent}>
                 <Box className={classes.banner}>

@@ -40,7 +40,7 @@ export default function LearningOutcomeSummaryNoData(props: Props) {
             {({ width, height }: { width: number, height: number }) => (
                 <NoDataMessageWrapper 
                     id="home.student.learningOutcomeSummary.noData" 
-                    defaultMessage="You will see your top 5 skills 7 days later."
+                    defaultMessage="You will see your top 5 skill areas from the last 7 days."
                 >
                     <BarChart
                         data={learningOutComeData}

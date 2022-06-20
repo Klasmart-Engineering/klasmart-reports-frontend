@@ -13,8 +13,7 @@ import {
     createStyles,
     makeStyles,
 } from "@mui/styles";
-import React,
-{
+import {
     createRef,
     useEffect,
     useMemo,
@@ -23,7 +22,10 @@ import React,
 } from "react";
 import { useIntl } from "react-intl";
 import { useResizeDetector } from "react-resize-detector";
-import WidgetWrapper from "@/components/WidgetWrapper/WidgetWrapper";
+import { HomeScreenWidgetWrapper } from "@kl-engineering/kidsloop-px";
+import WidgetWrapperError from "@/components/WidgetWrapper/WidgetWrapperError";
+import { Context } from "@/components/models/widgetContext";
+import { WidgetType } from "@/components/models/widget.model";
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -130,9 +132,12 @@ interface DataObj {
     slides: number;
 }
 
-interface Props { }
+interface Props {
+    widgetContext: Context;
+}
 
 function AdaptiveLearningJourney(props: Props) {
+    const { widgetContext } = props;
     const {
         width,
         height,
@@ -151,6 +156,8 @@ function AdaptiveLearningJourney(props: Props) {
     const [isVerticalMode, setIsverticalMode] = useState(width ? width < VERTICAL_MODE_BREAKPOINT : false);
     const [open, setOpen] = useState(false);
     const [noData, setNoData] = useState(true);
+    const { editing = false, removeWidget, layouts, widgets } = widgetContext;
+    const onRemove = () => removeWidget(WidgetType.ADAPTIVELEARNINGJOURNEY, widgets, layouts);
 
     const scroll = (scrollOffset: number) => {
         if (isVerticalMode) {
@@ -177,7 +184,7 @@ function AdaptiveLearningJourney(props: Props) {
     }, [width]);
 
     useEffect(() => {
-        if(noData) return;
+        if (noData) return;
         sliderRef.current.scrollTop = 0;
         sliderRef.current.scrollLeft = 0;
         bgRef.current.scrollTop = 0;
@@ -196,15 +203,22 @@ function AdaptiveLearningJourney(props: Props) {
     ]);
 
     return (
-        <WidgetWrapper
+        <HomeScreenWidgetWrapper
+            isPersistent
+            label={
+                intl.formatMessage({
+                    id: `home.student.adaptiveLearningJourney.containerTitleLabel`,
+                })
+            }
+            id={WidgetType.ADAPTIVELEARNINGJOURNEY}
             error={false}
+            errorScreen={<WidgetWrapperError reload={() => { return; }} />}
             loading={false}
+            background={`transparent`}
             noData={noData}
-            reload={() => {
-                return;
-            }}
-            noBackground
             noDataScreen={<AdaptiveLearningJourneyNoData />}
+            editing={editing}
+            onRemove={onRemove}
         >
             <Box
                 ref={ref}
@@ -281,7 +295,7 @@ function AdaptiveLearningJourney(props: Props) {
                     ))}
                 </Box>
             </Box>
-        </WidgetWrapper>
+        </HomeScreenWidgetWrapper>
     );
 }
 

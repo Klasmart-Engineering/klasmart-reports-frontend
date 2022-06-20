@@ -15,8 +15,7 @@ import {
     makeStyles,
 } from '@mui/styles';
 import { ParentSize } from "@visx/responsive";
-import React,
-{
+import {
     useEffect,
     useState,
 } from "react";
@@ -25,8 +24,11 @@ import {
     useIntl,
 } from "react-intl";
 import { currentOrganizationState, useGlobalStateValue } from "@kl-engineering/frontend-state";
-import WidgetWrapper from "@/components/WidgetWrapper/WidgetWrapper";
 import StudentAttendanceNoData from "./StudentAttendenceNoData";
+import { HomeScreenWidgetWrapper } from "@kl-engineering/kidsloop-px";
+import WidgetWrapperError from "@/components/WidgetWrapper/WidgetWrapperError";
+import { Context } from "@/components/models/widgetContext";
+import { WidgetType } from "@/components/models/widget.model";
 
 const useStyles = makeStyles((theme: Theme) => createStyles({
     widgetContent: {
@@ -59,9 +61,11 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
 const PRIMARY_THEME_COLOR = `#0094FF`;
 
 interface Props {
+    widgetContext: Context;
 }
 
 export default function StudentAttendanceWidget(props: Props) {
+    const { widgetContext } = props;
     const intl = useIntl();
     const classes = useStyles();
     const currentOrganization = useGlobalStateValue(currentOrganizationState);
@@ -70,6 +74,8 @@ export default function StudentAttendanceWidget(props: Props) {
     const organizationPrimaryColor = currentOrganization?.branding?.primaryColor ?? (organizationName ? utils.stringToColor(organizationName) : PRIMARY_THEME_COLOR);
     const [attendanceData, setAttendanceData] = useState<LineChartData[]>([]);
     const [averageAttendance, setAverageAttendance] = useState(0);
+    const { editing = false, removeWidget, layouts, widgets } = widgetContext;
+    const onRemove = () => removeWidget(WidgetType.STUDENTATTENDANCE, widgets, layouts);
     const {
         data,
         isFetching,
@@ -86,12 +92,20 @@ export default function StudentAttendanceWidget(props: Props) {
     }, [data]);
 
     return (
-        <WidgetWrapper
+        <HomeScreenWidgetWrapper
+            label={
+                intl.formatMessage({
+                    id: `home.student.attendanceWidget.containerTitleLabel`,
+                })
+            }
+            id={WidgetType.STUDENTATTENDANCE}
             noData={!attendanceData?.length}
             loading={isFetching}
             error={error}
-            reload={refetch}
+            errorScreen={<WidgetWrapperError reload={refetch} />}
             noDataScreen={<StudentAttendanceNoData />}
+            editing={editing}
+            onRemove={onRemove}
         >
             <Box className={classes.widgetContent}>
                 <Box className={classes.banner}>
@@ -129,6 +143,6 @@ export default function StudentAttendanceWidget(props: Props) {
                     </ParentSize>
                 </Box>
             </Box>
-        </WidgetWrapper>
+        </HomeScreenWidgetWrapper>
     );
 }

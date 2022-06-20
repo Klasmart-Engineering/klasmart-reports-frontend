@@ -1,9 +1,11 @@
 
+import { WidgetType } from "../../models/widget.model";
 import attendanceRateDataFormatter from "./attendanceRateDataFormatter";
 import { ClassAttendanceLegendLabels } from "../../models/data.model";
 import DonutWithText from "./Donut/DonutWithText";
 import Legend from "./Donut/Legend";
-import { useWidth, HomeScreenWidgetWrapper } from "@kl-engineering/kidsloop-px";
+// import { useCurrentOrganization } from "@/store/organizationMemberships";
+import { useWidth } from "@kl-engineering/kidsloop-px";
 import { useGetClassAttendanceRateGroup } from "@kl-engineering/reports-api-client";
 import { FiberManualRecord } from "@mui/icons-material";
 import {
@@ -15,16 +17,13 @@ import {
     createStyles,
     makeStyles,
 } from '@mui/styles';
-import { useMemo } from "react";
+import React,
+{ useMemo } from "react";
 import {
     FormattedMessage,
     useIntl,
 } from "react-intl";
-import { currentOrganizationState, useGlobalStateValue } from "@kl-engineering/frontend-state";
-import AttendanceRateNoData from "./AttendanceRateNoData";
-import WidgetWrapperError from "@/components/WidgetWrapper/WidgetWrapperError";
-import { Context } from "@/components/models/widgetContext";
-import { WidgetType } from "@/components/models/widget.model";
+import NoDataMessageWrapper from "@/components/NoDataMessage/NoDataMessageWrapper";
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -56,29 +55,24 @@ const useStyles = makeStyles((theme: Theme) =>
         },
     }));
 
-interface Props {
-    widgetContext: Context;
-}
-
-export default function AttendanceRateWidget(props: Props) {
+export default function AttendanceRateNoData () {
     const intl = useIntl();
     const theme = useTheme();
     const classes = useStyles();
     const width = useWidth();
     const defaultView = width !== `xs`;
-    const currentOrganization = useGlobalStateValue(currentOrganizationState);
-    const organizationId = currentOrganization?.id ?? ``;
-    const { editing = false, removeWidget, layouts, widgets } = props.widgetContext;
-    const onRemove = () => removeWidget(WidgetType.ATTENDANCERATE, widgets, layouts);
 
-    const {
-        data,
-        isFetching,
-        error,
-        refetch,
-    } = useGetClassAttendanceRateGroup({
-        org: organizationId,
-    });
+    const data = {
+        "info": {
+            "grp1": 0.28,
+            "grp2": 0.32,
+            "grp3": 0.40,
+            "grp1count": 47
+        },
+        "lastupdate": 1654761820,
+        "expiry": 1654763620,
+        "successful": true
+    }
 
     const dataLabels: ClassAttendanceLegendLabels = {
         high: intl.formatMessage({
@@ -95,22 +89,12 @@ export default function AttendanceRateWidget(props: Props) {
     const formattedData = useMemo(() => {
         if (!data) return [];
         return attendanceRateDataFormatter(data, theme, dataLabels);
-    }, [data, dataLabels]);
+    }, [ dataLabels ]);
 
     return (
-        <HomeScreenWidgetWrapper
-            label={
-                intl.formatMessage({
-                    id: `home.attendance.containerTitleLabel`,
-                })
-            }
-            loading={isFetching}
-            error={error}
-            errorScreen={<WidgetWrapperError reload={refetch} />}
-            noData={!!data?.successful}
-            noDataScreen={<AttendanceRateNoData />}
-            editing={editing}
-            onRemove={onRemove}
+        <NoDataMessageWrapper
+            id="home.teacher.attendanceRate.noData"
+            defaultMessage="Run and conduct classes to see student's attendance over a period of seven days."
         >
             <div className={classes.titleWrapper}>
                 <FiberManualRecord className={classes.icon} />
@@ -121,21 +105,21 @@ export default function AttendanceRateWidget(props: Props) {
 
             {data && <div
                 className={`${classes.root} ${defaultView ? classes.rootDesktop : classes.rootMobile}`}
-            >
+                >
                 <DonutWithText
                     data={formattedData}
                     options={{
                         pieSize: defaultView ? 100 : 70,
-                        radiusWidth: defaultView ? 24 : 16,
+                        radiusWidth: defaultView? 24 : 16,
                         padAngle: 0,
                     }}
-                />
+                    />
                 <Legend
                     data={formattedData}
                     format={defaultView ? `desktop` : `mobile`}
-                />
+                    />
             </div>
             }
-        </HomeScreenWidgetWrapper>
+            </NoDataMessageWrapper>
     );
 }

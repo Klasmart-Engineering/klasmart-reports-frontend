@@ -6,14 +6,17 @@ import createStyles from '@mui/styles/createStyles';
 import { FiberManualRecord } from "@mui/icons-material";
 import { makeStyles } from "@mui/styles";
 import { sumBy } from "lodash";
-import React,
-{ useMemo } from "react";
+import { useMemo } from "react";
 import {
     FormattedMessage,
     useIntl,
 } from "react-intl";
 import { currentOrganizationState, useGlobalStateValue } from "@kl-engineering/frontend-state";
-import WidgetWrapper from "@/components/WidgetWrapper/WidgetWrapper";
+import PendingAssessmentsNoData from "./PendingAssesmentsNoData";
+import { HomeScreenWidgetWrapper } from "@kl-engineering/kidsloop-px";
+import { Context } from "@/components/models/widgetContext";
+import { WidgetType } from "@/components/models/widget.model";
+import WidgetWrapperError from "@/components/WidgetWrapper/WidgetWrapperError";
 
 const useStyles = makeStyles((theme: Theme) => createStyles({
     widgetContent: {
@@ -64,12 +67,17 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
         fontSize: 10,
     },
 }));
+interface Props {
+    widgetContext: Context;
+}
 
-export default function PendingAssessmentsWidget() {
+export default function PendingAssessmentsWidget(props: Props) {
     const intl = useIntl();
     const classes = useStyles();
     const currentOrganization = useGlobalStateValue(currentOrganizationState);
     const organizationId = currentOrganization?.id ?? ``;
+    const { editing = false, removeWidget, layouts, widgets } = props.widgetContext;
+    const onRemove = () => removeWidget(WidgetType.ATTENDANCERATE, widgets, layouts);
 
     const {
         data,
@@ -88,11 +96,25 @@ export default function PendingAssessmentsWidget() {
     const total: number = sumBy(formattedData, (item) => item.count);
 
     return (
-        <WidgetWrapper
+        <HomeScreenWidgetWrapper
+            label={
+                intl.formatMessage({
+                    id: `home.pendingAssessments.containerTitleLabel`,
+                })
+            }
+            link={{
+                url: `assessments`,
+                label: intl.formatMessage({
+                    id: `home.pendingAssessments.containerUrlLabel`,
+                }),
+            }}
             loading={isFetching}
             error={error}
-            noData={!data?.successful}
-            reload={refetch}
+            errorScreen={<WidgetWrapperError reload={refetch} />}
+            noData={!!data?.successful}
+            noDataScreen={<PendingAssessmentsNoData />}
+            editing={editing}
+            onRemove={onRemove}
         >
             <div className={classes.widgetContent}>
                 <div className={classes.titleWrapper}>
@@ -137,6 +159,6 @@ export default function PendingAssessmentsWidget() {
                     </List>
                 }
             </div>
-        </WidgetWrapper>
+        </HomeScreenWidgetWrapper>
     );
 }
