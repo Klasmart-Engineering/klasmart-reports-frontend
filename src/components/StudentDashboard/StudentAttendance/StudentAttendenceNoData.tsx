@@ -1,7 +1,7 @@
 
 import XYLineChart,
 { LineChartData } from "./XYLineChart";
-import NoDataMessageWrapper from "@/components/NoDataMessage/NoDataMessageWrapper";
+import NoDataMessageWrapper from "@/components/NoDataMessage";
 import { CalendarTodayOutlined } from '@mui/icons-material';
 import {
     Box,
@@ -94,7 +94,6 @@ export default function StudentAttendanceNoData(props: Props) {
     return (
         <NoDataMessageWrapper
             id="home.student.attendence.noData"
-            defaultMessage="Monitor your attendance within a two weeks period."
         >
             <Box className={classes.widgetContent}>
                 <Box className={classes.banner}>

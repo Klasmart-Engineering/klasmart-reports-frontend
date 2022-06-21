@@ -82,7 +82,6 @@ export default function LearningOutcomeSummary(props: Props) {
             label={intl.formatMessage({
                 id: `home.student.learningOutcomeWidget.containerTitleLabel`,
             })}
-            id={WidgetType.LEARNINGOUTCOME}
             loading={isLearingOutcomeLoading}
             error={isLearingOutcomeError}
             errorScreen={<WidgetWrapperError reload={refetch}/>}

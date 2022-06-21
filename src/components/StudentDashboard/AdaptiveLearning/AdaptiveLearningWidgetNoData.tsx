@@ -12,8 +12,7 @@ import {
     makeStyles,
 } from "@mui/styles";
 import { ParentSize } from "@visx/responsive";
-import NoDataMessageWrapper from "@/components/NoDataMessage/NoDataMessageWrapper";
-import React from "react";
+import NoDataMessageWrapper from "@/components/NoDataMessage";
 import { useIntl } from "react-intl";
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -179,7 +178,6 @@ export default function AdaptiveLearningNoData(props: Props) {
     return (
         <NoDataMessageWrapper
             id="home.student.adaptiveLearning.noData"
-            defaultMessage="Keep track of how much your skills are improving with adaptive learning."
         >
             <Box className={classes.widgetContent}>
                 <ChartLegend

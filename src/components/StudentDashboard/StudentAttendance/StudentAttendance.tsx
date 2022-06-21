@@ -98,7 +98,6 @@ export default function StudentAttendanceWidget(props: Props) {
                     id: `home.student.attendanceWidget.containerTitleLabel`,
                 })
             }
-            id={WidgetType.STUDENTATTENDANCE}
             noData={!attendanceData?.length}
             loading={isFetching}
             error={error}

@@ -1,12 +1,8 @@
-
-import { WidgetType } from "../../models/widget.model";
 import attendanceRateDataFormatter from "./attendanceRateDataFormatter";
 import { ClassAttendanceLegendLabels } from "../../models/data.model";
 import DonutWithText from "./Donut/DonutWithText";
 import Legend from "./Donut/Legend";
-// import { useCurrentOrganization } from "@/store/organizationMemberships";
 import { useWidth } from "@kl-engineering/kidsloop-px";
-import { useGetClassAttendanceRateGroup } from "@kl-engineering/reports-api-client";
 import { FiberManualRecord } from "@mui/icons-material";
 import {
     Theme,
@@ -17,13 +13,12 @@ import {
     createStyles,
     makeStyles,
 } from '@mui/styles';
-import React,
-{ useMemo } from "react";
+import { useMemo } from "react";
 import {
     FormattedMessage,
     useIntl,
 } from "react-intl";
-import NoDataMessageWrapper from "@/components/NoDataMessage/NoDataMessageWrapper";
+import NoDataMessageWrapper from "@/components/NoDataMessage";
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -93,8 +88,7 @@ export default function AttendanceRateNoData () {
 
     return (
         <NoDataMessageWrapper
-            id="home.teacher.attendanceRate.noData"
-            defaultMessage="Run and conduct classes to see student's attendance over a period of seven days."
+            id="home.teacher.attendance.noData"
         >
             <div className={classes.titleWrapper}>
                 <FiberManualRecord className={classes.icon} />

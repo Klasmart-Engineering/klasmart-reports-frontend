@@ -210,7 +210,6 @@ function AdaptiveLearningJourney(props: Props) {
                     id: `home.student.adaptiveLearningJourney.containerTitleLabel`,
                 })
             }
-            id={WidgetType.ADAPTIVELEARNINGJOURNEY}
             error={false}
             errorScreen={<WidgetWrapperError reload={() => { return; }} />}
             loading={false}

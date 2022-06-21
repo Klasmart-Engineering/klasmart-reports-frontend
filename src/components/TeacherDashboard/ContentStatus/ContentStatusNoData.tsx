@@ -10,7 +10,7 @@ import {
     FormattedMessage,
     useIntl,
 } from "react-intl";
-import NoDataMessageWrapper from "@/components/NoDataMessage/NoDataMessageWrapper";
+import NoDataMessageWrapper from "@/components/NoDataMessage";
 
 const useStyles = makeStyles(((theme: Theme) => createStyles({
     widgetContent: {
@@ -95,9 +95,8 @@ export default function ContentStatusNoData() {
     return (
         <NoDataMessageWrapper
             id="home.teacher.contentStatus.noData"
-            defaultMessage="Create content, submit it, and check the status here."
             buttonLink="#/library/organization-content"
-            buttonName={intl.formatMessage({ id : `home.teacher.contentStatus.createLessonPlan`, defaultMessage : `Create lesson plan`})}
+            buttonName={intl.formatMessage({ id : `home.teacher.contentStatus.createLessonPlan` })}
         >
             <div className={classes.widgetContent}>
                 <div className={classes.titleWrapper}>

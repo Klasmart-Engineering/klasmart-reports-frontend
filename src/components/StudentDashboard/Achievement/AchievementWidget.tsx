@@ -93,7 +93,7 @@ export interface AchievementData {
     count: number;
     color: string;
 }
-interface Props {
+export interface Props {
     widgetContext: Context;
 }
 

@@ -5,9 +5,8 @@ import createStyles from '@mui/styles/createStyles';
 import { FiberManualRecord } from "@mui/icons-material";
 import { makeStyles } from "@mui/styles";
 import { sumBy } from "lodash";
-import NoDataMessageWrapper from "@/components/NoDataMessage/NoDataMessageWrapper";
-import React,
-{ useMemo } from "react";
+import NoDataMessageWrapper from "@/components/NoDataMessage";
+import { useMemo } from "react";
 import {
     FormattedMessage,
     useIntl,
@@ -94,9 +93,8 @@ export default function PendingAssessmentsNoData() {
     return (
         <NoDataMessageWrapper
             id="home.teacher.pendingAssesments.noData"
-            defaultMessage="Schdeule classes to start assesment on your students."
             buttonLink="#/schedule"
-            buttonName={intl.formatMessage({ id: `home.teacher.pendingAssesments.scheduleAClass`, defaultMessage: `Schedule a class` })}
+            buttonName={intl.formatMessage({ id: `home.teacher.noDataStatus.scheduleClass` })}
         >
             <div className={classes.widgetContent}>
                 <div className={classes.titleWrapper}>
@@ -116,7 +114,7 @@ export default function PendingAssessmentsNoData() {
                                     color: theme.palette.info.main,
                                     marginLeft: theme.spacing(1)
                                 }}>
-                                <FormattedMessage id="home.teacher.pendingAssesments.classType" defaultMessage="Class Type" />
+                                <FormattedMessage id="home.teacher.pendingAssesments.classType" />
                             </Typography>
                             <List
                                 sx={{
@@ -148,7 +146,7 @@ export default function PendingAssessmentsNoData() {
                                     color: theme.palette.info.main,
                                     marginLeft: theme.spacing(1)
                                 }}>
-                                <FormattedMessage id="home.teacher.pendingAssesments.assesmentsToComplete" defaultMessage="Assesments to complete" />
+                                <FormattedMessage id="home.teacher.pendingAssesments.assesmentsToComplete" />
                             </Typography>
                             <List
                                 sx={{

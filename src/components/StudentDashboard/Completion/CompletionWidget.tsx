@@ -170,7 +170,6 @@ export default function CompletionWidget(props: Props) {
                     id: `home.student.completionWidget.containerTitleLabel`,
                 })
             }   
-            id={WidgetType.COMPLETION}
             loading={isAssignmentCompletionLoading}
             error={isAssignmentCompletionError}
             errorScreen={<WidgetWrapperError reload={refetch}/>}

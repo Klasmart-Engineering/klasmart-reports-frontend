@@ -7,7 +7,7 @@ import desktop from "@/assets/img/AdaptiveLearningJourney/desktop.png";
 import mobileBg from "@/assets/img/AdaptiveLearningJourney/mobileBg.png";
 import ArrowBackIosNewRoundedIcon from '@mui/icons-material/ArrowBackIosNewRounded';
 import ArrowForwardIosRoundedIcon from '@mui/icons-material/ArrowForwardIosRounded';
-import NoDataMessageWrapper from "@/components/NoDataMessage/NoDataMessageWrapper";
+import NoDataMessageWrapper from "@/components/NoDataMessage";
 import { Box, Theme } from "@mui/material";
 import {
     createStyles,
@@ -195,7 +195,6 @@ export default function AdaptiveLearningJourneyNoData (props: Props) {
             <NoDataMessageWrapper
                 backdrop
                 id="home.student.adaptiveLearningJourney.noData"
-                defaultMessage="Visually follow your Adaptive learning journey with this interactive map."
             >   
                 <Box
                     ref={ref}

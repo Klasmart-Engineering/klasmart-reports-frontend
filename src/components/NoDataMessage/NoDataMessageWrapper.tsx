@@ -33,24 +33,23 @@ const useStyles = makeStyles((theme: Theme) =>
         }
     }));
 
-interface Props {
+export interface NoDataMessageWrapperProps {
     id: string;
-    defaultMessage: string;
+    defaultMessage?: string;
     children?: React.ReactNode;
     backdrop?: boolean;
     buttonLink?: string;
     buttonName?: string;
 }
 
-export default function NoDataMessage(props: Props) {
+const NoDataMessageWrapper: React.FC<NoDataMessageWrapperProps> = (props) => {
     const classes = useStyles();
     const theme = createTheme();
-    const { id, defaultMessage, children, backdrop, buttonLink, buttonName } = props;
 
     return (
         <Box sx={{ position: `relative`, height: `100%` }}>
-            {children}
-            {backdrop &&
+            {props.children}
+            {props.backdrop &&
                 <>
                     <Box
                         sx={{
@@ -75,29 +74,29 @@ export default function NoDataMessage(props: Props) {
                             opacity: 0.6
                         }}>
                         <Typography color={theme.palette.common.white}>
-                            <FormattedMessage id="home.student.adaptiveLearningJourney.sample" defaultMessage="Sample" />
+                            <FormattedMessage id="home.student.adaptiveLearningJourneyNoData.sample" />
                         </Typography>
                     </Box>
                 </>
             }
             <Box
                 sx={{
-                    right: theme.spacing(backdrop ? 0 : -2),
-                    bottom: theme.spacing(backdrop ? 0 : -2),
-                    boxShadow: backdrop ? `none` : `-2px -2px 10px ${theme.palette.grey[400]}`,
+                    right: theme.spacing(props.backdrop ? 0 : -2),
+                    bottom: theme.spacing(props.backdrop ? 0 : -2),
+                    boxShadow: props.backdrop ? `none` : `-2px -2px 10px ${theme.palette.grey[400]}`,
                     zIndex: 3,
                 }}
                 className={classes.messageBox}>
                 <Box className={classes.message}>
                     <img src={lightBulb} alt="bulb" width={15}/>
                     <Typography fontSize={14} fontWeight={400} sx={{ width: `80%`, marginLeft: theme.spacing(1) }}>
-                        <FormattedMessage id={id} defaultMessage={defaultMessage} />
+                        <FormattedMessage id={props.id} defaultMessage={props.defaultMessage} />
                     </Typography>
                 </Box>
-                {buttonLink &&
+                {props.buttonLink &&
                     <Link
                         underline="none"
-                        href={buttonLink}
+                        href={props.buttonLink}
                         sx={{
                             backgroundColor: theme.palette.primary.main,
                             borderRadius: 3,
@@ -114,7 +113,7 @@ export default function NoDataMessage(props: Props) {
                                 color: theme.palette.common.white,
                             }}
                         >
-                            {buttonName}
+                            {props.buttonName}
                         </Typography>
                     </Link>
                 }
@@ -122,3 +121,5 @@ export default function NoDataMessage(props: Props) {
         </Box>
     )
 }
+
+export default NoDataMessageWrapper;

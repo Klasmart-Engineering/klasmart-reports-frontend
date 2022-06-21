@@ -189,7 +189,6 @@ export default function AdaptiveLearningWidget(props: Props) {
             label={intl.formatMessage({
                 id: `home.student.adaptiveLearningWidget.containerTitleLabel`,
             })}
-            id={WidgetType.ADAPTIVELEARNING}
             loading={false}
             error={false}
             errorScreen={<WidgetWrapperError reload={() => {return;}} />}

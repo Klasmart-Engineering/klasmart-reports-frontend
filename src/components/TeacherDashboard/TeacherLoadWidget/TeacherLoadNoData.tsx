@@ -1,4 +1,3 @@
-
 import {
     Box,
     Theme,
@@ -18,7 +17,7 @@ import {
     FormattedMessage,
     useIntl,
 } from "react-intl";
-import NoDataMessageWrapper from "@/components/NoDataMessage/NoDataMessageWrapper";
+import NoDataMessageWrapper from "@/components/NoDataMessage";
 
 const useStyles = makeStyles(((theme: Theme) => createStyles({
     widgetContent: {
@@ -89,7 +88,6 @@ export default function TeacherLoadNoData() {
     return (
         <NoDataMessageWrapper
             id="home.teacher.teacherLoad.noData"
-            defaultMessage="Add classes and class roster to keep track of your load."
         >
             <div className={classes.widgetContent}>
                 <Box
@@ -101,8 +99,12 @@ export default function TeacherLoadNoData() {
                         justifyContent: `space-between`,
                         top: theme.spacing(-2),
                     }}>
-                    <Typography fontSize={14} fontWeight={600} letterSpacing={-0.5} color={theme.palette.info.main} marginLeft={theme.spacing(6)}>List</Typography>
-                    <Typography fontSize={14} fontWeight={600} letterSpacing={-0.5} color={theme.palette.info.main}>Last Update</Typography>
+                    <Typography fontSize={14} fontWeight={600} letterSpacing={-0.5} color={theme.palette.info.main} marginLeft={theme.spacing(6)}>
+                        <FormattedMessage id="home.teacher.teacherLoad.list"/>
+                    </Typography>
+                    <Typography fontSize={14} fontWeight={600} letterSpacing={-0.5} color={theme.palette.info.main}>
+                        <FormattedMessage id="home.teacher.teacherLoad.lastUpdate"/>
+                    </Typography>
                 </Box>
                 <ul className={classes.list}>
                     <li className={classes.listItem}>

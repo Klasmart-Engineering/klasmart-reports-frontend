@@ -1,7 +1,6 @@
 import BarChart from "./BarChart";
 import { ParentSize } from "@visx/responsive";
-import React from "react";
-import NoDataMessageWrapper from "@/components/NoDataMessage/NoDataMessageWrapper";
+import NoDataMessageWrapper from "@/components/NoDataMessage";
 
 interface Props { }
 
@@ -40,7 +39,6 @@ export default function LearningOutcomeSummaryNoData(props: Props) {
             {({ width, height }: { width: number, height: number }) => (
                 <NoDataMessageWrapper 
                     id="home.student.learningOutcomeSummary.noData" 
-                    defaultMessage="You will see your top 5 skill areas from the last 7 days."
                 >
                     <BarChart
                         data={learningOutComeData}

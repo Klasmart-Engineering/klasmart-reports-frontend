@@ -13,7 +13,7 @@ import {
     FormattedMessage,
     useIntl,
 } from "react-intl";
-import NoDataMessageWrapper from "@/components/NoDataMessage/NoDataMessageWrapper";
+import NoDataMessageWrapper from "@/components/NoDataMessage";
 
 const useStyles = makeStyles(((theme: Theme) => createStyles({
     widgetContent: {
@@ -143,7 +143,6 @@ export default function CompletionNoData() {
     return (
         <NoDataMessageWrapper
             id="home.student.completion.noData"
-            defaultMessage="Get a summary of the completion status of all assignments from your teacher"
         >
             <div className={classes.widgetContent}>
                 <div className={classes.titleWrapper}>

@@ -1,5 +1,5 @@
 import ProgressBar from "./ProgressBar";
-import NoDataMessageWrapper from "@/components/NoDataMessage/NoDataMessageWrapper";
+import NoDataMessageWrapper from "@/components/NoDataMessage";
 import { FiberManualRecord } from "@mui/icons-material";
 import {
     List,
@@ -119,8 +119,7 @@ export default function AchievementNoData() {
 
     return (
         <NoDataMessageWrapper 
-            id="home.student.achievement.noData"
-            defaultMessage="Need to update this message after getting figma access."
+            id="home.student.achievements.noData"
         >
             <div className={classes.widgetContent}>
                 <div className={classes.titleWrapper}>
