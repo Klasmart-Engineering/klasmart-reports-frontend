@@ -170,7 +170,7 @@ const useStyles = makeStyles<Theme, StyleProps>(((theme: Theme) =>
         },
     })));
 
-interface DataObj {
+export interface DataObj {
     level: number;
     ratings: number;
     completed: boolean;
@@ -183,13 +183,13 @@ interface DataObj {
     boosterCategory: string;
 }
 
-interface ClassTypeIdentity {
+export interface ClassTypeIdentity {
     intlKey: string | ReactElement;
     color: string;
     icon: OverridableComponent<SvgIconTypeMap<{}, "svg">>;
     aliases?: (string|ScheduleClassType)[];
 }
-interface Props {
+export interface PopupProps {
     handlePopup: (open : boolean, type : string, data : DataObj | null) => void;
     selectedAssesmentType : string;
     selectedAssesment : DataObj | null;
@@ -197,22 +197,15 @@ interface Props {
     open: boolean;
 }
 
-export default function Popup (props: Props) {
+const Popup: React.VFC<PopupProps> = (props) => {
 
-    const {
-        handlePopup,
-        open,
-        selectedAssesmentType,
-        selectedAssesment,
-        isVerticalMode,
-    } = props;
     const intl = useIntl();
     const classes = useStyles({
-        selectedAssesmentType,
+        selectedAssesmentType : props.selectedAssesmentType,
     });
     const theme = createTheme();
     const [ activeStep, setActiveStep ] = React.useState(0);
-    const maxSteps = selectedAssesment?.slides ?? 1;
+    const maxSteps = props.selectedAssesment?.slides ?? 1;
     const [ classTypeIdentity, setClassTypeIdentity ] = useState<ClassTypeIdentity>();
 
     const [ progressData, setProgressData ] = useState([
@@ -251,17 +244,17 @@ export default function Popup (props: Props) {
     };
 
     const handlePopupClose = () => {
-        handlePopup(false, selectedAssesmentType, null);
+        props.handlePopup(false, props.selectedAssesmentType, null);
         setActiveStep(0);
     };
 
     useEffect(() => {
-        const classIdentity = retrieveClassTypeIdentityOrDefault(selectedAssesmentType as ScheduleClassType);
+        const classIdentity = retrieveClassTypeIdentityOrDefault(props.selectedAssesmentType as ScheduleClassType);
         setClassTypeIdentity(classIdentity);
-    }, [ selectedAssesmentType ]);
+    }, [ props.selectedAssesmentType ]);
 
     useEffect(() => {
-        if(selectedAssesmentType !== `booster`){
+        if(props.selectedAssesmentType !== `booster`){
             if(progressData.length > 3) setProgressData(progressData.splice(1, 3));
         } else {
             setProgressData([
@@ -273,7 +266,7 @@ export default function Popup (props: Props) {
                 ...progressData,
             ]);
         }
-    }, [ selectedAssesmentType ]);
+    }, [ props.selectedAssesmentType ]);
 
     const mockTeacherData = [
         {
@@ -291,7 +284,7 @@ export default function Popup (props: Props) {
     ];
 
     const mockAssesmentIcons = [
-        selectedAssesment?.category,
+        props.selectedAssesment?.category,
         assesment2,
         assesment3,
         assesment4,
@@ -326,7 +319,7 @@ export default function Popup (props: Props) {
                     overflow: `visible`,
                 },
             }}
-            open={open}
+            open={props.open}
             BackdropProps={{
                 style:{
                     position: `inherit`,
@@ -351,7 +344,7 @@ export default function Popup (props: Props) {
                                 <CloseRoundedIcon
                                     className={classes.closeIcon}
                                     onClick={handlePopupClose}/>
-                                {selectedAssesment ? !selectedAssesment?.completed && <Box className={classes.lockIconWrapper}><img
+                                {props.selectedAssesment ? !props.selectedAssesment?.completed && <Box className={classes.lockIconWrapper}><img
                                     className={classes.lockIcon}
                                     src={lock} /></Box> : <></>}
                                 <img
@@ -370,14 +363,14 @@ export default function Popup (props: Props) {
                                         <div>
                                             <Chip
                                                 className={classes.classChip}
-                                                icon={selectedAssesmentType === `booster` ? <img
+                                                icon={props.selectedAssesmentType === `booster` ? <img
                                                     className={classes.classChipIcon}
                                                     src={chipIcon}/> :
                                                     <SvgIcon
                                                         component={classTypeIdentity?.icon}
                                                         className={classes.classTypeIcon} />}
                                                 label={ intl.formatMessage({
-                                                    id: selectedAssesmentType === `booster` ? `home.student.adaptiveLearningJourney.classTitle` : `class.type.${selectedAssesmentType}`,
+                                                    id: props.selectedAssesmentType === `booster` ? `home.student.adaptiveLearningJourney.classTitle` : `class.type.${props.selectedAssesmentType}`,
                                                 })}
                                             />
                                             <Box
@@ -473,15 +466,15 @@ export default function Popup (props: Props) {
                                                     <Box>
                                                         <BorderLinearProgress
                                                             variant="buffer"
-                                                            value={selectedAssesment?.completed ? item.score : 0}
-                                                            valueBuffer={selectedAssesmentType === `booster` ? item.adaptiveLearning : 0} />
+                                                            value={props.selectedAssesment?.completed ? item.score : 0}
+                                                            valueBuffer={props.selectedAssesmentType === `booster` ? item.adaptiveLearning : 0} />
                                                     </Box>
                                                     <Box
                                                         className={classes.count}
                                                         style={{
                                                             color : item.score > 0 ? `#FFBC00` : `#FF5FE4`,
                                                         }}>
-                                                        {selectedAssesment?.completed ? `${selectedAssesmentType === `booster` ? item.adaptiveLearning : item.score}%` : `0%`}
+                                                        {props.selectedAssesment?.completed ? `${props.selectedAssesmentType === `booster` ? item.adaptiveLearning : item.score}%` : `0%`}
                                                     </Box>
                                                 </div>
                                             </ListItem>;
@@ -492,7 +485,7 @@ export default function Popup (props: Props) {
                         </Box>
                     ))}
                 </SwipeableViews>
-                {selectedAssesmentType === `booster` && maxSteps > 1 &&
+                {props.selectedAssesmentType === `booster` && maxSteps > 1 &&
                 <MobileStepper
                     steps={maxSteps}
                     position="static"
@@ -509,7 +502,7 @@ export default function Popup (props: Props) {
                         alignItems : `center`,
                     }}
                     nextButton={
-                        !isVerticalMode && <IconButton
+                        !props.isVerticalMode && <IconButton
                             size="medium"
                             disabled={activeStep === maxSteps - 1}
                             className={classes.navigator}
@@ -526,7 +519,7 @@ export default function Popup (props: Props) {
                         </IconButton>
                     }
                     backButton={
-                        !isVerticalMode && <IconButton
+                        !props.isVerticalMode && <IconButton
                             size="medium"
                             disabled={activeStep === 0}
                             className={classes.navigator}
@@ -547,3 +540,5 @@ export default function Popup (props: Props) {
         </Dialog>
     );
 }
+
+export default Popup;

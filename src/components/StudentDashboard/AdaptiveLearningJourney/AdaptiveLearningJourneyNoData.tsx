@@ -115,7 +115,7 @@ const useStyles = makeStyles((theme: Theme) =>
     }));
 
 const VERTICAL_MODE_BREAKPOINT = 520;
-interface DataObj {
+export interface DataObj {
     level: number;
     ratings: number;
     completed: boolean;
@@ -128,9 +128,7 @@ interface DataObj {
     slides: number;
 }
 
-interface Props { }
-
-export default function AdaptiveLearningJourneyNoData (props: Props) {
+const AdaptiveLearningJourneyNoData: React.FC = () => {
     const {
         width,
         height,
@@ -274,3 +272,5 @@ export default function AdaptiveLearningJourneyNoData (props: Props) {
             </NoDataMessageWrapper>
     );
 }
+
+export default AdaptiveLearningJourneyNoData;

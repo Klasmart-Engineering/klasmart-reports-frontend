@@ -50,7 +50,7 @@ const useStyles = makeStyles((theme: Theme) =>
         },
     }));
 
-export default function AttendanceRateNoData () {
+const AttendanceRateNoData: React.VFC = () => {
     const intl = useIntl();
     const theme = useTheme();
     const classes = useStyles();
@@ -117,3 +117,5 @@ export default function AttendanceRateNoData () {
             </NoDataMessageWrapper>
     );
 }
+
+export default AttendanceRateNoData;

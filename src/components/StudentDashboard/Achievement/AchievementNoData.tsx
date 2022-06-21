@@ -13,15 +13,11 @@ import {
     makeStyles,
 } from '@mui/styles';
 import { sumBy } from "lodash";
-import React,
-{
+import {
     useEffect,
     useState,
 } from "react";
-import {
-    FormattedMessage,
-    useIntl,
-} from "react-intl";
+import { FormattedMessage } from "react-intl";
 
 
 const useStyles = makeStyles((theme: Theme) => createStyles({
@@ -87,8 +83,7 @@ export interface AchievementData {
     count: number;
     color: string;
 }
-export default function AchievementNoData() {
-    const intl = useIntl();
+const AchievementNoData: React.FC = () => {
     const classes = useStyles();
     const theme = useTheme();
     const [total, setTotal] = useState(0);
@@ -118,7 +113,7 @@ export default function AchievementNoData() {
 
 
     return (
-        <NoDataMessageWrapper 
+        <NoDataMessageWrapper
             id="home.student.achievements.noData"
         >
             <div className={classes.widgetContent}>
@@ -172,3 +167,5 @@ export default function AchievementNoData() {
         </NoDataMessageWrapper>
     );
 }
+
+export default AchievementNoData;

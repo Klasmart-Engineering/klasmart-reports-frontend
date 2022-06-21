@@ -129,8 +129,7 @@ const useStyles = makeStyles(((theme: Theme) => createStyles({
     },
 })));
 
-export default function CompletionNoData() {
-    const intl = useIntl();
+const CompletionNoData: React.VFC = () => {
     const classes = useStyles();
     const completionData = {
         "total": 132,
@@ -230,3 +229,5 @@ export default function CompletionNoData() {
         </NoDataMessageWrapper>
     );
 }
+
+export default CompletionNoData;

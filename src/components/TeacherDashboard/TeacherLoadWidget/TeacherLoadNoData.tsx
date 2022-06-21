@@ -75,15 +75,12 @@ const useStyles = makeStyles(((theme: Theme) => createStyles({
     },
 })));
 
-export default function TeacherLoadNoData() {
+const TeacherLoadNoData: React.VFC = () => {
     const classes = useStyles();
-
+    const theme = useTheme();
     const [totalClasses, setTotalClasses] = useState<(number)>(26);
     const [totalStudents, setTotalStudents] = useState<(number)>(87);
     const [upcomingClasses, setUpcomingClasses] = useState<(number)>(30);
-    const intl = useIntl();
-    const theme = useTheme();
-
 
     return (
         <NoDataMessageWrapper
@@ -184,3 +181,5 @@ export default function TeacherLoadNoData() {
         </NoDataMessageWrapper>
     );
 }
+
+export default TeacherLoadNoData;

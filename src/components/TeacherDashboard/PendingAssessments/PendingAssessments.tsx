@@ -16,7 +16,7 @@ import PendingAssessmentsNoData from "./PendingAssesmentsNoData";
 import { HomeScreenWidgetWrapper } from "@kl-engineering/kidsloop-px";
 import { Context } from "@/components/models/widgetContext";
 import { WidgetType } from "@/components/models/widget.model";
-import WidgetWrapperError from "@/components/WidgetWrapper/WidgetWrapperError";
+import WidgetWrapperError from "@/components/WidgetWrapper";
 
 const useStyles = makeStyles((theme: Theme) => createStyles({
     widgetContent: {
@@ -67,11 +67,11 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
         fontSize: 10,
     },
 }));
-interface Props {
+export interface PendingAssessmentsWidgetProps {
     widgetContext: Context;
 }
 
-export default function PendingAssessmentsWidget(props: Props) {
+const PendingAssessmentsWidget: React.FC<PendingAssessmentsWidgetProps> = (props) => {
     const intl = useIntl();
     const classes = useStyles();
     const currentOrganization = useGlobalStateValue(currentOrganizationState);
@@ -162,3 +162,5 @@ export default function PendingAssessmentsWidget(props: Props) {
         </HomeScreenWidgetWrapper>
     );
 }
+
+export default PendingAssessmentsWidget;

@@ -20,42 +20,43 @@ import React,
 {
     forwardRef,
     ReactElement,
+    Ref,
     useEffect,
     useState,
 } from "react";
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
-        levelWrapper : {
+        levelWrapper: {
             width: 100,
-            height : 120,
+            height: 120,
             position: `relative`,
             display: `flex`,
             flexDirection: `column`,
             alignItems: `center`,
-            cursor : `pointer`,
-            borderBottom : `5px solid ${theme.palette.warning.main}`,
+            cursor: `pointer`,
+            borderBottom: `5px solid ${theme.palette.warning.main}`,
             backgroundColor: theme.palette.warning.light,
             borderRadius: theme.spacing(2.5),
-            padding : theme.spacing(1.2),
+            padding: theme.spacing(1.2),
             paddingTop: theme.spacing(0),
             [theme.breakpoints.down(`sm`)]: {
-                width : 70,
-                height : 80,
-                padding : theme.spacing(1),
-                paddingTop : theme.spacing(0),
+                width: 70,
+                height: 80,
+                padding: theme.spacing(1),
+                paddingTop: theme.spacing(0),
             },
         },
         boosterWidget: {
             width: 100,
-            height : 100,
+            height: 100,
             position: `absolute`,
             top: -170,
             left: 120,
-            cursor : `pointer`,
+            cursor: `pointer`,
             [theme.breakpoints.down(`sm`)]: {
-                width : 60,
-                height : 60,
+                width: 60,
+                height: 60,
                 top: 70,
                 borderRadius: theme.spacing(2.5),
                 left: 150,
@@ -66,9 +67,9 @@ const useStyles = makeStyles((theme: Theme) =>
         },
         boosterWrapper: {
             width: 100,
-            height : 100,
+            height: 100,
             borderRadius: theme.spacing(3.5),
-            padding : theme.spacing(1.2),
+            padding: theme.spacing(1.2),
             backgroundColor: `#FF5EE4`,
             position: `relative`,
             display: `flex`,
@@ -76,11 +77,11 @@ const useStyles = makeStyles((theme: Theme) =>
             alignItems: `center`,
             justifyContent: `space-around`,
             [theme.breakpoints.down(`sm`)]: {
-                width : 70,
-                height : 70,
+                width: 70,
+                height: 70,
                 borderRadius: theme.spacing(2.5),
-                padding : theme.spacing(1),
-                paddingTop : theme.spacing(0),
+                padding: theme.spacing(1),
+                paddingTop: theme.spacing(0),
             },
         },
         boosterCategory: {
@@ -115,7 +116,7 @@ const useStyles = makeStyles((theme: Theme) =>
                 padding: theme.spacing(1),
             },
         },
-        ratings : {
+        ratings: {
             display: `flex`,
             justifyContent: `space-around`,
             padding: `${theme.spacing(.5)} ${theme.spacing(1.5)}`,
@@ -126,7 +127,7 @@ const useStyles = makeStyles((theme: Theme) =>
         type: {
             width: 40,
             height: 40,
-            borderRadius : `50% 0 50% 0`,
+            borderRadius: `50% 0 50% 0`,
             position: `absolute`,
             bottom: 0,
             right: 0,
@@ -134,73 +135,73 @@ const useStyles = makeStyles((theme: Theme) =>
             backgroundColor: theme.palette.warning.light,
             zIndex: 2,
             [theme.breakpoints.down(`sm`)]: {
-                width : 30,
-                height : 30,
+                width: 30,
+                height: 30,
                 padding: theme.spacing(.5),
             },
         },
         checkMark: {
-            width : 40,
+            width: 40,
             [theme.breakpoints.down(`sm`)]: {
-                width : 21,
+                width: 21,
             },
         },
         classTypeIcon: {
-            fontSize : `1.5rem`,
-            color : theme.palette.common.white,
+            fontSize: `1.5rem`,
+            color: theme.palette.common.white,
             [theme.breakpoints.down(`sm`)]: {
-                fontSize : `1rem`,
+                fontSize: `1rem`,
             },
         },
         categoryIcon: {
             width: 70,
             [theme.breakpoints.down(`sm`)]: {
-                width : 50,
+                width: 50,
             },
         },
-        boosterCategoryIcon : {
+        boosterCategoryIcon: {
             width: 60,
             [theme.breakpoints.down(`sm`)]: {
-                width : 40,
+                width: 40,
             },
         },
         currentLevelIndicator: {
             position: `absolute`,
             top: -30,
             [theme.breakpoints.down(`sm`)]: {
-                width : 20,
+                width: 20,
                 top: -20,
             },
         },
     }));
 
-    interface DataObj {
-        level: number;
-        ratings: number;
-        completed: boolean;
-        type: string;
-        category: string;
-        hasBooster: boolean;
-        boosterRatings: number;
-        boosterCompleted: boolean;
-        slides: number;
-        boosterCategory: string;
-    }
+export interface DataObj {
+    level: number;
+    ratings: number;
+    completed: boolean;
+    type: string;
+    category: string;
+    hasBooster: boolean;
+    boosterRatings: number;
+    boosterCompleted: boolean;
+    slides: number;
+    boosterCategory: string;
+}
 
-    interface ClassTypeIdentity {
-        intlKey: string | ReactElement;
-        color: string;
-        icon: OverridableComponent<SvgIconTypeMap<{}, "svg">>;
-        aliases?: (string|ScheduleClassType)[];
-    }
-    interface Props {
-        data : DataObj;
-        currentLevel: DataObj;
-        booster : boolean;
-        handlePopup: (open: boolean, type : string, data: DataObj) => void;
-    }
+export interface ClassTypeIdentity {
+    intlKey: string | ReactElement;
+    color: string;
+    icon: OverridableComponent<SvgIconTypeMap<{}, "svg">>;
+    aliases?: (string | ScheduleClassType)[];
+}
+export interface LevelBoxProps {
+    data: DataObj;
+    currentLevel: DataObj;
+    booster: boolean;
+    handlePopup: (open: boolean, type: string, data: DataObj) => void;
+}
 
-function LevelBox (props : Props, ref : Ref<HTMLDivElement>) {
+const LevelBox: React.ForwardRefRenderFunction<HTMLDivElement, LevelBoxProps> = (props, ref) => {
 
     const {
         data,
@@ -210,12 +211,12 @@ function LevelBox (props : Props, ref : Ref<HTMLDivElement>) {
     } = props;
     const classes = useStyles();
     const theme = createTheme();
-    const [ classTypeIdentity, setClassTypeIdentity ] = useState<ClassTypeIdentity>();
+    const [classTypeIdentity, setClassTypeIdentity] = useState<ClassTypeIdentity>();
 
     useEffect(() => {
         const classIdentity = retrieveClassTypeIdentityOrDefault(data?.type as ScheduleClassType);
         setClassTypeIdentity(classIdentity);
-    }, [ data ]);
+    }, [data]);
 
     return (
         <Box
@@ -224,22 +225,22 @@ function LevelBox (props : Props, ref : Ref<HTMLDivElement>) {
             onClick={() => handlePopup(true, (booster ? `booster` : data.type), data)}>
             <Box className={booster ? classes.boosterWrapper : classes.levelWrapper}>
                 {currentLevel.level === data.level && (booster ? !data.boosterCompleted : !data.completed) &&
-                            <img
-                                src={arrowDown}
-                                className={classes.currentLevelIndicator}/>
+                    <img
+                        src={arrowDown}
+                        className={classes.currentLevelIndicator} />
                 }
                 {booster &&
-                data.slides > 0 &&
-                <Badge
-                    badgeContent={data.slides}
-                    color="info"
-                    overlap="circular"
-                    classes={{
-                        badge : classes.boosterBadge,
-                    }} />
+                    data.slides > 0 &&
+                    <Badge
+                        badgeContent={data.slides}
+                        color="info"
+                        overlap="circular"
+                        classes={{
+                            badge: classes.boosterBadge,
+                        }} />
                 }
                 <Box className={classes.ratings}>
-                    {[ ...Array(3) ].map((item, i) => (
+                    {[...Array(3)].map((item, i) => (
                         <Star
                             key={i}
                             fill={(booster ? data.boosterRatings : data.ratings) > i ? `#FFF30B` : (booster ? `#EA34D5` : theme.palette.warning.main)} />
@@ -253,20 +254,20 @@ function LevelBox (props : Props, ref : Ref<HTMLDivElement>) {
                     {(booster ? data.boosterCompleted : data.completed) ? (
                         <img
                             className={classes.checkMark}
-                            src={checkMark}/>
+                            src={checkMark} />
 
                     ) : (
                         <img
                             className={booster ? classes.boosterCategoryIcon : classes.categoryIcon}
-                            src={booster ? data.boosterCategory : data.category}/>
+                            src={booster ? data.boosterCategory : data.category} />
                     )}
                 </Box>
                 {!booster &&
-            <Box className={classes.type}>
-                <SvgIcon
-                    component={classTypeIdentity?.icon}
-                    className={classes.classTypeIcon} />
-            </Box>
+                    <Box className={classes.type}>
+                        <SvgIcon
+                            component={classTypeIdentity?.icon}
+                            className={classes.classTypeIcon} />
+                    </Box>
                 }
             </Box>
         </Box>

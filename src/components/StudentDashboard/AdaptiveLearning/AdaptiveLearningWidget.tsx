@@ -15,7 +15,7 @@ import { ParentSize } from "@visx/responsive";
 import { useIntl } from "react-intl";
 import AdaptiveLearningNoData from "./AdaptiveLearningWidgetNoData";
 import { HomeScreenWidgetWrapper } from "@kl-engineering/kidsloop-px";
-import WidgetWrapperError from "@/components/WidgetWrapper/WidgetWrapperError";
+import WidgetWrapperError from "@/components/WidgetWrapper";
 import { Context } from "@/components/models/widgetContext";
 import { WidgetType } from "@/components/models/widget.model";
 
@@ -111,24 +111,23 @@ const useStyles = makeStyles((theme: Theme) =>
         },
     }));
 
-interface LabelProps {
+export interface LabelProps {
     dataName: string;
     value: number;
     type: string;
 }
 
-interface Props {
+export interface AdaptiveLearningWidgetProps {
     widgetContext: Context;
 }
 
-export default function AdaptiveLearningWidget(props: Props) {
-    const { widgetContext } = props;
+const AdaptiveLearningWidget: React.FC<AdaptiveLearningWidgetProps> = (props) => {
     const intl = useIntl();
     const classes = useStyles();
     const theme = createTheme();
     const legendColorRange = [theme.palette.info.light, theme.palette.grey[500]];
     const chartColorRange = [theme.palette.grey[500], theme.palette.info.light];
-    const { editing = false, removeWidget, layouts, widgets } = widgetContext;
+    const { editing = false, removeWidget, layouts, widgets } = props.widgetContext;
     const onRemove = () => removeWidget(WidgetType.ADAPTIVELEARNING, widgets, layouts);
 
     // TODO: Mock data
@@ -273,3 +272,5 @@ export default function AdaptiveLearningWidget(props: Props) {
         </HomeScreenWidgetWrapper>
     );
 }
+
+export default AdaptiveLearningWidget;

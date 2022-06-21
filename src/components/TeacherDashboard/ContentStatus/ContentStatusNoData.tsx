@@ -71,7 +71,7 @@ const useStyles = makeStyles(((theme: Theme) => createStyles({
     },
 })));
 
-export default function ContentStatusNoData() {
+const ContentStatusNoData: React.VFC = () => {
     const classes = useStyles();
     const intl = useIntl();
     const theme = useTheme();
@@ -187,3 +187,5 @@ export default function ContentStatusNoData() {
         </NoDataMessageWrapper>
     );
 }
+
+export default ContentStatusNoData;

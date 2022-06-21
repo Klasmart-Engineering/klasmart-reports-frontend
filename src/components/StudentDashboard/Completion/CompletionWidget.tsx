@@ -18,7 +18,7 @@ import {
 } from "react-intl";
 import { WidgetType } from "@/components/models/widget.model";
 import { Context } from "@/components/models/widgetContext"
-import WidgetWrapperError from "@/components/WidgetWrapper/WidgetWrapperError";
+import WidgetWrapperError from "@/components/WidgetWrapper";
 
 const useStyles = makeStyles(((theme: Theme) => createStyles({
     widgetContent: {
@@ -133,17 +133,16 @@ const useStyles = makeStyles(((theme: Theme) => createStyles({
         color: theme.palette.info.light,
     },
 })));
-interface Props {
+interface CompletionWidgetProps {
     widgetContext: Context;
 }
 
-export default function CompletionWidget(props: Props) {
-    const { widgetContext } = props;
+const CompletionWidget: React.VFC<CompletionWidgetProps> = (props) => {
     const intl = useIntl();
     const classes = useStyles();
     const currentOrganization = useGlobalStateValue(currentOrganizationState);
     const organizationId = currentOrganization?.id ?? ``;
-    const { editing = false, removeWidget, layouts, widgets } = widgetContext;
+    const { editing = false, removeWidget, layouts, widgets } = props.widgetContext;
     const onRemove = () => removeWidget(WidgetType.COMPLETION, widgets, layouts);
     const {
         data,
@@ -265,3 +264,5 @@ export default function CompletionWidget(props: Props) {
         </HomeScreenWidgetWrapper>
     );
 }
+
+export default CompletionWidget;

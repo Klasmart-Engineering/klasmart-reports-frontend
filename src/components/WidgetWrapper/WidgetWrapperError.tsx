@@ -48,11 +48,11 @@ const useStyles = makeStyles((theme:Theme) => createStyles({
     },
 }));
 
-type Props = {
+export interface WidgetWrapperErrorProps {
     reload?: () => any | Promise<any>;
 }
 
-export default function WidgetWrapperError (props: Props) {
+const WidgetWrapperError: React.VFC<WidgetWrapperErrorProps> = (props) => {
     const classes = useStyles();
 
     return (
@@ -87,3 +87,5 @@ export default function WidgetWrapperError (props: Props) {
         </>
     );
 }
+
+export default WidgetWrapperError;

@@ -1,18 +1,18 @@
-export type Data = {
+export interface Data {
     label: string;
     value?: number;
     color: string;
     count?: number;
 }
 
-export type PieOptions = {
+export interface PieOptions {
     pieSize?: number;
     radiusWidth?: number;
     cornerRadius?: number;
     padAngle?: number;
 }
 
-export type Props = {
+export interface Props {
     data: Data[];
     options: PieOptions;
 }

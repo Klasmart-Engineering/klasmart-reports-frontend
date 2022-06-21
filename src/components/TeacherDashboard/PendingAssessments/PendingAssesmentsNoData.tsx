@@ -58,7 +58,7 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
     },
 }));
 
-export default function PendingAssessmentsNoData() {
+const PendingAssessmentsNoData: React.FC = () => {
     const intl = useIntl();
     const classes = useStyles();
     const theme = useTheme();
@@ -184,3 +184,5 @@ export default function PendingAssessmentsNoData() {
         </NoDataMessageWrapper>
     );
 }
+
+export default PendingAssessmentsNoData;

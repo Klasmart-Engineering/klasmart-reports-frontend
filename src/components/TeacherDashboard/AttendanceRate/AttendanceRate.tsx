@@ -22,7 +22,7 @@ import {
 } from "react-intl";
 import { currentOrganizationState, useGlobalStateValue } from "@kl-engineering/frontend-state";
 import AttendanceRateNoData from "./AttendanceRateNoData";
-import WidgetWrapperError from "@/components/WidgetWrapper/WidgetWrapperError";
+import WidgetWrapperError from "@/components/WidgetWrapper";
 import { Context } from "@/components/models/widgetContext";
 import { WidgetType } from "@/components/models/widget.model";
 
@@ -56,11 +56,11 @@ const useStyles = makeStyles((theme: Theme) =>
         },
     }));
 
-interface Props {
+export interface AttendanceRateWidgetProps {
     widgetContext: Context;
 }
 
-export default function AttendanceRateWidget(props: Props) {
+const AttendanceRateWidget: React.VFC<AttendanceRateWidgetProps> = (props) => {
     const intl = useIntl();
     const theme = useTheme();
     const classes = useStyles();
@@ -139,3 +139,5 @@ export default function AttendanceRateWidget(props: Props) {
         </HomeScreenWidgetWrapper>
     );
 }
+
+export default AttendanceRateWidget;

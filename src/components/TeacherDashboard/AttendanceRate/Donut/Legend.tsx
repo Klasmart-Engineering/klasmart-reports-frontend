@@ -7,9 +7,8 @@ import {
     createStyles,
     makeStyles,
 } from '@mui/styles';
-import React from "react";
 
-type Props = {
+export interface LegendProps {
     data: Data[];
     format: "desktop" | "mobile";
 }
@@ -58,23 +57,21 @@ const useStyles = makeStyles((theme: Theme) =>
         },
     }));
 
-export default function Legend (props: Props) {
+const Legend: React.VFC<LegendProps> = (props) => {
     const classes = useStyles();
-    const { data, format } = props;
-
     return (
         <div
-            className={`${classes.root} ${format === `desktop` ? classes.rootDesktop : classes.rootMobile}`}>
-            {data && data.map(item => {
+            className={`${classes.root} ${props.format === `desktop` ? classes.rootDesktop : classes.rootMobile}`}>
+            {props.data && props.data.map(item => {
                 return (
                     <div
                         key={item.label}
                         className={classes.container}>
-                        <Typography className={`${classes.title} ${format === `desktop` ? classes.titleDesktop : classes.titleMobile}`}>
+                        <Typography className={`${classes.title} ${props.format === `desktop` ? classes.titleDesktop : classes.titleMobile}`}>
                             {item.label}
                         </Typography>
                         <Typography
-                            className={`${classes.percentage} ${format === `desktop` ? classes.percentageDesktop : classes.percentageMobile}`}
+                            className={`${classes.percentage} ${props.format === `desktop` ? classes.percentageDesktop : classes.percentageMobile}`}
                             style={{
                                 color: item.color,
                             }}>
@@ -86,3 +83,5 @@ export default function Legend (props: Props) {
         </div>
     );
 }
+
+export default Legend;

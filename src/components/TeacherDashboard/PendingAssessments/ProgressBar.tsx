@@ -1,8 +1,7 @@
 import { LinearProgress, Theme } from "@mui/material";
 import { withStyles } from '@mui/styles';
-import React from "react";
 
-type Props = {
+export interface ProgressBarProps {
   total: number;
   progress: number;
   color?: string;
@@ -11,12 +10,8 @@ type Props = {
   width?: number;
 };
 
-export default function  ProgressBar (props: Props) {
+const ProgressBar: React.VFC<ProgressBarProps> = (props) => {
     const {
-        total,
-        progress,
-        color,
-        backgroundColor,
         thickness = 10,
     } = props;
 
@@ -26,17 +21,19 @@ export default function  ProgressBar (props: Props) {
             borderRadius: thickness / 2,
         },
         colorPrimary: {
-            backgroundColor: backgroundColor ?? theme.palette.grey[300],
+            backgroundColor: props.backgroundColor ?? theme.palette.grey[300],
         },
         bar: {
             borderRadius: thickness / 2,
-            backgroundColor: color ?? theme.palette.info.main,
+            backgroundColor: props.color ?? theme.palette.info.main,
         },
     }))(LinearProgress);
 
     return (
         <BorderLinearProgress
             variant="determinate"
-            value={(progress/total) * 100} />
+            value={(props.progress/props.total) * 100} />
     );
 }
+
+export default ProgressBar;

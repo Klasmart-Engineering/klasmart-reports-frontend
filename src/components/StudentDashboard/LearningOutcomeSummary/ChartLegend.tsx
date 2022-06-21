@@ -48,30 +48,24 @@ const useStyles = makeStyles((theme: Theme) =>
         },
     }));
 
-interface Props {
+export interface ChartLegendProps {
     dataLength: number;
     width: number;
     height: number;
     colorRange: any[];
 }
 
-export default function ChartLegend (props: Props) {
+const ChartLegend: React.VFC<ChartLegendProps> = (props) => {
     const intl = useIntl();
     const classes = useStyles();
-    const {
-        dataLength,
-        width,
-        height,
-        colorRange,
-    } = props;
     const legendShapeWidth = 10;
     const legendShapeHeight = 10;
-    const legendTitle = dataLength === 1 ? intl.formatMessage({
+    const legendTitle = props.dataLength === 1 ? intl.formatMessage({
         id: `home.student.learningOutcomeWidget.singleSkillTitle`,
     }) : intl.formatMessage({
         id: `home.student.learningOutcomeWidget.legendTitle`,
     }, {
-        skillcount: dataLength,
+        skillcount: props.dataLength,
     });
     const achieved = intl.formatMessage({
         id: `home.student.learningOutcomeWidget.legendAchieved`,
@@ -81,13 +75,13 @@ export default function ChartLegend (props: Props) {
     });
     const ordinalColorScale = scaleOrdinal({
         domain: [ achieved, notAchieved ],
-        range: dataLength % 2 === 0 ? colorRange : colorRange.reverse(),
+        range: props.dataLength % 2 === 0 ? props.colorRange : props.colorRange.reverse(),
     });
     return (
         <Box
             sx={{
-                width,
-                height,
+                width: props.width,
+                height: props.height,
             }}
             className={classes.legendWrapper}
         >
@@ -101,9 +95,9 @@ export default function ChartLegend (props: Props) {
                 scale={ordinalColorScale}
                 labelFormat={(label: any) => label}
             >
-                {(labels: { value: string | undefined; text: boolean | React.ReactChild | React.ReactFragment | React.ReactPortal | null | undefined; }[]) => (
+                {(labels) => (
                     <Box className={classes.legendItemWrapper}>
-                        {labels.map((label: { value: string | undefined; text: boolean | React.ReactChild | React.ReactFragment | React.ReactPortal | null | undefined; }, i: any) => (
+                        {labels.map((label, i) => (
                             <LegendItem
                                 key={`legend-quantile-${i}`}
                                 margin="0 5px"
@@ -139,3 +133,5 @@ export default function ChartLegend (props: Props) {
         </Box>
     );
 }
+
+export default ChartLegend;

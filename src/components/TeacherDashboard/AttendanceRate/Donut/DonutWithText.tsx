@@ -1,16 +1,14 @@
 import { defaultOptions } from "./defaultOptions";
 import Donut from "./Donut";
-import { Props } from "./typings";
+import { Props as DonutWithTextProps } from "./typings";
 import { Group } from "@visx/group";
 import { ParentSize } from '@visx/responsive';
 import { Text } from "@visx/text";
-import React from "react";
 import { useIntl } from "react-intl";
 
-export default function DonutWithText (props: Props) {
+const DonutWithText: React.VFC<DonutWithTextProps> = (props) => {
     const intl = useIntl();
     const {
-        data,
         options: {
             pieSize = defaultOptions.pieSize,
             cornerRadius = defaultOptions.cornerRadius,
@@ -29,7 +27,7 @@ export default function DonutWithText (props: Props) {
                         top={height/2}
                         left={width/2}>
                         <Donut
-                            data={data}
+                            data={props.data}
                             options={{
                                 pieSize,
                                 cornerRadius,
@@ -55,7 +53,7 @@ export default function DonutWithText (props: Props) {
                             fontSize={36}
                             fontFamily={`Arial, Helvetica, sans-serif`}
                             fill={`#EF0261`}>
-                            {data[2].count}
+                            {props.data[2].count}
                         </Text>
                     </Group>
                 </svg>
@@ -63,3 +61,5 @@ export default function DonutWithText (props: Props) {
         </ParentSize>
     );
 }
+
+export default DonutWithText;

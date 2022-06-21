@@ -20,7 +20,7 @@ import {
 import { currentOrganizationState, useGlobalStateValue } from "@kl-engineering/frontend-state";
 import TeacherLoadNoData from "./TeacherLoadNoData";
 import { HomeScreenWidgetWrapper } from "@kl-engineering/kidsloop-px";
-import WidgetWrapperError from "@/components/WidgetWrapper/WidgetWrapperError";
+import WidgetWrapperError from "@/components/WidgetWrapper";
 import { Context } from "@/components/models/widgetContext";
 
 const useStyles = makeStyles(((theme: Theme) => createStyles({
@@ -78,17 +78,16 @@ const useStyles = makeStyles(((theme: Theme) => createStyles({
         color: theme.palette.info.main,
     },
 })));
-interface Props {
+export interface TeacherLoadWidgetProps {
     widgetContext: Context;
 }
 
-export default function TeacherLoadWidget(props: Props) {
+const TeacherLoadWidget: React.VFC<TeacherLoadWidgetProps> = (props) => {
     const classes = useStyles();
-
+    const intl = useIntl();
     const [totalClasses, setTotalClasses] = useState<(number)>(0);
     const [totalStudents, setTotalStudents] = useState<(number)>(0);
     const [upcomingClasses, setUpcomingClasses] = useState<(number)>(0);
-    const intl = useIntl();
     const currentOrganization = useGlobalStateValue(currentOrganizationState);
     const organizationId = currentOrganization?.id ?? ``;
     const { editing = false, removeWidget, layouts, widgets } = props.widgetContext;
@@ -229,3 +228,5 @@ export default function TeacherLoadWidget(props: Props) {
         </HomeScreenWidgetWrapper>
     );
 }
+
+export default TeacherLoadWidget;

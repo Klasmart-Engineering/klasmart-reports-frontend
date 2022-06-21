@@ -25,7 +25,7 @@ import {
 import { currentOrganizationState, useGlobalStateValue } from "@kl-engineering/frontend-state";
 import AchievementNoData from "./AchievementNoData";
 import { HomeScreenWidgetWrapper } from "@kl-engineering/kidsloop-px";
-import WidgetWrapperError from "@/components/WidgetWrapper/WidgetWrapperError";
+import WidgetWrapperError from "@/components/WidgetWrapper";
 import { WidgetType } from "@/components/models/widget.model";
 import { Context } from "@/components/models/widgetContext";
 
@@ -93,19 +93,18 @@ export interface AchievementData {
     count: number;
     color: string;
 }
-export interface Props {
+export interface AchievementWidgetProps {
     widgetContext: Context;
 }
 
-export default function AchievementWidget(props: Props) {
-    const { widgetContext } = props;
+const AchievementWidget: React.FC<AchievementWidgetProps> = (props) => {
     const intl = useIntl();
     const classes = useStyles();
     const theme = useTheme();
     const [total, setTotal] = useState(0);
     const currentOrganization = useGlobalStateValue(currentOrganizationState);
     const organizationId = currentOrganization?.id ?? ``;
-    const { editing = false, removeWidget, layouts, widgets } = widgetContext;
+    const { editing = false, removeWidget, layouts, widgets } = props.widgetContext;
     const onRemove = () => removeWidget(WidgetType.ACHIEVEMENT, widgets, layouts);
 
     const {
@@ -212,3 +211,5 @@ export default function AchievementWidget(props: Props) {
         </HomeScreenWidgetWrapper>
     );
 }
+
+export default AchievementWidget;

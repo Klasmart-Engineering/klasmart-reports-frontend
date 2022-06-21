@@ -2,9 +2,7 @@ import BarChart from "./BarChart";
 import { ParentSize } from "@visx/responsive";
 import NoDataMessageWrapper from "@/components/NoDataMessage";
 
-interface Props { }
-
-export default function LearningOutcomeSummaryNoData(props: Props) {
+const LearningOutcomeSummaryNoData: React.FC = () => {
 
     const learningOutComeData = [
         {
@@ -50,3 +48,5 @@ export default function LearningOutcomeSummaryNoData(props: Props) {
         </ParentSize>
     );
 }
+
+export default LearningOutcomeSummaryNoData;

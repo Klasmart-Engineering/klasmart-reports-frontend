@@ -5,32 +5,31 @@ import { useIntl } from "react-intl";
 import { currentOrganizationState, useGlobalStateValue } from "@kl-engineering/frontend-state";
 import LearningOutcomeSummaryNoData from "./LearningOutcomeSummaryNoData";
 import { HomeScreenWidgetWrapper } from "@kl-engineering/kidsloop-px";
-import WidgetWrapperError from "@/components/WidgetWrapper/WidgetWrapperError";
+import WidgetWrapperError from "@/components/WidgetWrapper";
 import { Context } from "@/components/models/widgetContext";
 import { WidgetType } from "@/components/models/widget.model";
 
-interface Props { 
-    widgetContext: Context;
- }
-interface UniqueSkillConversionType {
+export interface UniqueSkillConversionType {
     skill: string[];
     skill_name: string;
     achieved: number;
     not_achieved: number;
     total: number;
 }
-interface SkillTypeForGraph {
+export interface SkillTypeForGraph {
     skill: string;
     achieved: number;
     notAchieved: number;
 }
+export interface LearningOutcomeSummaryProps { 
+    widgetContext: Context;
+ }
 
-export default function LearningOutcomeSummary(props: Props) {
-    const { widgetContext } = props;
+const LearningOutcomeSummary: React.FC<LearningOutcomeSummaryProps> = (props) => {
     const intl = useIntl();
     const currentOrganization = useGlobalStateValue(currentOrganizationState);
     const organizationId = currentOrganization?.id ?? ``;
-    const { editing = false, removeWidget, layouts, widgets } = widgetContext;
+    const { editing = false, removeWidget, layouts, widgets } = props.widgetContext;
     const onRemove = () => removeWidget(WidgetType.LEARNINGOUTCOME, widgets, layouts);
 
     const {
@@ -102,3 +101,5 @@ export default function LearningOutcomeSummary(props: Props) {
         </HomeScreenWidgetWrapper>
     );
 }
+
+export default LearningOutcomeSummary;

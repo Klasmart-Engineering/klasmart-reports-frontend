@@ -55,11 +55,7 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
 
 const PRIMARY_THEME_COLOR = `#0094FF`;
 
-interface Props {
-}
-
-export default function StudentAttendanceNoData(props: Props) {
-    const intl = useIntl();
+const StudentAttendanceNoData: React.FC = () => {
     const classes = useStyles();
     const currentOrganization = useGlobalStateValue(currentOrganizationState);
     const organizationName = currentOrganization?.name ?? ``;
@@ -134,3 +130,5 @@ export default function StudentAttendanceNoData(props: Props) {
         </NoDataMessageWrapper>
     );
 }
+
+export default StudentAttendanceNoData;

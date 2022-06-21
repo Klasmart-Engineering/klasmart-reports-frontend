@@ -16,9 +16,6 @@ import { scaleOrdinal } from "@visx/scale";
 import React from "react";
 import { useIntl } from "react-intl";
 
-interface Props {
-    colorRange: string[];
-}
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
         legendWrapper: {
@@ -46,8 +43,11 @@ const useStyles = makeStyles((theme: Theme) =>
         },
     }));
 
-export default function ChartLegend (props: Props){
-    const { colorRange } = props;
+export interface ChartLegendProps {
+    colorRange: string[];
+}
+
+const ChartLegend: React.VFC<ChartLegendProps> = (props) => {
     const intl = useIntl();
     const classes = useStyles();
     const legendShapeWidth = 10;
@@ -62,8 +62,8 @@ export default function ChartLegend (props: Props){
         id: `home.student.adaptiveLearningWidget.legendTitle`,
     });
     const ordinalColorScale = scaleOrdinal({
-        domain: [ withReview, withoutReview ],
-        range: colorRange,
+        domain: [withReview, withoutReview],
+        range: props.colorRange,
     });
     return (
         <Box
@@ -113,3 +113,5 @@ export default function ChartLegend (props: Props){
         </Box>
     );
 }
+
+export default ChartLegend;

@@ -1,11 +1,9 @@
 import { defaultOptions } from "./defaultOptions";
-import { Props } from "./typings";
+import { Props as DonutProps } from "./typings";
 import { Pie } from "@visx/shape";
-import React from "react";
 
-export default function Donut (props: Props) {
+const Donut: React.VFC<DonutProps> = (props) => {
     const {
-        data,
         options: {
             pieSize = defaultOptions.pieSize,
             cornerRadius = defaultOptions.cornerRadius,
@@ -16,7 +14,7 @@ export default function Donut (props: Props) {
 
     return (
         <Pie
-            data={data}
+            data={props.data}
             pieValue={(data) => data.value!}
             outerRadius={pieSize}
             innerRadius={(pieSize ?? 0) - (radiusWidth ?? 0)}
@@ -38,3 +36,5 @@ export default function Donut (props: Props) {
         </Pie>
     );
 }
+
+export default Donut;

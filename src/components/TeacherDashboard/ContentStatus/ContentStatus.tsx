@@ -1,4 +1,3 @@
-
 import { WidgetType } from "../../models/widget.model";
 import contentStatusDataFormatter from "./contentStatusDataFormatter";
 import { useGetContentTeacher } from "@kl-engineering/reports-api-client";
@@ -15,7 +14,7 @@ import {
 import { currentOrganizationState, useGlobalStateValue } from "@kl-engineering/frontend-state";
 import ContentStatusNoData from "./ContentStatusNoData";
 import { HomeScreenWidgetWrapper } from "@kl-engineering/kidsloop-px";
-import WidgetWrapperError from "@/components/WidgetWrapper/WidgetWrapperError";
+import WidgetWrapperError from "@/components/WidgetWrapper";
 import { Context } from "@/components/models/widgetContext";
 
 const useStyles = makeStyles(((theme: Theme) => createStyles({
@@ -76,11 +75,11 @@ const useStyles = makeStyles(((theme: Theme) => createStyles({
         color: theme.palette.error.light,
     },
 })));
-interface Props {
+export interface ContentStatusWidgetProps {
     widgetContext: Context;
 }
 
-export default function ContentStatusWidget(props: Props) {
+const ContentStatusWidget: React.VFC<ContentStatusWidgetProps> = (props) => {
     const classes = useStyles();
     const intl = useIntl();
     const currentOrganization = useGlobalStateValue(currentOrganizationState);
@@ -202,3 +201,5 @@ export default function ContentStatusWidget(props: Props) {
         </HomeScreenWidgetWrapper>
     );
 }
+
+export default ContentStatusWidget;

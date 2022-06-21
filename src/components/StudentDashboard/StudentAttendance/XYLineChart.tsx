@@ -16,7 +16,7 @@ export interface LineChartData {
     rate: number;
 }
 
-interface Props {
+export interface XYLineChartProps {
     data: LineChartData[];
     width: number;
     height: number;
@@ -24,15 +24,7 @@ interface Props {
     noData?: boolean;
 }
 
-export default function XYLineChart(props: Props) {
-    const {
-        data,
-        width,
-        height,
-        color,
-        noData
-    } = props;
-
+const XYLineChart: React.VFC<XYLineChartProps> = (props) => {
     const intl = useIntl();
     const approximateYrows = 3;
 
@@ -53,8 +45,8 @@ export default function XYLineChart(props: Props) {
 
     return (
         <XYChart
-            width={width - widthAdjustmentForResizing}
-            height={height}
+            width={props.width - widthAdjustmentForResizing}
+            height={props.height}
             margin={{
                 top: 30,
                 bottom: 30,
@@ -107,10 +99,10 @@ export default function XYLineChart(props: Props) {
                     return `${number * 100}%`;
                 }}
             />
-            {noData &&
+            {props.noData &&
                 <GlyphSeries
                     enableEvents={false}
-                    data={[data[data.length - 1]]}
+                    data={[props.data[props.data.length - 1]]}
                     dataKey={`records-glyph`}
                     xAccessor={accessors.xAccessor}
                     yAccessor={accessors.yAccessor}
@@ -123,7 +115,7 @@ export default function XYLineChart(props: Props) {
                             verticalAnchor="middle"
                         >
                             <Box sx={{
-                                background: lighten(color, 0.5),
+                                background: lighten(props.color, 0.5),
                                 borderRadius: `50%`,
                                 width: 40,
                                 height: 40,
@@ -131,20 +123,22 @@ export default function XYLineChart(props: Props) {
                                 alignItems: 'center',
                                 justifyContent: 'center',
                             }}>
-                                <Box sx={{ background: color, borderRadius: `50%`, width: 15, height: 15 }} />
+                                <Box sx={{ background: props.color, borderRadius: `50%`, width: 15, height: 15 }} />
                             </Box>
                         </HtmlLabel>}
                 />
             }
             <LineSeries
-                stroke={color}
+                stroke={props.color}
                 strokeLinejoin="round"
                 strokeLinecap="round"
                 strokeWidth={3}
                 dataKey="primary_line"
-                data={data}
+                data={props.data}
                 {...accessors}
             />
         </XYChart>
     );
 }
+
+export default XYLineChart;

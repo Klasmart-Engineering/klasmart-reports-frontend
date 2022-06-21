@@ -107,16 +107,13 @@ const useStyles = makeStyles((theme: Theme) =>
         },
     }));
 
-interface LabelProps {
+export interface LabelProps {
     dataName: string;
     value: number;
     type: string;
 }
 
-interface Props {
-}
-
-export default function AdaptiveLearningNoData(props: Props) {
+const AdaptiveLearningNoData: React.FC = () => {
     const intl = useIntl();
     const classes = useStyles();
     const theme = createTheme();
@@ -255,3 +252,5 @@ export default function AdaptiveLearningNoData(props: Props) {
         </NoDataMessageWrapper>
     );
 }
+
+export default AdaptiveLearningNoData;

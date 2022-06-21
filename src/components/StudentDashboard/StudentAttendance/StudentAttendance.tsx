@@ -26,7 +26,7 @@ import {
 import { currentOrganizationState, useGlobalStateValue } from "@kl-engineering/frontend-state";
 import StudentAttendanceNoData from "./StudentAttendenceNoData";
 import { HomeScreenWidgetWrapper } from "@kl-engineering/kidsloop-px";
-import WidgetWrapperError from "@/components/WidgetWrapper/WidgetWrapperError";
+import WidgetWrapperError from "@/components/WidgetWrapper";
 import { Context } from "@/components/models/widgetContext";
 import { WidgetType } from "@/components/models/widget.model";
 
@@ -60,12 +60,11 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
 
 const PRIMARY_THEME_COLOR = `#0094FF`;
 
-interface Props {
+export interface StudentAttendanceWidgetProps {
     widgetContext: Context;
 }
 
-export default function StudentAttendanceWidget(props: Props) {
-    const { widgetContext } = props;
+const StudentAttendanceWidget: React.FC<StudentAttendanceWidgetProps> = (props) => {
     const intl = useIntl();
     const classes = useStyles();
     const currentOrganization = useGlobalStateValue(currentOrganizationState);
@@ -74,7 +73,7 @@ export default function StudentAttendanceWidget(props: Props) {
     const organizationPrimaryColor = currentOrganization?.branding?.primaryColor ?? (organizationName ? utils.stringToColor(organizationName) : PRIMARY_THEME_COLOR);
     const [attendanceData, setAttendanceData] = useState<LineChartData[]>([]);
     const [averageAttendance, setAverageAttendance] = useState(0);
-    const { editing = false, removeWidget, layouts, widgets } = widgetContext;
+    const { editing = false, removeWidget, layouts, widgets } = props.widgetContext;
     const onRemove = () => removeWidget(WidgetType.STUDENTATTENDANCE, widgets, layouts);
     const {
         data,
@@ -145,3 +144,5 @@ export default function StudentAttendanceWidget(props: Props) {
         </HomeScreenWidgetWrapper>
     );
 }
+
+export default StudentAttendanceWidget;

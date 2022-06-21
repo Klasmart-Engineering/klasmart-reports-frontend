@@ -23,7 +23,7 @@ import {
 import { useIntl } from "react-intl";
 import { useResizeDetector } from "react-resize-detector";
 import { HomeScreenWidgetWrapper } from "@kl-engineering/kidsloop-px";
-import WidgetWrapperError from "@/components/WidgetWrapper/WidgetWrapperError";
+import WidgetWrapperError from "@/components/WidgetWrapper";
 import { Context } from "@/components/models/widgetContext";
 import { WidgetType } from "@/components/models/widget.model";
 
@@ -119,7 +119,7 @@ const useStyles = makeStyles((theme: Theme) =>
     }));
 
 const VERTICAL_MODE_BREAKPOINT = 520;
-interface DataObj {
+export interface DataObj {
     level: number;
     ratings: number;
     completed: boolean;
@@ -132,12 +132,11 @@ interface DataObj {
     slides: number;
 }
 
-interface Props {
+export interface AdaptiveLearningJourneyProps {
     widgetContext: Context;
 }
 
-function AdaptiveLearningJourney(props: Props) {
-    const { widgetContext } = props;
+const AdaptiveLearningJourney: React.FC<AdaptiveLearningJourneyProps> = (props) => {
     const {
         width,
         height,
@@ -156,7 +155,7 @@ function AdaptiveLearningJourney(props: Props) {
     const [isVerticalMode, setIsverticalMode] = useState(width ? width < VERTICAL_MODE_BREAKPOINT : false);
     const [open, setOpen] = useState(false);
     const [noData, setNoData] = useState(true);
-    const { editing = false, removeWidget, layouts, widgets } = widgetContext;
+    const { editing = false, removeWidget, layouts, widgets } = props.widgetContext;
     const onRemove = () => removeWidget(WidgetType.ADAPTIVELEARNINGJOURNEY, widgets, layouts);
 
     const scroll = (scrollOffset: number) => {

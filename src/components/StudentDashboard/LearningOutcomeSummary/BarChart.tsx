@@ -69,43 +69,38 @@ const useStyles = makeStyles((theme: Theme) =>
 
 const roundNumber = (num: number) => Math.round((num / 10) * 10);
 const LEFT_AXIS_BREAKPOINT = 400;
-interface Data {
+export interface Data {
     skill: string;
     achieved: number;
     notAchieved: number;
 }
-interface Props {
+export interface BarChartProps {
     data: Data[];
     width: number;
     height: number;
 }
 
-export default function BarChart (props: Props) {
-    const {
-        data,
-        width,
-        height,
-    } = props;
+const BarChart: React.VFC<BarChartProps> = (props) => {
     const intl = useIntl();
     const classes = useStyles();
     const theme = createTheme();
     const margin = {
         top: 60,
         bottom: 50,
-        left: width < LEFT_AXIS_BREAKPOINT ? 0 : 10,
+        left: props.width < LEFT_AXIS_BREAKPOINT ? 0 : 10,
         right: 10,
     };
 
     const totalLabel = intl.formatMessage({
         id: `home.student.learningOutcomeWidget.totalLabel`,
     });
-    const innerWidth = width - margin.left;
-    const innerHeight = height - margin.bottom;
+    const innerWidth = props.width - margin.left;
+    const innerHeight = props.height - margin.bottom;
     const achievedColor = theme.palette.info.light;
     const notAchievedColor = theme.palette.error.light;
     const barRadius = 6;
-    const keys = Object.keys(data[0] || {}).filter((d) => d !== `skill`);
-    const achievementTotals = data.reduce((totals, skill) => {
+    const keys = Object.keys(props.data[0] || {}).filter((d) => d !== `skill`);
+    const achievementTotals = props.data.reduce((totals, skill) => {
         totals.push(skill.achieved + skill.notAchieved);
         return totals;
     }, [] as number[]);
@@ -116,7 +111,7 @@ export default function BarChart (props: Props) {
     // Defining scales
     const xScale = scaleBand<string>({
         range: [ margin.left, innerWidth ],
-        domain: data.map(getSkill),
+        domain: props.data.map(getSkill),
         padding: .7,
     });
     const yScale = scaleLinear<number>({
@@ -125,14 +120,14 @@ export default function BarChart (props: Props) {
     });
     const colorRange = [ achievedColor, notAchievedColor ];
     const colorScale = scaleOrdinal({
-        domain: data.map(getSkill),
-        range: data.length % 2 === 0 ? colorRange : colorRange.reverse(),
+        domain: props.data.map(getSkill),
+        range: props.data.length % 2 === 0 ? colorRange : colorRange.reverse(),
     });
 
     // Axis Tick Label Props
     const bottomTickLabelProps = () =>
         ({
-            fontSize: width < LEFT_AXIS_BREAKPOINT ? `0.6rem` : `0.75rem`,
+            fontSize: props.width < LEFT_AXIS_BREAKPOINT ? `0.6rem` : `0.75rem`,
             letterSpacing: -0.5,
             fontWeight: 600,
             width: 80,
@@ -156,15 +151,15 @@ export default function BarChart (props: Props) {
             }}
         >
             <ChartLegend
-                width={width}
-                height={height}
-                dataLength={data?.length}
+                width={props.width}
+                height={props.height}
+                dataLength={props.data?.length}
                 colorRange={colorRange}
             />
             <svg
                 width="100%"
                 height="100%"
-                viewBox={`0 0 ${width} ${height}`}
+                viewBox={`0 0 ${props.width} ${props.height}`}
             >
                 {/* Chart Grid Lines */}
                 <GridRows
@@ -191,7 +186,7 @@ export default function BarChart (props: Props) {
 
                 {/* Axis Left */}
                 <Group>
-                    {width > LEFT_AXIS_BREAKPOINT ?
+                    {props.width > LEFT_AXIS_BREAKPOINT ?
                         (
                             <AxisLeft
                                 hideTicks
@@ -208,7 +203,7 @@ export default function BarChart (props: Props) {
                 {/* Chart Bars */}
                 <Group>
                     <BarStack
-                        data={data}
+                        data={props.data}
                         keys={keys}
                         x={getSkill}
                         xScale={xScale}
@@ -294,3 +289,5 @@ export default function BarChart (props: Props) {
         </Box>
     );
 }
+
+export default BarChart;

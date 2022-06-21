@@ -11,7 +11,6 @@ import {
     makeStyles,
     withStyles
 } from "@mui/styles";
-import React from "react";
 import { FormattedMessage } from "react-intl";
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -58,9 +57,7 @@ const useStyles = makeStyles((theme: Theme) =>
         },
     }));
 
-interface Props {}
-
-export default function ProgressBar (props: Props) {
+const ProgressBar: React.VFC = () => {
     const classes = useStyles();
 
     const BorderLinearProgress = withStyles((theme: Theme) => ({
@@ -108,3 +105,5 @@ export default function ProgressBar (props: Props) {
         </Box>
     );
 }
+
+export default ProgressBar;
