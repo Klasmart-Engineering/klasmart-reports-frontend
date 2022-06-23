@@ -53,7 +53,7 @@ const useStyles = makeStyles((theme: Theme) =>
         },
         label: {
             height: theme.spacing(7),
-            backgroundColor: theme.palette.grey[100],
+            backgroundColor: theme.palette.grey[300],
             borderRadius: theme.spacing(1.25),
             margin: `0.2em`,
             [theme.breakpoints.down(`sm`)]: {

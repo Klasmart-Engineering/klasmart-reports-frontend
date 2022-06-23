@@ -46,7 +46,7 @@ const useStyles = makeStyles(((theme: Theme) => createStyles({
         gridTemplateColumns: `45% 20% 35%`,
         alignItems: `center`,
         justifyItems: `center`,
-        padding: theme.spacing(0, 3),
+        padding: theme.spacing(0, 0.5),
         '&:not(:last-child):not(:first-child)': {
             borderBottom: `2px solid ${theme.palette.grey[300]}`,
         },

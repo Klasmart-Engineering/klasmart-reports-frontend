@@ -51,7 +51,7 @@ const useStyles = makeStyles(((theme: Theme) => createStyles({
     listItem: {
         display: `grid`,
         gridTemplateRows: `1fr`,
-        gridTemplateColumns: `50% 25% 25%`,
+        gridTemplateColumns: `50% 20% 30%`,
         alignItems: `center`,
         justifyItems: `center`,
         backgroundColor: theme.palette.grey[300],
@@ -65,7 +65,7 @@ const useStyles = makeStyles(((theme: Theme) => createStyles({
     },
     caption: {
         justifySelf: `start`,
-        paddingRight: `1rem`,
+        paddingRight: `0.5rem`,
         color: theme.palette.grey[700],
     },
     count: {
@@ -107,7 +107,6 @@ const TeacherLoadNoData: React.VFC = () => {
                     <li className={classes.listItem}>
                         <Typography
                             variant="body2"
-                            fontSize={16}
                             marginLeft={`0.5rem`}
                             fontWeight={600}
                             padding={theme.spacing(1)}
@@ -125,7 +124,6 @@ const TeacherLoadNoData: React.VFC = () => {
                         <Typography
                             variant="caption"
                             color="textSecondary"
-                            fontSize={16}
                             marginLeft={`0.5rem`}
                             fontWeight={600}
                             padding={theme.spacing(1)}

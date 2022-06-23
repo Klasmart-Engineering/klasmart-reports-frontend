@@ -17,6 +17,7 @@ import {
     useEffect,
     useState,
 } from "react";
+import clsx from "clsx";
 import { FormattedMessage } from "react-intl";
 
 
@@ -29,12 +30,18 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
     },
     row: {
         display: `grid`,
-        gridTemplateColumns: `25% 60% 10% `,
+        gridTemplateColumns: `25% 55% 10% `,
         gridTemplateRows: `1fr`,
         gridColumnGap: theme.spacing(1.25),
         alignItems: `center`,
         width: `100%`,
         marginBottom: theme.spacing(1.25),
+    },
+    rowHighLighted: {
+        boxShadow: `2px 2px 10px ${theme.palette.grey[400]}`,
+        borderRadius: theme.spacing(1.5),
+        border: `none`,
+        padding: theme.spacing(1)
     },
     rowIcon: {
         color: theme.palette.getContrastText(theme.palette.text.primary),
@@ -131,9 +138,14 @@ const AchievementNoData: React.FC = () => {
                         <div className={classes.break} />
                         {achievementData?.map((item, i) => {
                             return (
-                                <ListItem key={i}>
+                                <ListItem key={i}
+                                    sx={{
+                                        padding: i === 0 ? theme.spacing(0.5) : theme.spacing(0, 2)
+                                    }}>
                                     <div
-                                        className={classes.row}
+                                        className={clsx(classes.row, {
+                                            [classes.rowHighLighted]: !i
+                                        })}
                                         style={{
                                             color: item.color,
                                         }}

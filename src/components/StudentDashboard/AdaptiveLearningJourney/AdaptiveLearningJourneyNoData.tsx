@@ -139,7 +139,6 @@ const AdaptiveLearningJourneyNoData: React.FC = () => {
     const levelsRef = useRef(mockData.map(() => createRef())) as any;
     const classes = useStyles();
     const intl = useIntl();
-    const scrollOffset = 500;
     const [selectedAssesmentType, setSelectedAssesmentType] = useState(`live`);
     const [selectedAssesment, setSelectedAssesment] = useState({} as DataObj | null);
     const [connectorSVGWidth, setConnectorSVGWidth] = useState(0);
@@ -147,16 +146,6 @@ const AdaptiveLearningJourneyNoData: React.FC = () => {
     const [isVerticalMode, setIsverticalMode] = useState(width ? width < VERTICAL_MODE_BREAKPOINT : false);
     const [open, setOpen] = useState(false);
 
-    const scroll = (scrollOffset: number) => {
-        if (isVerticalMode) {
-            sliderRef.current.scrollTop += scrollOffset;
-            bgRef.current.scrollTop = (sliderRef.current.scrollTop + scrollOffset);
-        } else {
-            sliderRef.current.scrollLeft += scrollOffset;
-            bgRef.current.scrollLeft = (sliderRef.current.scrollLeft + scrollOffset);
-        }
-
-    };
     const handlePopup = (open: boolean, type: string, data: DataObj | null) => {
         setOpen(open);
         setSelectedAssesmentType(type);
@@ -173,9 +162,9 @@ const AdaptiveLearningJourneyNoData: React.FC = () => {
 
     useEffect(() => {
         sliderRef.current.scrollTop = 0;
-        sliderRef.current.scrollLeft = 500;
+        sliderRef.current.scrollLeft = 0;
         bgRef.current.scrollTop = 0;
-        bgRef.current.scrollLeft = 500;
+        bgRef.current.scrollLeft = 0;
         const slider = sliderRef.current?.getBoundingClientRect();
         const lastLevelPosition = levelsRef.current[mockData.length - 1].current.getBoundingClientRect();
         setConnectorSVGWidth(lastLevelPosition?.left - slider?.left);
@@ -190,86 +179,88 @@ const AdaptiveLearningJourneyNoData: React.FC = () => {
     ]);
 
     return (
-            <NoDataMessageWrapper
-                backdrop
-                id="home.student.adaptiveLearningJourney.noData"
-            >   
+        <NoDataMessageWrapper
+            backdrop
+            id="home.student.adaptiveLearningJourney.noData"
+        >
+            <Box
+                ref={ref}
+                className={classes.root}
+                id={`adaptiveLearningJourney`}
+            >
+                {!isVerticalMode &&
+                    <>
+                        <ArrowBackIosNewRoundedIcon
+                            className={classes.leftNavigator}
+                        />
+                        <ArrowForwardIosRoundedIcon
+                            className={classes.rightNavigator}
+                        />
+                    </>
+                }
+                <ProgressBar />
+                <Popup
+                    open={open}
+                    handlePopup={handlePopup}
+                    isVerticalMode={isVerticalMode}
+                    selectedAssesment={selectedAssesment}
+                    selectedAssesmentType={selectedAssesmentType}
+                />
                 <Box
-                    ref={ref}
-                    className={classes.root}
-                    id={`adaptiveLearningJourney`}
+                    ref={bgRef}
+                    className={classes.bgWrapper}
                 >
-                    <ArrowBackIosNewRoundedIcon
-                        className={classes.leftNavigator}
-                        onClick={() => scroll(isVerticalMode ? -(scrollOffset - 200) : -scrollOffset)}
+                    <img
+                        src={isVerticalMode ? mobileBg : desktop}
+                        alt="background"
+                        style={{
+                            flexGrow: 1,
+                        }}
                     />
-                    <ArrowForwardIosRoundedIcon
-                        className={classes.rightNavigator}
-                        onClick={() => scroll(isVerticalMode ? scrollOffset - 200 : scrollOffset)}
-                    />
-                    <ProgressBar />
-                    <Popup
-                        open={open}
-                        handlePopup={handlePopup}
-                        isVerticalMode={isVerticalMode}
-                        selectedAssesment={selectedAssesment}
-                        selectedAssesmentType={selectedAssesmentType}
-                    />
-                    <Box
-                        ref={bgRef}
-                        className={classes.bgWrapper}
-                    >
-                        <img
-                            src={isVerticalMode ? mobileBg : desktop}
-                            alt="background"
-                            style={{
-                                flexGrow: 1,
-                            }}
-                        />
-                    </Box>
-                    <Box
-                        ref={sliderRef}
-                        className={classes.slider}
-                        id="slider"
-                    >
-                        <LinePath
-                            levelsRef={levelsRef.current}
-                            width={width ?? 0}
-                            connectorSVGHeight={connectorSVGHeight}
-                            connectorSVGWidth={connectorSVGWidth}
-                            mockData={mockData}
-                            isVerticalMode={isVerticalMode}
-                        />
-                        {mockData.map((data, i) => (
-                            <Box
-                                key={data.level}
-                                className={classes.levelContainer}
-                                sx={{
-                                    alignItems: data.level % 2 === 0 ? `start` : `center`,
-                                }}
-                            >
-                                {data.type !== `booster` &&
-                                    <LevelBox
-                                        ref={levelsRef.current[i]}
-                                        data={data}
-                                        booster={false}
-                                        currentLevel={currentLevel}
-                                        handlePopup={handlePopup}
-                                    />}
-
-                                {data.hasBooster &&
-                                    <LevelBox
-                                        data={data}
-                                        booster={data.hasBooster}
-                                        currentLevel={currentLevel}
-                                        handlePopup={handlePopup}
-                                    />
-                                }
-                            </Box>
-                        ))}
-                    </Box>
                 </Box>
-            </NoDataMessageWrapper>
+                <Box
+                    ref={sliderRef}
+                    className={classes.slider}
+                    id="slider"
+                >
+                    <LinePath
+                        levelsRef={levelsRef.current}
+                        width={width ?? 0}
+                        connectorSVGHeight={connectorSVGHeight}
+                        connectorSVGWidth={connectorSVGWidth}
+                        mockData={mockData}
+                        isVerticalMode={isVerticalMode}
+                    />
+                    {mockData.map((data, i) => (
+                        <Box
+                            key={data.level}
+                            className={classes.levelContainer}
+                            sx={{
+                                alignItems: data.level % 2 === 0 ? `start` : `center`,
+                            }}
+                        >
+                            {data.type !== `booster` &&
+                                <LevelBox
+                                    ref={levelsRef.current[i]}
+                                    data={data}
+                                    booster={false}
+                                    currentLevel={currentLevel}
+                                    handlePopup={handlePopup}
+                                />}
+
+                            {data.hasBooster &&
+                                <LevelBox
+                                    data={data}
+                                    booster={data.hasBooster}
+                                    currentLevel={currentLevel}
+                                    handlePopup={handlePopup}
+                                />
+                            }
+                        </Box>
+                    ))}
+                </Box>
+            </Box>
+        </NoDataMessageWrapper>
     );
 }
 

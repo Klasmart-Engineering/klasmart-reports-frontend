@@ -117,7 +117,7 @@ const ContentStatusWidget: React.VFC<ContentStatusWidgetProps> = (props) => {
             loading={isFetching}
             error={error}
             errorScreen={<WidgetWrapperError reload={refetch} />}
-            noData={!!data?.successful}
+            noData={!data?.successful}
             noDataScreen={<ContentStatusNoData />}
             editing={editing}
             onRemove={onRemove}

@@ -167,11 +167,11 @@ const BarChart: React.VFC<BarChartProps> = (props) => {
                     left={margin.left}
                     width={innerWidth - margin.left}
                     height={innerHeight - margin.top}
-                    fill={theme.palette.grey[300]}
+                    stroke={theme.palette.grey[400]}
                     strokeDasharray="3"
                     numTicks={axisLeftNumTick}
                 />
-
+            
                 {/* Axis Bottom */}
                 <Group>
                     <AxisBottom

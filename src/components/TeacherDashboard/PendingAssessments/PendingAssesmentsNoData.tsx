@@ -26,12 +26,16 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
         gridColumnGap: theme.spacing(1.25),
         alignItems: `center`,
         width: `100%`,
+        height: 40,
     },
     rowIcon: {
         color: theme.palette.getContrastText(theme.palette.text.primary),
         borderRadius: `100%`,
         padding: 5,
         fontSize: 35,
+        [theme.breakpoints.down(`sm`)]: {
+            fontSize: 25,
+        }
     },
     progressBar: {
         [theme.breakpoints.down(`xs`)]: {
@@ -41,6 +45,14 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
     text: {
         fontSize: 14,
         color: theme.palette.text.primary,
+    },
+    annotationText: {
+        color: theme.palette.info.main,
+        marginLeft: theme.spacing(1),
+        fontSize: 12,
+        [theme.breakpoints.down(`sm`)]: {
+            fontSize: `0.5rem`
+        }
     },
     titleWrapper: {
         display: `flex`,
@@ -108,19 +120,18 @@ const PendingAssessmentsNoData: React.FC = () => {
                         <Grid
                             item
                             xs={5}>
-                            <Typography
-                                fontSize={12}
-                                sx={{
-                                    color: theme.palette.info.main,
-                                    marginLeft: theme.spacing(1)
-                                }}>
+                            <Typography className={classes.annotationText}>
                                 <FormattedMessage id="home.teacher.pendingAssesments.classType" />
                             </Typography>
                             <List
                                 sx={{
                                     backgroundColor: lighten(theme.palette.info.dark, 0.8),
                                     borderRadius: 3,
-                                    padding: 0
+                                    padding: 0,
+                                    height: `90%`,
+                                    display: 'flex',
+                                    flexDirection: 'column',
+                                    justifyContent: 'space-between'
                                 }}>
                                 {formattedData.map((item, index: number) => {
                                     return <ListItem key={index}>
@@ -140,23 +151,23 @@ const PendingAssessmentsNoData: React.FC = () => {
                             </List>
                         </Grid>
                         <Grid item xs={7}>
-                        <Typography
-                                fontSize={12}
-                                sx={{
-                                    color: theme.palette.info.main,
-                                    marginLeft: theme.spacing(1)
-                                }}>
+                            <Typography className={classes.annotationText}>
                                 <FormattedMessage id="home.teacher.pendingAssesments.assesmentsToComplete" />
                             </Typography>
                             <List
                                 sx={{
                                     border: `2px solid ${theme.palette.grey[300]}`,
                                     borderRadius: 3,
+                                    padding: 0,
+                                    height: `90%`,
+                                    display: 'flex',
+                                    flexDirection: 'column',
+                                    justifyContent: 'space-between'
                                 }}
                             >
                                 {formattedData.map((item, index: number) => {
                                     return <ListItem key={index}>
-                                        <div className={classes.row} style={{ gridTemplateColumns: `15% 1fr` }}>
+                                        <div className={classes.row} style={{ gridTemplateColumns: `20% 1fr` }}>
                                             <div
                                                 className={classes.text}
                                                 style={{

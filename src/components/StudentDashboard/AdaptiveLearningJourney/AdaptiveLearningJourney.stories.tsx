@@ -15,7 +15,8 @@ const Template: ComponentStory<typeof AdaptiveLearningJourney> = (args) => <Adap
 export const Story = Template.bind({});
 // More on args: https://storybook.js.org/docs/react/writing-stories/args
 Story.args = {
-  title: `Title`,
-  subtitle: ``,
+  widgetContext: {
+    editing: false
+  }
 };
 Story.storyName = "AdaptiveLearningJourney"

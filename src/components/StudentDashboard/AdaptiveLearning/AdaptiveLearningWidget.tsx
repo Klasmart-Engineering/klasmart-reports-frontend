@@ -201,7 +201,6 @@ const AdaptiveLearningWidget: React.FC<AdaptiveLearningWidgetProps> = (props) =>
                     colorRange={legendColorRange}
                 />
                 <Grid container sx={{ height: `100%` }}>
-
                     <Grid
                         item
                         xs={12}
