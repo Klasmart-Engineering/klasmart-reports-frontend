@@ -77,12 +77,12 @@ const PendingAssessmentsWidget: React.FC<PendingAssessmentsWidgetProps> = (props
     const currentOrganization = useGlobalStateValue(currentOrganizationState);
     const organizationId = currentOrganization?.id ?? ``;
     const { editing = false, removeWidget, layouts, widgets } = props.widgetContext;
-    const onRemove = () => removeWidget(WidgetType.ATTENDANCERATE, widgets, layouts);
+    const onRemove = () => removeWidget(WidgetType.PENDINGASSESSMENTS, widgets, layouts);
 
     const {
         data,
         isFetching,
-        error,
+        isSuccess,
         refetch,
     } = useGetPendingAssignments({
         org: organizationId,
@@ -109,9 +109,9 @@ const PendingAssessmentsWidget: React.FC<PendingAssessmentsWidgetProps> = (props
                 }),
             }}
             loading={isFetching}
-            error={error}
+            error={!isSuccess}
             errorScreen={<WidgetWrapperError reload={refetch} />}
-            noData={!!data?.successful}
+            noData={!data?.successful}
             noDataScreen={<PendingAssessmentsNoData />}
             editing={editing}
             onRemove={onRemove}

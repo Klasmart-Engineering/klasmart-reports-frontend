@@ -1,7 +1,6 @@
 
 import XYLineChart,
 { LineChartData } from "./XYLineChart";
-// import { useCurrentOrganization } from "@/store/organizationMemberships";
 import { utils } from "@kl-engineering/kidsloop-px";
 import { useGetStudentAttendanceRate } from "@kl-engineering/reports-api-client";
 import { CalendarTodayOutlined } from '@mui/icons-material';
@@ -77,8 +76,8 @@ const StudentAttendanceWidget: React.FC<StudentAttendanceWidgetProps> = (props) 
     const onRemove = () => removeWidget(WidgetType.STUDENTATTENDANCE, widgets, layouts);
     const {
         data,
-        isFetching,
-        error,
+        isFetching: isStudentAttendanceLoading,
+        isSuccess: isStudentAttendanceSuccess,
         refetch,
     } = useGetStudentAttendanceRate({
         org: organizationId,
@@ -98,8 +97,8 @@ const StudentAttendanceWidget: React.FC<StudentAttendanceWidgetProps> = (props) 
                 })
             }
             noData={!attendanceData?.length}
-            loading={isFetching}
-            error={error}
+            loading={isStudentAttendanceLoading}
+            error={!isStudentAttendanceSuccess}
             errorScreen={<WidgetWrapperError reload={refetch} />}
             noDataScreen={<StudentAttendanceNoData />}
             editing={editing}

@@ -8,14 +8,10 @@ import {
     createStyles,
     makeStyles,
 } from "@mui/styles";
-import React,
-{
-    useEffect,
-    useState,
-} from "react";
+import React from "react";
 import {
+    FormattedDate,
     FormattedMessage,
-    useIntl,
 } from "react-intl";
 import NoDataMessageWrapper from "@/components/NoDataMessage";
 
@@ -78,9 +74,14 @@ const useStyles = makeStyles(((theme: Theme) => createStyles({
 const TeacherLoadNoData: React.VFC = () => {
     const classes = useStyles();
     const theme = useTheme();
-    const [totalClasses, setTotalClasses] = useState<(number)>(26);
-    const [totalStudents, setTotalStudents] = useState<(number)>(87);
-    const [upcomingClasses, setUpcomingClasses] = useState<(number)>(30);
+    const totalClasses = 26;
+    const totalStudents = 87;
+    const upcomingClasses = 30;
+    const now = new Date();
+    const unixStartOfDay = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 0, 0, 0)
+        .getTime();
+    const unixNext7daysIncludeToday = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 7, 23, 59, 59)
+        .getTime();
 
     return (
         <NoDataMessageWrapper
@@ -160,6 +161,19 @@ const TeacherLoadNoData: React.VFC = () => {
                             className={classes.body2}
                         >
                             <FormattedMessage id="home.teacherLoad.upcomingClassesLabel" />
+                            <Typography fontWeight="normal">
+                                <FormattedDate
+                                    value={unixStartOfDay}
+                                    month="long"
+                                    day="2-digit"
+                                    children={(date: Date) => `${date} - `}
+                                />
+                                <FormattedDate
+                                    value={unixNext7daysIncludeToday}
+                                    month="long"
+                                    day="2-digit"
+                                />
+                            </Typography>
                         </Typography>
                         <Typography
                             className={classes.count}

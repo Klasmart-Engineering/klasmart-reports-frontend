@@ -138,7 +138,6 @@ const AdaptiveLearningJourneyNoData: React.FC = () => {
     const bgRef = useRef(createRef()) as any;
     const levelsRef = useRef(mockData.map(() => createRef())) as any;
     const classes = useStyles();
-    const intl = useIntl();
     const [selectedAssesmentType, setSelectedAssesmentType] = useState(`live`);
     const [selectedAssesment, setSelectedAssesment] = useState({} as DataObj | null);
     const [connectorSVGWidth, setConnectorSVGWidth] = useState(0);

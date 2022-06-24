@@ -4,14 +4,13 @@ import { REQUEST_RETRY_COUNT_MAX } from "@/config/validationValues";
 import { redirectToAuth } from "@/utils/routing";
 import { ReportsApiClientProvider as KLReportsApiClientProvider } from "@kl-engineering/reports-api-client";
 import { AxiosError } from "axios";
-import React,
-{ useMemo } from "react";
+import React from "react";
 import { Cookies } from "react-cookie";
 
 const AUTH_HEADER = `authorization`;
 const ACCESS_TOKEN_COOKIE = `access`;
 
-interface Props {
+export interface ReportsApiClientProviderProps {
     children: React.ReactNode;
 }
 export enum WidgetView {
@@ -20,8 +19,7 @@ export enum WidgetView {
     DEFAULT = `default`
 }
 
-export default function ReportsApiClientProvider (props: Props) {
-    const { children } = props;
+const ReportsApiClientProvider: React.FC<ReportsApiClientProviderProps> = (props) => {
     const reportsServiceEndpoint = getReportsEndpoint();
 
     const STALE_TIME = 60 * 1000; // 60 seconds
@@ -76,7 +74,9 @@ export default function ReportsApiClientProvider (props: Props) {
                 },
             ]}
         >
-            {children}
+            {props.children}
         </KLReportsApiClientProvider>
     );
 }
+
+export default ReportsApiClientProvider;

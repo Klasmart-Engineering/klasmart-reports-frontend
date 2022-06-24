@@ -147,7 +147,7 @@ const CompletionWidget: React.VFC<CompletionWidgetProps> = (props) => {
     const {
         data,
         isLoading: isAssignmentCompletionLoading,
-        error: isAssignmentCompletionError,
+        isSuccess: isAssignmentCompletionSuccess,
         refetch,
     } = useGetStudentAssignmentCompletion({
         org: organizationId,
@@ -170,7 +170,7 @@ const CompletionWidget: React.VFC<CompletionWidgetProps> = (props) => {
                 })
             }   
             loading={isAssignmentCompletionLoading}
-            error={isAssignmentCompletionError}
+            error={!isAssignmentCompletionSuccess}
             errorScreen={<WidgetWrapperError reload={refetch}/>}
             noData={!data?.successful}
             noDataScreen={<CompletionNoData />}

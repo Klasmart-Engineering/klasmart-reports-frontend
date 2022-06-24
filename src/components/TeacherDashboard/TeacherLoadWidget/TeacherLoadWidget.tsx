@@ -14,6 +14,7 @@ import {
     useState,
 } from "react";
 import {
+    FormattedDate,
     FormattedMessage,
     useIntl,
 } from "react-intl";
@@ -91,7 +92,7 @@ const TeacherLoadWidget: React.VFC<TeacherLoadWidgetProps> = (props) => {
     const currentOrganization = useGlobalStateValue(currentOrganizationState);
     const organizationId = currentOrganization?.id ?? ``;
     const { editing = false, removeWidget, layouts, widgets } = props.widgetContext;
-    const onRemove = () => removeWidget(WidgetType.ATTENDANCERATE, widgets, layouts);
+    const onRemove = () => removeWidget(WidgetType.TEACHERLOAD, widgets, layouts);
 
     const now = new Date();
     const unixStartOfDay = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 0, 0, 0)
@@ -102,7 +103,7 @@ const TeacherLoadWidget: React.VFC<TeacherLoadWidgetProps> = (props) => {
     const {
         data: teacherData,
         isFetching: isTeacherDataFetching,
-        error: isTeacherDataError,
+        isSuccess: isTeacherDataSuccess,
         refetch: teacherDataRefetch,
     } = useClassTeacherLoad({
         org: organizationId,
@@ -111,7 +112,7 @@ const TeacherLoadWidget: React.VFC<TeacherLoadWidgetProps> = (props) => {
     const {
         data: schedulesData,
         isFetching: isSchedulesFetching,
-        isError: isScheduleError,
+        isSuccess: isScheduleSuccess,
         refetch: scheduleDataRefetch,
     } = usePostSchedulesTimeViewList({
         org_id: organizationId,
@@ -131,7 +132,7 @@ const TeacherLoadWidget: React.VFC<TeacherLoadWidgetProps> = (props) => {
     useEffect(() => {
         if (!teacherData || teacherData.info === undefined) return;
 
-        setTotalClasses(teacherData.info.reduce((sum: number, item) => { if (item.class_id !== ``) return ++sum; }, 0) || 0);
+        setTotalClasses(teacherData.info.reduce((sum: number, item) => { return (item.class_id !== `` ? ++sum : sum) }, 0));
         setTotalStudents(teacherData.info.reduce((sum: number, item) => { return sum + item.studnum; }, 0));
 
         if (!schedulesData?.total) return;
@@ -145,7 +146,6 @@ const TeacherLoadWidget: React.VFC<TeacherLoadWidgetProps> = (props) => {
         scheduleDataRefetch();
     };
 
-
     return (
         <HomeScreenWidgetWrapper
             label={
@@ -154,7 +154,7 @@ const TeacherLoadWidget: React.VFC<TeacherLoadWidgetProps> = (props) => {
                 })
             }
             loading={isTeacherDataFetching || isSchedulesFetching}
-            error={isTeacherDataError || isScheduleError}
+            error={!isTeacherDataSuccess || !isScheduleSuccess}
             errorScreen={<WidgetWrapperError reload={reload} />}
             noData={!!teacherData?.successful || !schedulesData?.data}
             noDataScreen={<TeacherLoadNoData />}
@@ -209,6 +209,19 @@ const TeacherLoadWidget: React.VFC<TeacherLoadWidgetProps> = (props) => {
                             className={classes.body2}
                         >
                             <FormattedMessage id="home.teacherLoad.upcomingClassesLabel" />
+                            <Typography fontWeight="normal">
+                                <FormattedDate
+                                    value={unixStartOfDay}
+                                    month="long"
+                                    day="2-digit"
+                                    children={(date: Date) => `${date} - `}
+                                />
+                                <FormattedDate
+                                    value={unixNext7daysIncludeToday}
+                                    month="long"
+                                    day="2-digit"
+                                />
+                            </Typography>
                         </Typography>
                         <Typography
                             className={classes.count}

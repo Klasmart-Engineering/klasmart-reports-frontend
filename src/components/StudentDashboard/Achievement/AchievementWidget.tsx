@@ -110,8 +110,8 @@ const AchievementWidget: React.FC<AchievementWidgetProps> = (props) => {
     const {
         data,
         isFetching: isachievementDataFetching,
-        error: isachievementDataError,
         refetch: achievementDataRefetch,
+        isSuccess: isachievementDataSuccess,
     } = useGetStudentLearningOutcome({
         org: organizationId,
     });
@@ -153,7 +153,7 @@ const AchievementWidget: React.FC<AchievementWidgetProps> = (props) => {
                 })
             }
             loading={isachievementDataFetching}
-            error={isachievementDataError}
+            error={!isachievementDataSuccess}
             errorScreen={<WidgetWrapperError reload={reload} />}
             noData={!data?.successful}
             noDataScreen={<AchievementNoData />}

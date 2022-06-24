@@ -6,7 +6,7 @@ import { CmsApiClientProvider as KLCmsApiClientProvider } from "@kl-engineering/
 import { AxiosError } from "axios";
 import React from "react";
 
-interface Props {
+export interface CmsApiClientProviderProps {
     children: React.ReactNode;
 }
 
@@ -22,8 +22,7 @@ const retryHandler = async (error: AxiosError) => {
     }
 };
 
-export default function CmsApiClientProvider (props: Props) {
-    const { children } = props;
+const CmsApiClientProvider: React.FC<CmsApiClientProviderProps> = (props) => {
     const cmsServiceEndpoint = getCmsApiEndpoint();
 
     const STALE_TIME = 60 * 1000; // 60 seconds
@@ -48,7 +47,8 @@ export default function CmsApiClientProvider (props: Props) {
                 },
             ]}
         >
-            {children}
+            {props.children}
         </KLCmsApiClientProvider>
     );
 }
+export default CmsApiClientProvider;

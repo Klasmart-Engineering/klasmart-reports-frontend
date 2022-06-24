@@ -85,12 +85,12 @@ const ContentStatusWidget: React.VFC<ContentStatusWidgetProps> = (props) => {
     const currentOrganization = useGlobalStateValue(currentOrganizationState);
     const organizationId = currentOrganization?.id ?? ``;
     const { editing = false, removeWidget, layouts, widgets } = props.widgetContext;
-    const onRemove = () => removeWidget(WidgetType.ATTENDANCERATE, widgets, layouts);
+    const onRemove = () => removeWidget(WidgetType.CONTENTSTATUS, widgets, layouts);
 
     const {
         data,
         isFetching,
-        error,
+        isSuccess,
         refetch,
     } = useGetContentTeacher({
         org: organizationId,
@@ -115,7 +115,7 @@ const ContentStatusWidget: React.VFC<ContentStatusWidgetProps> = (props) => {
                 }),
             }}
             loading={isFetching}
-            error={error}
+            error={!isSuccess}
             errorScreen={<WidgetWrapperError reload={refetch} />}
             noData={!data?.successful}
             noDataScreen={<ContentStatusNoData />}

@@ -9,7 +9,7 @@ import path from "path";
 import webpack from "webpack";
 
 const webpackConfig = (env: any, args: any): webpack.Configuration => ({
-    mode: `production`,
+    mode: env.mode === `development` ? 'development' : 'production',
     devtool: env.mode === `development` ? `eval-cheap-module-source-map` : `source-map`,
     output: {
         filename: `[name].js`,

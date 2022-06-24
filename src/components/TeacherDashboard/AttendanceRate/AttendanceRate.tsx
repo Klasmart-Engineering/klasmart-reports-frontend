@@ -74,7 +74,7 @@ const AttendanceRateWidget: React.VFC<AttendanceRateWidgetProps> = (props) => {
     const {
         data,
         isFetching,
-        error,
+        isSuccess,
         refetch,
     } = useGetClassAttendanceRateGroup({
         org: organizationId,
@@ -105,9 +105,9 @@ const AttendanceRateWidget: React.VFC<AttendanceRateWidgetProps> = (props) => {
                 })
             }
             loading={isFetching}
-            error={error}
+            error={!isSuccess}
             errorScreen={<WidgetWrapperError reload={refetch} />}
-            noData={!!data?.successful}
+            noData={!data?.successful}
             noDataScreen={<AttendanceRateNoData />}
             editing={editing}
             onRemove={onRemove}

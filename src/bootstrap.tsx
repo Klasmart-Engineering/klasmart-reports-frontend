@@ -1,9 +1,7 @@
 
 import ThemeProvider from "../src/theme/provider";
 import LocaleProvider from "./locale/Provider";
-import React from "react";
 import ReactDOM from "react-dom";
-import LearningOutcomeSummary from "./components/StudentDashboard/LearningOutcomeSummary/LearningOutcomeSummary";
 import { GlobalStateProvider } from "@kl-engineering/frontend-state";
 
 function main() {
@@ -19,7 +17,7 @@ function main() {
 const App = () => (
         <LocaleProvider locale={`en`}>
             <ThemeProvider>
-                <LearningOutcomeSummary />
+                <></>
             </ThemeProvider>
         </LocaleProvider>
 );

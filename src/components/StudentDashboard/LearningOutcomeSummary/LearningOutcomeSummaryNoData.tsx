@@ -1,32 +1,44 @@
 import BarChart from "./BarChart";
 import { ParentSize } from "@visx/responsive";
 import NoDataMessageWrapper from "@/components/NoDataMessage";
+import { useIntl } from "react-intl";
 
 const LearningOutcomeSummaryNoData: React.FC = () => {
+    const intl = useIntl();
 
     const learningOutComeData = [
         {
-            "skill": "Cognitive Skills",
+            "skill": intl.formatMessage({
+                id: `home.student.learningOutcomeWidget.skill1`,
+            }),
             "achieved": 34,
             "notAchieved": 1
         },
         {
-            "skill": "Subject Matter",
+            "skill": intl.formatMessage({
+                id: `home.student.learningOutcomeWidget.skill2`,
+            }),
             "achieved": 17,
             "notAchieved": 13
         },
         {
-            "skill": "Motor Skills",
+            "skill": intl.formatMessage({
+                id: `home.student.learningOutcomeWidget.skill3`,
+            }),
             "achieved": 20,
             "notAchieved": 7
         },
         {
-            "skill": "Speech & Language Skills",
+            "skill": intl.formatMessage({
+                id: `home.student.learningOutcomeWidget.skill4`,
+            }),
             "achieved": 17,
             "notAchieved": 5
         },
         {
-            "skill": "Gross Motor Skills",
+            "skill": intl.formatMessage({
+                id: `home.student.learningOutcomeWidget.skill5`,
+            }),
             "achieved": 10,
             "notAchieved": 7
         }

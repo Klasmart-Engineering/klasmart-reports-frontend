@@ -23,7 +23,7 @@ export interface SkillTypeForGraph {
 }
 export interface LearningOutcomeSummaryProps { 
     widgetContext: Context;
- }
+}
 
 const LearningOutcomeSummary: React.FC<LearningOutcomeSummaryProps> = (props) => {
     const intl = useIntl();
@@ -35,9 +35,9 @@ const LearningOutcomeSummary: React.FC<LearningOutcomeSummaryProps> = (props) =>
     const {
         data,
         isLoading: isLearingOutcomeLoading,
-        error: isLearingOutcomeError,
+        isSuccess: isLearingOutcomeSuccess,
         refetch,
-    } = useGetStudentLearningOutcome({
+    }  = useGetStudentLearningOutcome({
         org: organizationId,
     });
 
@@ -82,7 +82,7 @@ const LearningOutcomeSummary: React.FC<LearningOutcomeSummaryProps> = (props) =>
                 id: `home.student.learningOutcomeWidget.containerTitleLabel`,
             })}
             loading={isLearingOutcomeLoading}
-            error={isLearingOutcomeError}
+            error={!isLearingOutcomeSuccess}
             errorScreen={<WidgetWrapperError reload={refetch}/>}
             noData={!data?.successful}
             noDataScreen={<LearningOutcomeSummaryNoData />}
