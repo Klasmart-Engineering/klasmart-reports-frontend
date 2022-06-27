@@ -20,7 +20,6 @@ import {
     useRef,
     useState,
 } from "react";
-import { useIntl } from "react-intl";
 import { useResizeDetector } from "react-resize-detector";
 
 const useStyles = makeStyles((theme: Theme) =>

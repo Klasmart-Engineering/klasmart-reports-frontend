@@ -5,7 +5,6 @@ import assesment4 from "@/assets/img/AdaptiveLearningJourney/assesment4.png";
 import assesment5 from "@/assets/img/AdaptiveLearningJourney/assesment5.png";
 import assesment6 from "@/assets/img/AdaptiveLearningJourney/assesment6.png";
 import rocket from "@/assets/img/AdaptiveLearningJourney/rocket.png";
-import React from "react";
 
 export default [
     {

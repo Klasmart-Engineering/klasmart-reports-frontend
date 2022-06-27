@@ -1,4 +1,3 @@
-
 import contentStatusDataFormatter from "./contentStatusDataFormatter";
 import { Theme, Typography, useTheme } from "@mui/material";
 import createStyles from '@mui/styles/createStyles';

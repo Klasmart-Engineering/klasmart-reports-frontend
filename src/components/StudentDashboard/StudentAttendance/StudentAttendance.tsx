@@ -1,4 +1,3 @@
-
 import XYLineChart,
 { LineChartData } from "./XYLineChart";
 import { utils } from "@kl-engineering/kidsloop-px";

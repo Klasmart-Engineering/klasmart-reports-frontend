@@ -1,4 +1,3 @@
-
 import attendanceRateDataFormatter from "./attendanceRateDataFormatter";
 import { ClassAttendanceLegendLabels } from "../../models/data.model";
 import DonutWithText from "./Donut/DonutWithText";

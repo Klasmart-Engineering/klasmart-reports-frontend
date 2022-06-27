@@ -8,7 +8,6 @@ import { Box, Link, Typography } from "@mui/material";
 import { FormattedMessage } from "react-intl";
 import lightBulb from "@/assets/img/bulb.png";
 
-
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
         backdrop: {

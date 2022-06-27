@@ -133,7 +133,7 @@ const useStyles = makeStyles(((theme: Theme) => createStyles({
         color: theme.palette.info.light,
     },
 })));
-interface CompletionWidgetProps {
+export interface CompletionWidgetProps {
     widgetContext: Context;
 }
 

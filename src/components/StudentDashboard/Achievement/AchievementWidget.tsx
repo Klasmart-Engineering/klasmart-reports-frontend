@@ -29,7 +29,6 @@ import WidgetWrapperError from "@/components/WidgetWrapper";
 import { WidgetType } from "@/components/models/widget.model";
 import { Context } from "@/components/models/widgetContext";
 
-
 const useStyles = makeStyles((theme: Theme) => createStyles({
     widgetContent: {
         height: `100%`,
@@ -143,7 +142,6 @@ const AchievementWidget: React.FC<AchievementWidgetProps> = (props) => {
     const reload = () => {
         achievementDataRefetch();
     };
-
 
     return (
         <HomeScreenWidgetWrapper

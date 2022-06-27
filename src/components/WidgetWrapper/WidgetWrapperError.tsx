@@ -61,7 +61,7 @@ const WidgetWrapperError: React.VFC<WidgetWrapperErrorProps> = (props) => {
                 <div className={classes.imageLayout}>
                     <img
                         src={OopsSvg}
-                        alt=""
+                        alt="Error"
                         className={classes.image}/>
                     <div className={classes.textLayout}>
                         <div className={classes.title}>

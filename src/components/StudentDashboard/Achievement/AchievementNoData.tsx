@@ -20,7 +20,6 @@ import {
 import clsx from "clsx";
 import { FormattedMessage } from "react-intl";
 
-
 const useStyles = makeStyles((theme: Theme) => createStyles({
     widgetContent: {
         height: `100%`,
@@ -117,7 +116,6 @@ const AchievementNoData: React.FC = () => {
         setAchievementData(generatedAchievementData);
         setTotal(sumBy(generatedAchievementData, (item) => item.count));
     }, []);
-
 
     return (
         <NoDataMessageWrapper

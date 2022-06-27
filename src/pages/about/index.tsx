@@ -1,5 +1,4 @@
 import ErrorBoundary from "@/components/ErrorBoundary";
-import LocaleProvider from "@/locale/Provider";
 import { GlobalStateProvider } from "@kl-engineering/frontend-state";
 import React, { useState } from "react";
 import { useResizeDetector } from "react-resize-detector";

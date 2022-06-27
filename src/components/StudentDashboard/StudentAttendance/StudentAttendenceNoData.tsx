@@ -1,4 +1,3 @@
-
 import XYLineChart,
 { LineChartData } from "./XYLineChart";
 import NoDataMessageWrapper from "@/components/NoDataMessage";
@@ -20,7 +19,6 @@ import React,
 } from "react";
 import {
     FormattedMessage,
-    useIntl,
 } from "react-intl";
 import { currentOrganizationState, useGlobalStateValue } from "@kl-engineering/frontend-state";
 import { utils } from "@kl-engineering/kidsloop-px";
