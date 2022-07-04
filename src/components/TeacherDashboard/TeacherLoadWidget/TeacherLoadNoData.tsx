@@ -98,10 +98,10 @@ const TeacherLoadNoData: React.VFC = () => {
                         top: theme.spacing(-2),
                     }}>
                     <Typography fontSize={14} fontWeight={600} letterSpacing={-0.5} color={theme.palette.info.main} marginLeft={theme.spacing(6)}>
-                        <FormattedMessage id="home.teacher.teacherLoad.list"/>
+                        <FormattedMessage id="home.teacher.teacherLoad.list" />
                     </Typography>
                     <Typography fontSize={14} fontWeight={600} letterSpacing={-0.5} color={theme.palette.info.main}>
-                        <FormattedMessage id="home.teacher.teacherLoad.lastUpdate"/>
+                        <FormattedMessage id="home.teacher.teacherLoad.lastUpdate" />
                     </Typography>
                 </Box>
                 <ul className={classes.list}>
@@ -156,12 +156,17 @@ const TeacherLoadNoData: React.VFC = () => {
                         </Typography>
                     </li>
                     <li className={classes.listItem}>
-                        <Typography
-                            variant="body2"
-                            className={classes.body2}
-                        >
-                            <FormattedMessage id="home.teacherLoad.upcomingClassesLabel" />
-                            <Typography fontWeight="normal">
+                        <Box>
+                            <Typography
+                                variant="body2"
+                                className={classes.body2}
+                            >
+                                <FormattedMessage id="home.teacherLoad.upcomingClassesLabel" />
+                            </Typography>
+                            <Typography
+                                fontSize={14}
+                                fontWeight="normal"
+                                paddingLeft="1.5rem">
                                 <FormattedDate
                                     value={unixStartOfDay}
                                     month="long"
@@ -174,7 +179,7 @@ const TeacherLoadNoData: React.VFC = () => {
                                     day="2-digit"
                                 />
                             </Typography>
-                        </Typography>
+                        </Box>
                         <Typography
                             className={classes.count}
                         >

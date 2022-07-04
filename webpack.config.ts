@@ -97,11 +97,21 @@ const webpackConfig = (env: any, args: any): webpack.Configuration => ({
                     singleton: true,
                     requiredVersion: pkg.dependencies[`react-intl`],
                 },
-                '@mui/icons-material': {
+                '@kl-engineering/reports-api-client': {
                     singleton: true,
+                    requiredVersion: pkg.dependencies[`@kl-engineering/reports-api-client`],
                 },
-                '@mui/lab': {
+                '@kl-engineering/cms-api-client': {
                     singleton: true,
+                    requiredVersion: pkg.dependencies[`@kl-engineering/cms-api-client`],
+                },
+                '@kl-engineering/frontend-state': {
+                    singleton: true,
+                    requiredVersion: pkg.dependencies[`@kl-engineering/frontend-state`],
+                },
+                '@kl-engineering/kidsloop-px': {
+                    singleton: true,
+                    requiredVersion: pkg.dependencies[`@kl-engineering/kidsloop-px`],
                 },
                 '@mui/material': {
                     singleton: true,
@@ -109,26 +119,6 @@ const webpackConfig = (env: any, args: any): webpack.Configuration => ({
                 },
                 '@mui/styles': {
                     singleton: true,
-                },
-                '@kl-engineering/reports-api-client': {
-                    singleton: true,
-                },
-                '@kl-engineering/cms-api-client': {
-                    singleton: true,
-                },
-                '@kl-engineering/kidsloop-px': {
-                    singleton: true,
-                },
-                '@kl-engineering/frontend-state': {
-                    singleton: true,
-                    requiredVersion: pkg.dependencies[`@kl-engineering/frontend-state`],
-                },
-                lodash: {
-                    singleton: true,
-                },
-                '@emotion/styled': {
-                    singleton: true,
-                    requiredVersion: pkg.dependencies[`@emotion/styled`],
                 },
                 '@emotion/react': {
                     singleton: true,

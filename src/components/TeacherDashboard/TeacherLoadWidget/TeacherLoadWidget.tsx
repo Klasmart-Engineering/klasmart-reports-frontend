@@ -2,6 +2,7 @@ import { WidgetType } from "../../models/widget.model";
 import { usePostSchedulesTimeViewList } from "@kl-engineering/cms-api-client";
 import { useClassTeacherLoad } from "@kl-engineering/reports-api-client";
 import {
+    Box,
     Theme,
     Typography,
 } from "@mui/material";
@@ -58,7 +59,6 @@ const useStyles = makeStyles(((theme: Theme) => createStyles({
         gridTemplateRows: `1fr`,
         gridTemplateColumns: `50% 25% 25%`,
         alignItems: `center`,
-        justifyItems: `center`,
         backgroundColor: theme.palette.grey[100],
         padding: `1.1rem 0 1.1rem 0`,
         borderRadius: `0.5rem`,
@@ -204,12 +204,17 @@ const TeacherLoadWidget: React.VFC<TeacherLoadWidgetProps> = (props) => {
                         </Typography>
                     </li>
                     <li className={classes.listItem}>
-                        <Typography
-                            variant="body2"
-                            className={classes.body2}
-                        >
-                            <FormattedMessage id="home.teacherLoad.upcomingClassesLabel" />
-                            <Typography fontWeight="normal">
+                        <Box>
+                            <Typography
+                                variant="body2"
+                                className={classes.body2}
+                            >
+                                <FormattedMessage id="home.teacherLoad.upcomingClassesLabel" />
+                            </Typography>
+                            <Typography
+                                fontSize={14}
+                                fontWeight="normal"
+                                paddingLeft="1.5rem">
                                 <FormattedDate
                                     value={unixStartOfDay}
                                     month="long"
@@ -222,7 +227,7 @@ const TeacherLoadWidget: React.VFC<TeacherLoadWidgetProps> = (props) => {
                                     day="2-digit"
                                 />
                             </Typography>
-                        </Typography>
+                        </Box>
                         <Typography
                             className={classes.count}
                         >
