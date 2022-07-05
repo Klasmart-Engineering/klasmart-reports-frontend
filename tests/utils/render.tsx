@@ -5,7 +5,7 @@ import {
     IntlShape,
     RawIntlProvider,
 } from 'react-intl';
-import { RecoilRoot } from 'recoil';
+import { GlobalStateProvider } from '@kl-engineering/frontend-state';
 
 export interface RenderOptions {
     locale?: IntlShape;
@@ -16,10 +16,10 @@ export default function render (component: React.ReactNode, options: RenderOptio
         locale = defaultLanguage,
     } = options;
     return RTLRender((
-        <RecoilRoot>
+        <GlobalStateProvider cookieDomain={process.env.COOKIE_DOMAIN ?? ``}>
             <RawIntlProvider value={locale}>
                 {component}
             </RawIntlProvider>
-        </RecoilRoot>
+        </GlobalStateProvider>
     ));
 };

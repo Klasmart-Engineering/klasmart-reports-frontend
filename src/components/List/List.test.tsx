@@ -1,12 +1,12 @@
-import render from "tests/utils/render";
+import render from "../../../tests/utils/render";
 import { screen } from "@testing-library/react";
 import List, { ListProps } from "./List";
 import React, {useEffect} from "react";
 import { ListItemProps } from "../ListItem";
-import { useRecoilValue, RecoilState } from "recoil";
+import { useGlobalStateValue } from "@kl-engineering/frontend-state";
 
-export const RecoilObserver = ({node, onChange} : {node: RecoilState<any>, onChange: any }) => {
-    const value = useRecoilValue(node);
+export const RecoilObserver = ({node, onChange} : {node: any, onChange: any }) => {
+    const value = useGlobalStateValue(node);
     useEffect(() => onChange(value), [onChange, value]);
     return null;
   };
