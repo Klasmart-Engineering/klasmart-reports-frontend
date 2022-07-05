@@ -1,11 +1,11 @@
-import { RecoilRoot } from "recoil"
+import { GlobalStateProvider } from '@kl-engineering/frontend-state';
 import React from "react";
 
 const StoreProvider: React.FC = (props) => {
     return (
-        <RecoilRoot>
+        <GlobalStateProvider cookieDomain={process.env.COOKIE_DOMAIN ?? ``}>
             {props.children}
-        </RecoilRoot>
+        </GlobalStateProvider>
     )
 }
 

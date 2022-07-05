@@ -11,8 +11,7 @@ export interface ListProps {
 
 export default function List (props: ListProps) {
     useEffect(() => {
-        // @ts-ignore
-        console.log(`List mounted`, kex)
+        console.log(`List mounted`)
         return () => console.error(`List destroyed`)
     }, []);
 
