@@ -11,6 +11,7 @@ import {
     FormattedMessage,
     useIntl,
 } from "react-intl";
+import React from "react";
 
 const useStyles = makeStyles((theme: Theme) => createStyles({
     widgetContent: {

@@ -71,12 +71,12 @@ const useStyles = makeStyles<Theme, StyleProps>(((theme: Theme) =>
             background : theme.palette.common.white,
             minWidth: 240,
             maxWidth: 300,
-            height : ({ selectedAssesmentType }) => selectedAssesmentType === `booster` ? 470 : 440,
+            height : ({ selectedAssesmentType }: StyleProps) => selectedAssesmentType === `booster` ? 470 : 440,
             borderRadius: theme.spacing(2),
             alignSelf: `center`,
             overflow: `hidden`,
             [theme.breakpoints.down(`sm`)] : {
-                height : ({ selectedAssesmentType }) => selectedAssesmentType === `booster` ? 400 : 390,
+                height : ({ selectedAssesmentType }: StyleProps) => selectedAssesmentType === `booster` ? 400 : 390,
             },
         },
         assesmentIcon : {
@@ -88,7 +88,7 @@ const useStyles = makeStyles<Theme, StyleProps>(((theme: Theme) =>
             justifyContent: `center`,
             position : `relative`,
             [theme.breakpoints.down(`sm`)] : {
-                height : ({ selectedAssesmentType }) => selectedAssesmentType === `booster` ? `25%` : `30%`,
+                height : ({ selectedAssesmentType }: StyleProps) => selectedAssesmentType === `booster` ? `25%` : `30%`,
             },
         },
         contentContainer : {
@@ -97,7 +97,7 @@ const useStyles = makeStyles<Theme, StyleProps>(((theme: Theme) =>
         },
         classChip : {
             height: theme.spacing(3),
-            background : ({ selectedAssesmentType }) => selectedAssesmentType === `booster` ? `#FF5EE4` : theme.palette.info.main,
+            background : ({ selectedAssesmentType }: StyleProps) => selectedAssesmentType === `booster` ? `#FF5EE4` : theme.palette.info.main,
             color : theme.palette.common.white,
         },
         classChipIcon : {

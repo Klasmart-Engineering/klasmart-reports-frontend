@@ -21,6 +21,7 @@ import {
     useState,
 } from "react";
 import { useResizeDetector } from "react-resize-detector";
+import React from "react";
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({

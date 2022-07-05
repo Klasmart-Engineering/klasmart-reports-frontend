@@ -8,6 +8,7 @@ import { HomeScreenWidgetWrapper } from "@kl-engineering/kidsloop-px";
 import WidgetWrapperError from "@/components/WidgetWrapper";
 import { Context } from "@/components/models/widgetContext";
 import { WidgetType } from "@/components/models/widget.model";
+import React from "react";
 
 export interface UniqueSkillConversionType {
     skill: string[];

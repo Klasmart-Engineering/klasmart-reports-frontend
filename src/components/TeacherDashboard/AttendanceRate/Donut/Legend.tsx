@@ -7,6 +7,7 @@ import {
     createStyles,
     makeStyles,
 } from '@mui/styles';
+import React from "react";
 
 export interface LegendProps {
     data: Data[];

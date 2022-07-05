@@ -19,6 +19,7 @@ import {
 import { WidgetType } from "@/components/models/widget.model";
 import { Context } from "@/components/models/widgetContext"
 import WidgetWrapperError from "@/components/WidgetWrapper";
+import React from "react";
 
 const useStyles = makeStyles(((theme: Theme) => createStyles({
     widgetContent: {

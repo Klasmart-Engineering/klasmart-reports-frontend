@@ -19,7 +19,7 @@ import {
 } from "react";
 import clsx from "clsx";
 import { FormattedMessage } from "react-intl";
-import { getAuthEndpoint } from "@/config";
+import React from "react";
 
 const useStyles = makeStyles((theme: Theme) => createStyles({
     widgetContent: {

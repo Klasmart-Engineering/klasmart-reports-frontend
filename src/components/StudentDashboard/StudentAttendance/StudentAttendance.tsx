@@ -27,6 +27,7 @@ import { HomeScreenWidgetWrapper } from "@kl-engineering/kidsloop-px";
 import WidgetWrapperError from "@/components/WidgetWrapper";
 import { Context } from "@/components/models/widgetContext";
 import { WidgetType } from "@/components/models/widget.model";
+import React from "react";
 
 const useStyles = makeStyles((theme: Theme) => createStyles({
     widgetContent: {

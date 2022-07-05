@@ -5,6 +5,7 @@ import { Group } from "@visx/group";
 import { ParentSize } from '@visx/responsive';
 import { Text } from "@visx/text";
 import { useIntl } from "react-intl";
+import React from "react";
 
 const DonutWithText: React.VFC<DonutWithTextProps> = (props) => {
     const intl = useIntl();

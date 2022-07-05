@@ -1,6 +1,7 @@
 import { defaultOptions } from "./defaultOptions";
 import { Props as DonutProps } from "./typings";
 import { Pie } from "@visx/shape";
+import React from "react";
 
 const Donut: React.VFC<DonutProps> = (props) => {
     const {

@@ -16,6 +16,7 @@ import ContentStatusNoData from "./ContentStatusNoData";
 import { HomeScreenWidgetWrapper } from "@kl-engineering/kidsloop-px";
 import WidgetWrapperError from "@/components/WidgetWrapper";
 import { Context } from "@/components/models/widgetContext";
+import React from "react";
 
 const useStyles = makeStyles(((theme: Theme) => createStyles({
     widgetContent: {

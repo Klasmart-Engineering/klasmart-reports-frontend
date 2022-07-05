@@ -14,6 +14,7 @@ import {
 import { ParentSize } from "@visx/responsive";
 import NoDataMessageWrapper from "@/components/NoDataMessage";
 import { useIntl } from "react-intl";
+import React from "react";
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({

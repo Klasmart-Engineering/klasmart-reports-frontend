@@ -1,5 +1,6 @@
 import { LinearProgress, Theme } from "@mui/material";
 import { withStyles } from '@mui/styles';
+import React from "react";
 
 export interface ProgressBarProps {
   total: number;
