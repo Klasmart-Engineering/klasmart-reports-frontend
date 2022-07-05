@@ -62,11 +62,11 @@ const AttendanceRateNoData: React.VFC = () => {
             "grp1": 0.28,
             "grp2": 0.32,
             "grp3": 0.40,
-            "grp1count": 47
+            "grp1count": 47,
         },
         "lastupdate": 1654761820,
         "expiry": 1654763620,
-        "successful": true
+        "successful": true,
     }
 
     const dataLabels: ClassAttendanceLegendLabels = {

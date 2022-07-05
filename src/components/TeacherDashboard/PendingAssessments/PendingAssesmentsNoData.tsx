@@ -79,20 +79,20 @@ const PendingAssessmentsNoData: React.FC = () => {
         "info": [
             {
                 "class_type": "class",
-                "count": 14
+                "count": 14,
             },
             {
                 "class_type": "live",
-                "count": 25
+                "count": 25,
             },
             {
                 "class_type": "homework",
-                "count": 4
-            }
+                "count": 4,
+            },
         ],
         "lastupdate": 1654762530,
         "expiry": 1654764330,
-        "successful": true
+        "successful": true,
     }
 
     const formattedData = useMemo(() => {

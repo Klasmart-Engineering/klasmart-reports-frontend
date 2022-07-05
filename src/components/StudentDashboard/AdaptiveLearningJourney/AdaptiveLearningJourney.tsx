@@ -166,7 +166,6 @@ const AdaptiveLearningJourney: React.FC<AdaptiveLearningJourneyProps> = (props) 
             sliderRef.current.scrollLeft += scrollOffset;
             bgRef.current.scrollLeft = (sliderRef.current.scrollLeft + scrollOffset);
         }
-
     };
     const handlePopup = (open: boolean, type: string, data: DataObj | null) => {
         setOpen(open);

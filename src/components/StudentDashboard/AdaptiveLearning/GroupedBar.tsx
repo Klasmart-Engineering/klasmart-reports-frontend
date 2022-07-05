@@ -108,7 +108,7 @@ const useStyles = makeStyles((theme: Theme) =>
         },
         htmlLabelTextForBarValue: {
             fontSize: `.8rem`,
-            color: `#FFFFF`,
+            color: theme.palette.common.white,
             fontWeight: 600,
             paddingTop:theme.spacing(.75),
             letterSpacing: `-0.5px`,

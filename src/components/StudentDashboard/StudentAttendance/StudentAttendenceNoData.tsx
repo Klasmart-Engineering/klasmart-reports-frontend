@@ -63,19 +63,19 @@ const StudentAttendanceNoData: React.FC = () => {
     const data = [
         {
             "class_date": "2020-01-18",
-            "rate": 0.7
+            "rate": 0.7,
         },
         {
             "class_date": "2020-01-19",
-            "rate": 0.05
+            "rate": 0.05,
         },
         {
             "class_date": "2020-01-20",
-            "rate": 0.7
+            "rate": 0.7,
         },
         {
             "class_date": "2020-01-21",
-            "rate": 0.85
+            "rate": 0.85,
         },
     ];
 

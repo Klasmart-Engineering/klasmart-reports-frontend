@@ -14,6 +14,7 @@ import {
     FormattedMessage,
 } from "react-intl";
 import NoDataMessageWrapper from "@/components/NoDataMessage";
+import TeacherLoadWidgetMarkers from "./Markers";
 
 const useStyles = makeStyles(((theme: Theme) => createStyles({
     widgetContent: {
@@ -21,6 +22,7 @@ const useStyles = makeStyles(((theme: Theme) => createStyles({
         display: `grid`,
         gridTemplateColumns: `1fr`,
         gridTemplateRows: `1fr`,
+        overflow: 'visible'
     },
     titleWrapper: {
         display: `flex`,
@@ -42,22 +44,21 @@ const useStyles = makeStyles(((theme: Theme) => createStyles({
         display: `flex`,
         flexDirection: `column`,
         justifyContent: `space-around`,
-
     },
     listItem: {
         display: `grid`,
         gridTemplateRows: `1fr`,
         gridTemplateColumns: `50% 20% 30%`,
         alignItems: `center`,
-        justifyItems: `center`,
         backgroundColor: theme.palette.grey[300],
-        padding: `1.1rem 0 1.1rem 0`,
+        padding: `1rem 0 1rem 0`,
+        margin: theme.spacing(0.1),
         borderRadius: `0.5rem`,
     },
     body2: {
         fontWeight: 600,
         justifySelf: `start`,
-        marginLeft: `1.5rem`,
+        paddingLeft: `1.5rem`,
     },
     caption: {
         justifySelf: `start`,
@@ -69,6 +70,27 @@ const useStyles = makeStyles(((theme: Theme) => createStyles({
         justifySelf: `center`,
         color: theme.palette.info.main,
     },
+    annotationContainer: {
+        display: `grid`,
+        gridTemplateRows: `1fr`,
+        gridTemplateColumns: `70% 30%`,
+        width: `100%`,
+        height: `100%`,
+        position: `absolute`,
+        justifyContent: `space-between`,
+        top: theme.spacing(-1.5),
+    },
+    annotationText: {
+        fontSize: 14,
+        fontWeight: 600,
+        letterSpacing: -0.5,
+        color: theme.palette.info.main,
+        lineHeight: 1
+    },
+    svgArrow: {
+        position: `absolute`,
+        overflow: `visible`
+    }
 })));
 
 const TeacherLoadNoData: React.VFC = () => {
@@ -82,25 +104,36 @@ const TeacherLoadNoData: React.VFC = () => {
         .getTime();
     const unixNext7daysIncludeToday = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 7, 23, 59, 59)
         .getTime();
+    const svgPathAttributes = {
+        "marker-start": "url(#circle)",
+        "marker-end": "url(#arrow)",
+        "fill": "none",
+        "stroke": theme.palette.primary.main,
+        "stroke-width": 1,
+        "strokeDasharray": 3,
+    }
 
     return (
         <NoDataMessageWrapper
             id="home.teacher.teacherLoad.noData"
         >
             <div className={classes.widgetContent}>
-                <Box
-                    sx={{
-                        display: `flex`,
-                        width: `100%`,
-                        position: `absolute`,
-                        alignItems: `center`,
-                        justifyContent: `space-between`,
-                        top: theme.spacing(-2),
-                    }}>
-                    <Typography fontSize={14} fontWeight={600} letterSpacing={-0.5} color={theme.palette.info.main} marginLeft={theme.spacing(6)}>
+                <Box className={classes.annotationContainer}>
+                    <Typography
+                        className={classes.annotationText}
+                        paddingLeft={theme.spacing(6)}>
                         <FormattedMessage id="home.teacher.teacherLoad.list" />
+                        <svg className={classes.svgArrow}>
+                            <path d="M -50 40 q 0 -32 20 -32" {...svgPathAttributes}/>
+                        </svg>
                     </Typography>
-                    <Typography fontSize={14} fontWeight={600} letterSpacing={-0.5} color={theme.palette.info.main}>
+                    <Typography
+                        className={classes.annotationText}
+                        paddingLeft={`2rem`}>
+                        <svg className={classes.svgArrow}>
+                            <path d="M -25 40 q 0 -32 20 -32" {...svgPathAttributes}/>
+                            <TeacherLoadWidgetMarkers />
+                        </svg>
                         <FormattedMessage id="home.teacher.teacherLoad.lastUpdate" />
                     </Typography>
                 </Box>
@@ -125,9 +158,8 @@ const TeacherLoadNoData: React.VFC = () => {
                         <Typography
                             variant="caption"
                             color="textSecondary"
-                            marginLeft={`0.5rem`}
+                            padding={theme.spacing(1, 1.5)}
                             fontWeight={600}
-                            padding={theme.spacing(1)}
                             borderRadius={3}
                             justifySelf={`start`}
                             boxShadow={`2px 2px 10px ${theme.palette.grey[400]}`}

@@ -79,11 +79,11 @@ const ContentStatusNoData: React.VFC = () => {
         "info": {
             "total": 3,
             "draft": 4,
-            "published": 12
+            "published": 12,
         },
         "lastupdate": 1654762431,
         "expiry": 1654764231,
-        "successful": true
+        "successful": true,
     }
 
     const formattedData = useMemo(() => {
@@ -133,7 +133,7 @@ const ContentStatusNoData: React.VFC = () => {
                         <Typography
                             variant="body2"
                             className={classes.body2}
-                            fontSize={20}>
+                            fontSize={16}>
                             <FormattedMessage id="home.contentStatus.totalApprovedLabel" />
                         </Typography>
                         <Typography
@@ -145,7 +145,7 @@ const ContentStatusNoData: React.VFC = () => {
                             variant="caption"
                             className={classes.caption}
                             color="textSecondary"
-                            fontSize={20}>
+                            fontSize={13}>
                             <FormattedMessage id="home.contentStatus.timeFrame" />
                         </Typography>
                     </li>

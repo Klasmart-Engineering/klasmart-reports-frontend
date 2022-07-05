@@ -1,4 +1,6 @@
 import ErrorBoundary from "@/components/ErrorBoundary";
+import List from "@/components/List";
+import ListItem from "@/components/ListItem";
 import { GlobalStateProvider } from "@kl-engineering/frontend-state";
 import React, { useState } from "react";
 import { useResizeDetector } from "react-resize-detector";
@@ -26,16 +28,16 @@ export default function AboutPage (props: AboutPageProps) {
                             <h1 style={{backgroundColor: `red`}}>Something went wrong.</h1>
                         }>
                             <React.Suspense fallback={<div>Whaddap yo</div>}>
-                                {/* <List
+                                <List
                                     header="Nice woop woop"
                                     items={[]}
-                                /> */}
+                                />
                             </React.Suspense>
                         </ErrorBoundary>
                     ) : (
                         <ErrorBoundary FallbackComponent={<h1 style={{backgroundColor: `blue`}}>Something went wrong.</h1>}>
                             <React.Suspense fallback={<div>Whaddap yo</div>}>
-                                {/* <ListItem title="Some cool title"/> */}
+                                <ListItem title="Some cool title"/>
                             </React.Suspense>
                         </ErrorBoundary>
                     )}

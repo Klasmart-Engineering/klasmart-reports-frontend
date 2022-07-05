@@ -6,7 +6,7 @@ enum ContentType {
     APPROVED = `approved`,
     PENDING = `pending`,
     REJECTED = `rejected`,
-    TOTAL = `total`
+    TOTAL = `total`,
 }
 
 export default function contentStatusDataFormatter (data: ContentTeacherResponse): ContentTeacherFormatted {

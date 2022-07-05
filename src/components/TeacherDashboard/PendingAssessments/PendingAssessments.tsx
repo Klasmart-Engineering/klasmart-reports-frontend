@@ -103,7 +103,7 @@ const PendingAssessmentsWidget: React.FC<PendingAssessmentsWidgetProps> = (props
                 })
             }
             link={{
-                url: `assessments`,
+                url: `#/assessments`,
                 label: intl.formatMessage({
                     id: `home.pendingAssessments.containerUrlLabel`,
                 }),

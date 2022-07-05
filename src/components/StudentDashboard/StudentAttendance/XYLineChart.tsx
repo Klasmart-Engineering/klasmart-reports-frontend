@@ -1,5 +1,5 @@
 
-import { Box, lighten } from "@mui/material";
+import { Box, lighten, useTheme } from "@mui/material";
 import { HtmlLabel } from "@visx/annotation";
 import {
     Axis,
@@ -26,6 +26,7 @@ export interface XYLineChartProps {
 
 const XYLineChart: React.VFC<XYLineChartProps> = (props) => {
     const intl = useIntl();
+    const theme = useTheme();
     const approximateYrows = 3;
 
     const accessors = {
@@ -64,7 +65,7 @@ const XYLineChart: React.VFC<XYLineChartProps> = (props) => {
                 columns={false}
                 numTicks={approximateYrows}
                 lineStyle={{
-                    stroke: `#e1e1e1`,
+                    stroke: theme.palette.grey[400],
                     strokeLinecap: `round`,
                     strokeWidth: 1,
                 }}

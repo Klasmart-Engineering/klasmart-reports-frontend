@@ -76,13 +76,13 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
         fontSize: 10,
     },
     break: {
-        border: `1px solid #B7B7B7`,
+        border: `1px solid ${theme.palette.grey[400]}`,
         width: `95%`,
         margin: `auto`,
     },
     heading: {
         textAlign: `center`,
-        color: `#1896EA`,
+        color: theme.palette.info.light,
         fontWeight: 600,
         fontSize: 14,
     },

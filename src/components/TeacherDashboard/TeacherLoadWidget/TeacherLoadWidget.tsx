@@ -24,6 +24,7 @@ import TeacherLoadNoData from "./TeacherLoadNoData";
 import { HomeScreenWidgetWrapper } from "@kl-engineering/kidsloop-px";
 import WidgetWrapperError from "@/components/WidgetWrapper";
 import { Context } from "@/components/models/widgetContext";
+import React from "react";
 
 const useStyles = makeStyles(((theme: Theme) => createStyles({
     widgetContent: {
@@ -156,7 +157,7 @@ const TeacherLoadWidget: React.VFC<TeacherLoadWidgetProps> = (props) => {
             loading={isTeacherDataFetching || isSchedulesFetching}
             error={!isTeacherDataSuccess || !isScheduleSuccess}
             errorScreen={<WidgetWrapperError reload={reload} />}
-            noData={!!teacherData?.successful || !schedulesData?.data}
+            noData={!teacherData?.successful || !schedulesData?.data}
             noDataScreen={<TeacherLoadNoData />}
             editing={editing}
             onRemove={onRemove}

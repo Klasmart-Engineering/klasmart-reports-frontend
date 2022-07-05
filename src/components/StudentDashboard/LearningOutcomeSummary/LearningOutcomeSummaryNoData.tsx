@@ -12,36 +12,36 @@ const LearningOutcomeSummaryNoData: React.FC = () => {
                 id: `home.student.learningOutcomeWidget.skill1`,
             }),
             "achieved": 34,
-            "notAchieved": 1
+            "notAchieved": 1,
         },
         {
             "skill": intl.formatMessage({
                 id: `home.student.learningOutcomeWidget.skill2`,
             }),
             "achieved": 17,
-            "notAchieved": 13
+            "notAchieved": 13,
         },
         {
             "skill": intl.formatMessage({
                 id: `home.student.learningOutcomeWidget.skill3`,
             }),
             "achieved": 20,
-            "notAchieved": 7
+            "notAchieved": 7,
         },
         {
             "skill": intl.formatMessage({
                 id: `home.student.learningOutcomeWidget.skill4`,
             }),
             "achieved": 17,
-            "notAchieved": 5
+            "notAchieved": 5,
         },
         {
             "skill": intl.formatMessage({
                 id: `home.student.learningOutcomeWidget.skill5`,
             }),
             "achieved": 10,
-            "notAchieved": 7
-        }
+            "notAchieved": 7,
+        },
     ]
 
     return (

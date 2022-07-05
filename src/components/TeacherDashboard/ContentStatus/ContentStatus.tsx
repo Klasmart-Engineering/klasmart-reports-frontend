@@ -109,7 +109,7 @@ const ContentStatusWidget: React.VFC<ContentStatusWidgetProps> = (props) => {
                 })
             }
             link={{
-                url: `library/organization-content`,
+                url: `/#/library/organization-content`,
                 label: intl.formatMessage({
                     id: `home.contentStatus.containerUrlLabel`,
                 }),
