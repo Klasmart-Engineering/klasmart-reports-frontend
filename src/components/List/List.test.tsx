@@ -1,4 +1,4 @@
-import render from "../../../tests/utils/render";
+import render from "tests/utils/render";
 import { screen } from "@testing-library/react";
 import List, { ListProps } from "./List";
 import React, {useEffect} from "react";
