@@ -105,11 +105,11 @@ const TeacherLoadNoData: React.VFC = () => {
     const unixNext7daysIncludeToday = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 7, 23, 59, 59)
         .getTime();
     const svgPathAttributes = {
-        "marker-start": "url(#circle)",
-        "marker-end": "url(#arrow)",
+        "markerStart": "url(#circle)",
+        "markerEnd": "url(#arrow)",
         "fill": "none",
         "stroke": theme.palette.primary.main,
-        "stroke-width": 1,
+        "strokeWidth": 1,
         "strokeDasharray": 3,
     }
 
