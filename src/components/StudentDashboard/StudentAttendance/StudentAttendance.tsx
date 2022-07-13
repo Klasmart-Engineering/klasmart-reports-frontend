@@ -22,9 +22,9 @@ import {
     useIntl,
 } from "react-intl";
 import { currentOrganizationState, useGlobalStateValue } from "@kl-engineering/frontend-state";
-import StudentAttendanceNoData from "./StudentAttendenceNoData";
+import StudentAttendanceNoData from "./StudentAttendanceNoData/StudentAttendanceNoData";
 import { HomeScreenWidgetWrapper } from "@kl-engineering/kidsloop-px";
-import WidgetWrapperError from "@/components/WidgetWrapper";
+import WidgetWrapperError from "@/components/WidgetWrapperError";
 import { Context } from "@/components/models/widgetContext";
 import { WidgetType } from "@/components/models/widget.model";
 import React from "react";

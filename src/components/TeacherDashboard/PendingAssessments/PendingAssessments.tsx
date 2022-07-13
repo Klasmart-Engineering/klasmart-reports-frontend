@@ -1,5 +1,5 @@
 import pendingAssesmentsDataFormatter from "./pendingAssesmentsDataFormatter";
-import ProgressBar from "./ProgressBar";
+import ProgressBar from "./ProgressBar/ProgressBar";
 import { useGetPendingAssignments } from "@kl-engineering/reports-api-client";
 import { List, ListItem, SvgIcon, Theme, Typography } from "@mui/material";
 import createStyles from '@mui/styles/createStyles';
@@ -12,11 +12,11 @@ import {
     useIntl,
 } from "react-intl";
 import { currentOrganizationState, useGlobalStateValue } from "@kl-engineering/frontend-state";
-import PendingAssessmentsNoData from "./PendingAssesmentsNoData";
+import PendingAssessmentsNoData from "./PendingAssessmentsNoData";
 import { HomeScreenWidgetWrapper } from "@kl-engineering/kidsloop-px";
 import { Context } from "@/components/models/widgetContext";
 import { WidgetType } from "@/components/models/widget.model";
-import WidgetWrapperError from "@/components/WidgetWrapper";
+import WidgetWrapperError from "@/components/WidgetWrapperError";
 import React from "react";
 
 const useStyles = makeStyles((theme: Theme) => createStyles({

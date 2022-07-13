@@ -112,6 +112,7 @@ const webpackConfig = (env: any, args: any): webpack.Configuration => ({
                 '@mui/styles': {
                     singleton: true,
                     shareKey: `reports`,
+                    requiredVersion: pkg.dependencies[`@mui/styles`],
                 },
                 '@emotion/react': {
                     singleton: true,

@@ -7,6 +7,7 @@ import {
 import React,
 {
     createRef,
+    RefObject,
     useEffect,
     useRef,
 } from "react";
@@ -43,7 +44,7 @@ export interface LinePathProps {
 
 const LinePath: React.VFC<LinePathProps> = (props) => {
     const classes = useStyles();
-    const connectorsRef: RefObject<SVGPathElement> = useRef(props.mockData.map(() => createRef()));
+    const connectorsRef: any = useRef(props.mockData.map(() => createRef()));
 
     useEffect(() => {
         const slider = document.querySelector(`#slider`)?.getBoundingClientRect();

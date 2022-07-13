@@ -80,7 +80,6 @@ const useStyles = makeStyles((theme: Theme) =>
 
 export interface NoDataMessageWrapperProps {
     id: string;
-    defaultMessage?: string;
     children?: React.ReactNode;
     backdrop?: boolean;
     buttonLink?: string;
@@ -115,11 +114,12 @@ const NoDataMessageWrapper: React.FC<NoDataMessageWrapperProps> = (props) => {
                 <Box className={classes.message}>
                     <img src={lightBulb} alt="bulb" width={15} />
                     <Typography color={theme.palette.common.black} className={classes.messageText} fontWeight={400}>
-                        <FormattedMessage id={props.id} defaultMessage={props.defaultMessage} />
+                        <FormattedMessage id={props.id} />
                     </Typography>
                 </Box>
                 {props.buttonLink &&
                     <Link
+                        role="button"
                         underline="none"
                         href={props.buttonLink}
                         sx={{

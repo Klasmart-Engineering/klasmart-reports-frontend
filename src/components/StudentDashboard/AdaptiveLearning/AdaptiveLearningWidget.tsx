@@ -15,7 +15,7 @@ import { ParentSize } from "@visx/responsive";
 import { useIntl } from "react-intl";
 import AdaptiveLearningNoData from "./AdaptiveLearningWidgetNoData";
 import { HomeScreenWidgetWrapper } from "@kl-engineering/kidsloop-px";
-import WidgetWrapperError from "@/components/WidgetWrapper";
+import WidgetWrapperError from "@/components/WidgetWrapperError";
 import { Context } from "@/components/models/widgetContext";
 import { WidgetType } from "@/components/models/widget.model";
 import React from "react";

@@ -25,7 +25,7 @@ import {
 import { currentOrganizationState, useGlobalStateValue } from "@kl-engineering/frontend-state";
 import AchievementNoData from "./AchievementNoData";
 import { HomeScreenWidgetWrapper } from "@kl-engineering/kidsloop-px";
-import WidgetWrapperError from "@/components/WidgetWrapper";
+import WidgetWrapperError from "@/components/WidgetWrapperError";
 import { WidgetType } from "@/components/models/widget.model";
 import { Context } from "@/components/models/widgetContext";
 

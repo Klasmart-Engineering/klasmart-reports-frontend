@@ -1,11 +1,11 @@
-import BarChart from "./BarChart";
+import BarChart from "./BarChart/BarChart";
 import { useGetStudentLearningOutcome } from "@kl-engineering/reports-api-client";
 import { ParentSize } from "@visx/responsive";
 import { useIntl } from "react-intl";
 import { currentOrganizationState, useGlobalStateValue } from "@kl-engineering/frontend-state";
-import LearningOutcomeSummaryNoData from "./LearningOutcomeSummaryNoData";
+import LearningOutcomeSummaryNoData from "./LearningOutcomeSummaryNoData/LearningOutcomeSummaryNoData";
 import { HomeScreenWidgetWrapper } from "@kl-engineering/kidsloop-px";
-import WidgetWrapperError from "@/components/WidgetWrapper";
+import WidgetWrapperError from "@/components/WidgetWrapperError";
 import { Context } from "@/components/models/widgetContext";
 import { WidgetType } from "@/components/models/widget.model";
 import React from "react";

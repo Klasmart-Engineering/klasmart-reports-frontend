@@ -27,3 +27,5 @@ export type Context = {
     layouts: Layouts;
     view: WidgetView | null;
 }
+
+export const defaultContext = {} as Context;

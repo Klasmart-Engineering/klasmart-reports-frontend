@@ -6,20 +6,29 @@ import {
     RawIntlProvider,
 } from 'react-intl';
 import { GlobalStateProvider } from '@kl-engineering/frontend-state';
+import ThemeProvider from "../../src/theme/provider";
+import ReportsApiClientProvider from '../../src/providers/ReportsApiClient';
+import CmsReportsApiClientProvider from '../../src/providers/CmsApiClient';
 
 export interface RenderOptions {
     locale?: IntlShape;
 }
 
-export default function render (component: React.ReactNode, options: RenderOptions = {}) {
+export default function render(component: React.ReactNode, options: RenderOptions = {}) {
     const {
         locale = defaultLanguage,
     } = options;
     return RTLRender((
         <GlobalStateProvider cookieDomain={process.env.COOKIE_DOMAIN ?? ``}>
-            <RawIntlProvider value={locale}>
-                {component}
-            </RawIntlProvider>
-        </GlobalStateProvider>
+            <ReportsApiClientProvider>
+                <CmsReportsApiClientProvider>
+                    <RawIntlProvider value={locale}>
+                        <ThemeProvider>
+                            {component}
+                        </ThemeProvider>
+                    </RawIntlProvider>
+                </CmsReportsApiClientProvider>
+            </ReportsApiClientProvider>
+        </GlobalStateProvider >
     ));
 };

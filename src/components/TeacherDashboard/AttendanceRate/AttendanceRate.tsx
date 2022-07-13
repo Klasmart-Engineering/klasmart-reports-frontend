@@ -20,8 +20,8 @@ import {
     useIntl,
 } from "react-intl";
 import { currentOrganizationState, useGlobalStateValue } from "@kl-engineering/frontend-state";
-import AttendanceRateNoData from "./AttendanceRateNoData";
-import WidgetWrapperError from "@/components/WidgetWrapper";
+import AttendanceRateNoData from "./AttendanceRateNoData/AttendanceRateNoData";
+import WidgetWrapperError from "@/components/WidgetWrapperError";
 import { Context } from "@/components/models/widgetContext";
 import { WidgetType } from "@/components/models/widget.model";
 import React from "react";

@@ -2,7 +2,7 @@ import { currentOrganizationState, useGlobalStateValue } from "@kl-engineering/f
 import { useGetStudentAssignmentCompletion } from "@kl-engineering/reports-api-client";
 import { FiberManualRecord } from "@mui/icons-material";
 import { HomeScreenWidgetWrapper } from "@kl-engineering/kidsloop-px";
-import CompletionNoData from "./CompletionNoData";
+import CompletionNoData from "./CompletionNoData/CompletionNoData";
 import {
     Theme,
     Typography,
@@ -18,7 +18,7 @@ import {
 } from "react-intl";
 import { WidgetType } from "@/components/models/widget.model";
 import { Context } from "@/components/models/widgetContext"
-import WidgetWrapperError from "@/components/WidgetWrapper";
+import WidgetWrapperError from "@/components/WidgetWrapperError";
 import React from "react";
 
 const useStyles = makeStyles(((theme: Theme) => createStyles({

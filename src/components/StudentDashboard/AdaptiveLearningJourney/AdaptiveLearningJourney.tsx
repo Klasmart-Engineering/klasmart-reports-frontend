@@ -23,7 +23,7 @@ import {
 import { useIntl } from "react-intl";
 import { useResizeDetector } from "react-resize-detector";
 import { HomeScreenWidgetWrapper } from "@kl-engineering/kidsloop-px";
-import WidgetWrapperError from "@/components/WidgetWrapper";
+import WidgetWrapperError from "@/components/WidgetWrapperError";
 import { Context } from "@/components/models/widgetContext";
 import { WidgetType } from "@/components/models/widget.model";
 import React from "react";
@@ -155,7 +155,7 @@ const AdaptiveLearningJourney: React.FC<AdaptiveLearningJourneyProps> = (props) 
     const [connectorSVGHeight, setConnectorSVGHeight] = useState(0);
     const [isVerticalMode, setIsverticalMode] = useState(width ? width < VERTICAL_MODE_BREAKPOINT : false);
     const [open, setOpen] = useState(false);
-    const [noData, setNoData] = useState(true);
+    const [noData, setNoData] = useState(false);
     const { editing = false, removeWidget, layouts, widgets } = props.widgetContext;
     const onRemove = () => removeWidget(WidgetType.ADAPTIVELEARNINGJOURNEY, widgets, layouts);
 
