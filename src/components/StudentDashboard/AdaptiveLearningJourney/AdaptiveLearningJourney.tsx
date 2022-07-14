@@ -155,7 +155,7 @@ const AdaptiveLearningJourney: React.FC<AdaptiveLearningJourneyProps> = (props) 
     const [connectorSVGHeight, setConnectorSVGHeight] = useState(0);
     const [isVerticalMode, setIsverticalMode] = useState(width ? width < VERTICAL_MODE_BREAKPOINT : false);
     const [open, setOpen] = useState(false);
-    const [noData, setNoData] = useState(false);
+    const [noData, setNoData] = useState(true);
     const { editing = false, removeWidget, layouts, widgets } = props.widgetContext;
     const onRemove = () => removeWidget(WidgetType.ADAPTIVELEARNINGJOURNEY, widgets, layouts);
 

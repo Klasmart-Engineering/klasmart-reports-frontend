@@ -96,7 +96,7 @@ const StudentAttendanceWidget: React.FC<StudentAttendanceWidgetProps> = (props) 
                     id: `home.student.attendanceWidget.containerTitleLabel`,
                 })
             }
-            noData={!attendanceData?.length}
+            noData={!data?.successful}
             loading={isStudentAttendanceLoading}
             error={!isStudentAttendanceSuccess}
             errorScreen={<WidgetWrapperError reload={refetch} />}

@@ -8,8 +8,8 @@ describe(`AdaptiveLearningJourneyNoData`, () => {
         test(`AdaptiveLearningJourneyNoData renders correctly`, () => {
             render(<AdaptiveLearningJourneyNoData />);
 
-            expect(screen.queryByText(`Sample`)).toBeInTheDocument();
-            expect(screen.queryByText(`Visually follow your Adaptive learning journey with this interactive map.`)).toBeInTheDocument();
+            expect(screen.getByText(`Sample`)).toBeInTheDocument();
+            expect(screen.getByText(`Visually follow your Adaptive learning journey with this interactive map.`)).toBeInTheDocument();
         });
     });
 });

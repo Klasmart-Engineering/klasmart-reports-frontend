@@ -8,15 +8,15 @@ describe(`AdaptiveLearningWidgetNoData`, () => {
         test(`AdaptiveLearningWidgetNoData renders correctly`, () => {
             render(<AdaptiveLearningWidgetNoData />);
             
-            expect(screen.queryByText(`Learning Boost`)).toBeInTheDocument();
-            expect(screen.queryByText(`Total Auto Reviews`)).toBeInTheDocument();
-            expect(screen.queryByText(`Skills Improved`)).toBeInTheDocument();
-            expect(screen.queryByText(`Skills`)).toBeInTheDocument();
-            expect(screen.queryByText(`Classes`)).toBeInTheDocument();
-            expect(screen.queryByText(`With Review`)).toBeInTheDocument();
-            expect(screen.queryByText(`Without Auto Review`)).toBeInTheDocument();
-            expect(screen.queryByText(`Top 3 improved skills`)).toBeInTheDocument();
-            expect(screen.queryByText(`Keep track of how much your skills are improving with adaptive learning`)).toBeInTheDocument();
+            expect(screen.getByText(`Learning Boost`)).toBeInTheDocument();
+            expect(screen.getByText(`Total Auto Reviews`)).toBeInTheDocument();
+            expect(screen.getByText(`Skills Improved`)).toBeInTheDocument();
+            expect(screen.getByText(`Skills`)).toBeInTheDocument();
+            expect(screen.getByText(`Classes`)).toBeInTheDocument();
+            expect(screen.getByText(`With Review`)).toBeInTheDocument();
+            expect(screen.getByText(`Without Auto Review`)).toBeInTheDocument();
+            expect(screen.getByText(`Top 3 improved skills`)).toBeInTheDocument();
+            expect(screen.getByText(`Keep track of how much your skills are improving with adaptive learning`)).toBeInTheDocument();
         });
     });
 });
