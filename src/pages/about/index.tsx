@@ -1,48 +1,21 @@
-import ErrorBoundary from "@/components/ErrorBoundary";
-import List from "@/components/List";
-import ListItem from "@/components/ListItem";
-import { GlobalStateProvider } from "@kl-engineering/frontend-state";
-import React, { useState } from "react";
-import { useResizeDetector } from "react-resize-detector";
+import { Box, Typography } from "@mui/material";
 
 interface AboutPageProps {
 }
 
-export default function AboutPage (props: AboutPageProps) {
-    const [ state, setState ] = useState(true);
-    const {ref, width = 0} = useResizeDetector();
+const AboutPage: React.VFC<AboutPageProps> = (props) => {
     return (
-        <GlobalStateProvider cookieDomain={process.env.COOKIE_DOMAIN ?? ``}>
-            <button onClick={() => setState((state) => !state)}>Toggle state</button>
-            <div ref={ref}>
-                <div>About</div>
-                <div style={{
-                    display: `flex`,
-                    backgroundColor: width > 300 ? `#ff000040` : `#0000ff40`,
-                    flexDirection: width > 300 ? `row` : `column`,
-                }}>
-                    <div>Woop</div>
-                    <div>Nooice</div>
-                    {state ? (
-                        <ErrorBoundary FallbackComponent={
-                            <h1 style={{backgroundColor: `red`}}>Something went wrong.</h1>
-                        }>
-                            <React.Suspense fallback={<div>Whaddap yo</div>}>
-                                <List
-                                    header="Nice woop woop"
-                                    items={[]}
-                                />
-                            </React.Suspense>
-                        </ErrorBoundary>
-                    ) : (
-                        <ErrorBoundary FallbackComponent={<h1 style={{backgroundColor: `blue`}}>Something went wrong.</h1>}>
-                            <React.Suspense fallback={<div>Whaddap yo</div>}>
-                                <ListItem title="Some cool title"/>
-                            </React.Suspense>
-                        </ErrorBoundary>
-                    )}
-                </div>
-            </div>
-        </GlobalStateProvider>
+        <Box>
+            <Typography>About</Typography>
+            <Box style={{
+                backgroundColor: `#ff000040`,
+            }}>
+                <Typography>
+                    Reports widgets for Student and Teacher dashboard in the HUB.
+                </Typography>
+            </Box>
+        </Box>
     );
 }
+
+export default AboutPage;

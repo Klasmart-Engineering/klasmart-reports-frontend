@@ -1,6 +1,6 @@
 import render from "../../../../tests/utils/render";
 import CompletionWidget from "./CompletionWidget";
-import { defaultContext as defaultWidgetContext } from "../../models/widgetContext";
+import { BaseWidgetProps } from "../../models/widget.model";
 import { studentAssignmentCompletionMockData } from "../../../../tests/widgetsMockData";
 import { screen } from "@testing-library/react";
 import React from "react";
@@ -18,6 +18,12 @@ reportsApi.useGetStudentAssignmentCompletion = jest.fn() as jest.Mock;
 describe(`CompletionWidget`, () => {
 
     describe(`Render`, () => {
+        
+        const defaultProps: BaseWidgetProps = {
+            editing: false,
+            onRemove: jest.fn(),
+        }
+
         test(`Completion widget without error`, () => {
             reportsApi.useGetStudentAssignmentCompletion = (() => ({
                 data: studentAssignmentCompletionMockData,
@@ -26,11 +32,7 @@ describe(`CompletionWidget`, () => {
                 refetch: jest.fn(),
             }));
 
-            render((
-                <CompletionWidget
-                    widgetContext={defaultWidgetContext}
-                />
-            ));
+            render(<CompletionWidget {...defaultProps}/>);
 
             expect(screen.getByText(`83%`)).toBeInTheDocument();
             expect(screen.getByText(`17%`)).toBeInTheDocument();
@@ -47,11 +49,7 @@ describe(`CompletionWidget`, () => {
                 refetch: jest.fn(),
             }));
 
-            render((
-                <CompletionWidget
-                    widgetContext={defaultWidgetContext}
-                />
-            ));
+            render(<CompletionWidget {...defaultProps}/>);
 
             expect(screen.getByText("Oops!")).toBeInTheDocument();
             expect(screen.getByText("The data cannot be loaded, please try again later!")).toBeInTheDocument();
@@ -69,11 +67,7 @@ describe(`CompletionWidget`, () => {
                 refetch: jest.fn(),
             }));
 
-            render((
-                <CompletionWidget
-                    widgetContext={defaultWidgetContext}
-                />
-            ));
+            render(<CompletionWidget {...defaultProps}/>);
 
             expect(screen.getByText(`Get a summary of the completion status of all assignments from your teacher`)).toBeInTheDocument();
             expect(screen.getByText(`This week`)).toBeInTheDocument();

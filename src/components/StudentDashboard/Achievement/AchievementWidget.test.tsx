@@ -1,6 +1,6 @@
 import render from "../../../../tests/utils/render";
+import { BaseWidgetProps } from "../../models/widget.model";
 import AchievementWidget from "./AchievementWidget";
-import { defaultContext as defaultWidgetContext } from "../../models/widgetContext";
 import { screen } from "@testing-library/react";
 import { studentAcheivementMockData } from "../../../../tests/widgetsMockData";
 import React from "react";
@@ -17,7 +17,12 @@ reportsApi.useGetStudentLearningOutcome = jest.fn() as jest.Mock;
 describe(`AchievementWidget`, () => {
     
     describe(`Render`, () => {
-        beforeEach(() => jest.resetModules());
+        
+        const defaultProps: BaseWidgetProps = {
+            editing: false,
+            onRemove: jest.fn(),
+        }
+
         test(`Achievement widget without error`, () => {
             reportsApi.useGetStudentLearningOutcome = (() => ({
                 data: studentAcheivementMockData,
@@ -26,11 +31,7 @@ describe(`AchievementWidget`, () => {
                 refetch: jest.fn(),
             }));
 
-            render((
-                <AchievementWidget
-                    widgetContext={defaultWidgetContext}
-                />
-            ));
+            render(<AchievementWidget {...defaultProps}/>);
 
             expect(screen.getByText(20)).toBeInTheDocument();
             expect(screen.getByText(40)).toBeInTheDocument();
@@ -48,11 +49,7 @@ describe(`AchievementWidget`, () => {
                 refetch: jest.fn(),
             }));
 
-            render((
-                <AchievementWidget
-                    widgetContext={defaultWidgetContext}
-                />
-            ));
+            render(<AchievementWidget {...defaultProps}/>);
 
             expect(screen.getByText("Oops!")).toBeInTheDocument();
             expect(screen.getByText("The data cannot be loaded, please try again later!")).toBeInTheDocument();

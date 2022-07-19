@@ -16,8 +16,7 @@ import { useIntl } from "react-intl";
 import AdaptiveLearningNoData from "./AdaptiveLearningWidgetNoData";
 import { HomeScreenWidgetWrapper } from "@kl-engineering/kidsloop-px";
 import WidgetWrapperError from "@/components/WidgetWrapperError";
-import { Context } from "@/components/models/widgetContext";
-import { WidgetType } from "@/components/models/widget.model";
+import { BaseWidgetProps } from "@/components/models/widget.model";
 import React from "react";
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -118,9 +117,7 @@ export interface LabelProps {
     type: string;
 }
 
-export interface AdaptiveLearningWidgetProps {
-    widgetContext: Context;
-}
+export interface AdaptiveLearningWidgetProps extends BaseWidgetProps {};
 
 const AdaptiveLearningWidget: React.FC<AdaptiveLearningWidgetProps> = (props) => {
     const intl = useIntl();
@@ -128,8 +125,6 @@ const AdaptiveLearningWidget: React.FC<AdaptiveLearningWidgetProps> = (props) =>
     const theme = createTheme();
     const legendColorRange = [theme.palette.info.light, theme.palette.grey[500]];
     const chartColorRange = [theme.palette.grey[500], theme.palette.info.light];
-    const { editing = false, removeWidget, layouts, widgets } = props.widgetContext;
-    const onRemove = () => removeWidget(WidgetType.ADAPTIVELEARNING, widgets, layouts);
 
     // TODO: Mock data
     const data = [
@@ -194,8 +189,8 @@ const AdaptiveLearningWidget: React.FC<AdaptiveLearningWidgetProps> = (props) =>
             errorScreen={<WidgetWrapperError reload={() => {return;}} />}
             noData={true}
             noDataScreen={<AdaptiveLearningNoData />}
-            editing={editing}
-            onRemove={onRemove}
+            editing={props.editing}
+            onRemove={props.onRemove}
         >
             <Box className={classes.widgetContent}>
                 <ChartLegend

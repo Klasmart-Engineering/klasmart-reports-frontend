@@ -1,4 +1,4 @@
-import { WidgetType } from "../../models/widget.model";
+import { BaseWidgetProps } from "@/components/models/widget.model";
 import { usePostSchedulesTimeViewList } from "@kl-engineering/cms-api-client";
 import { useClassTeacherLoad } from "@kl-engineering/reports-api-client";
 import {
@@ -23,7 +23,6 @@ import { currentOrganizationState, useGlobalStateValue } from "@kl-engineering/f
 import TeacherLoadNoData from "./TeacherLoadNoData/TeacherLoadNoData";
 import { HomeScreenWidgetWrapper } from "@kl-engineering/kidsloop-px";
 import WidgetWrapperError from "@/components/WidgetWrapperError";
-import { Context } from "@/components/models/widgetContext";
 import React from "react";
 
 const useStyles = makeStyles(((theme: Theme) => createStyles({
@@ -80,9 +79,8 @@ const useStyles = makeStyles(((theme: Theme) => createStyles({
         color: theme.palette.info.main,
     },
 })));
-export interface TeacherLoadWidgetProps {
-    widgetContext: Context;
-}
+
+export interface TeacherLoadWidgetProps extends BaseWidgetProps {};
 
 const TeacherLoadWidget: React.VFC<TeacherLoadWidgetProps> = (props) => {
     const classes = useStyles();
@@ -92,8 +90,6 @@ const TeacherLoadWidget: React.VFC<TeacherLoadWidgetProps> = (props) => {
     const [upcomingClasses, setUpcomingClasses] = useState<(number)>(0);
     const currentOrganization = useGlobalStateValue(currentOrganizationState);
     const organizationId = currentOrganization?.id ?? ``;
-    const { editing = false, removeWidget, layouts, widgets } = props.widgetContext;
-    const onRemove = () => removeWidget(WidgetType.TEACHERLOAD, widgets, layouts);
 
     const now = new Date();
     const unixStartOfDay = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 0, 0, 0)
@@ -159,8 +155,8 @@ const TeacherLoadWidget: React.VFC<TeacherLoadWidgetProps> = (props) => {
             errorScreen={<WidgetWrapperError reload={reload} />}
             noData={!teacherData?.successful || !schedulesData?.data}
             noDataScreen={<TeacherLoadNoData />}
-            editing={editing}
-            onRemove={onRemove}
+            editing={props.editing}
+            onRemove={props.onRemove}
         >
             <div className={classes.widgetContent}>
                 <ul className={classes.list}>

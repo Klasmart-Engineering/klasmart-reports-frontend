@@ -14,8 +14,7 @@ import {
 import { currentOrganizationState, useGlobalStateValue } from "@kl-engineering/frontend-state";
 import PendingAssessmentsNoData from "./PendingAssessmentsNoData";
 import { HomeScreenWidgetWrapper } from "@kl-engineering/kidsloop-px";
-import { Context } from "@/components/models/widgetContext";
-import { WidgetType } from "@/components/models/widget.model";
+import { BaseWidgetProps } from "@/components/models/widget.model";
 import WidgetWrapperError from "@/components/WidgetWrapperError";
 import React from "react";
 
@@ -68,18 +67,14 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
         fontSize: 10,
     },
 }));
-export interface PendingAssessmentsWidgetProps {
-    widgetContext: Context;
-}
+
+export interface PendingAssessmentsWidgetProps extends BaseWidgetProps {};
 
 const PendingAssessmentsWidget: React.FC<PendingAssessmentsWidgetProps> = (props) => {
     const intl = useIntl();
     const classes = useStyles();
     const currentOrganization = useGlobalStateValue(currentOrganizationState);
     const organizationId = currentOrganization?.id ?? ``;
-    const { editing = false, removeWidget, layouts, widgets } = props.widgetContext;
-    const onRemove = () => removeWidget(WidgetType.PENDINGASSESSMENTS, widgets, layouts);
-
     const {
         data,
         isFetching,
@@ -114,8 +109,8 @@ const PendingAssessmentsWidget: React.FC<PendingAssessmentsWidgetProps> = (props
             errorScreen={<WidgetWrapperError reload={refetch} />}
             noData={!data?.successful}
             noDataScreen={<PendingAssessmentsNoData />}
-            editing={editing}
-            onRemove={onRemove}
+            editing={props.editing}
+            onRemove={props.onRemove}
         >
             <div className={classes.widgetContent}>
                 <div className={classes.titleWrapper}>

@@ -26,8 +26,7 @@ import { currentOrganizationState, useGlobalStateValue } from "@kl-engineering/f
 import AchievementNoData from "./AchievementNoData";
 import { HomeScreenWidgetWrapper } from "@kl-engineering/kidsloop-px";
 import WidgetWrapperError from "@/components/WidgetWrapperError";
-import { WidgetType } from "@/components/models/widget.model";
-import { Context } from "@/components/models/widgetContext";
+import { BaseWidgetProps } from "@/components/models/widget.model";
 
 const useStyles = makeStyles((theme: Theme) => createStyles({
     widgetContent: {
@@ -92,9 +91,7 @@ export interface AchievementData {
     count: number;
     color: string;
 }
-export interface AchievementWidgetProps {
-    widgetContext: Context;
-}
+export interface AchievementWidgetProps extends BaseWidgetProps {};
 
 const AchievementWidget: React.FC<AchievementWidgetProps> = (props) => {
     const intl = useIntl();
@@ -103,8 +100,6 @@ const AchievementWidget: React.FC<AchievementWidgetProps> = (props) => {
     const [total, setTotal] = useState(0);
     const currentOrganization = useGlobalStateValue(currentOrganizationState);
     const organizationId = currentOrganization?.id ?? ``;
-    const { editing = false, removeWidget, layouts, widgets } = props.widgetContext;
-    const onRemove = () => removeWidget(WidgetType.ACHIEVEMENT, widgets, layouts);
 
     const {
         data,
@@ -116,6 +111,9 @@ const AchievementWidget: React.FC<AchievementWidgetProps> = (props) => {
     });
 
     const [achievementData, setAchievementData] = useState<AchievementData[]>([]);
+    const reload = () => {
+        achievementDataRefetch();
+    };
     useEffect(() => {
         const { learning_outcomes } = data?.info || {};
         if (!learning_outcomes) return;
@@ -139,9 +137,6 @@ const AchievementWidget: React.FC<AchievementWidgetProps> = (props) => {
         setAchievementData(generatedAchievementData);
         setTotal(sumBy(generatedAchievementData, (item) => item.count));
     }, [data]);
-    const reload = () => {
-        achievementDataRefetch();
-    };
 
     return (
         <HomeScreenWidgetWrapper
@@ -155,8 +150,8 @@ const AchievementWidget: React.FC<AchievementWidgetProps> = (props) => {
             errorScreen={<WidgetWrapperError reload={reload} />}
             noData={!data?.successful}
             noDataScreen={<AchievementNoData />}
-            editing={editing}
-            onRemove={onRemove}
+            editing={props.editing}
+            onRemove={props.onRemove}
         >
             <div className={classes.widgetContent}>
                 <div className={classes.titleWrapper}>

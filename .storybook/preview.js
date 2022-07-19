@@ -1,5 +1,4 @@
 import LocaleProvider from "../src/locale/Provider";
-import UserServiceProvider from "../src/api/user-service/Provider";
 import ThemeProvider from "../src/theme/provider";
 import ReportsApiClientProvider from "../src/providers/ReportsApiClient";
 import CmsReportsApiClientProvider from "../src/providers/CmsApiClient";
@@ -59,19 +58,17 @@ const withProviders = (Story, context) => {
     const { locale } = context.globals;
     return (
       <GlobalStateProvider cookieDomain={process.env.COOKIE_DOMAIN ?? ``}>
-        <UserServiceProvider>
-          <ReportsApiClientProvider>
-            <CmsReportsApiClientProvider>
-              <LocaleProvider locale={locale}>
-                <ThemeProvider>
-                  <AppProvider>
-                    <Story {...context} />
-                  </AppProvider>
-                </ThemeProvider>
-              </LocaleProvider>
-            </CmsReportsApiClientProvider>
-          </ReportsApiClientProvider>
-        </UserServiceProvider>
+        <ReportsApiClientProvider>
+          <CmsReportsApiClientProvider>
+            <LocaleProvider locale={locale}>
+              <ThemeProvider>
+                <AppProvider>
+                  <Story {...context} />
+                </AppProvider>
+              </ThemeProvider>
+            </LocaleProvider>
+          </CmsReportsApiClientProvider>
+        </ReportsApiClientProvider>
       </GlobalStateProvider>
     )
 }

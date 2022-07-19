@@ -6,8 +6,7 @@ import { currentOrganizationState, useGlobalStateValue } from "@kl-engineering/f
 import LearningOutcomeSummaryNoData from "./LearningOutcomeSummaryNoData/LearningOutcomeSummaryNoData";
 import { HomeScreenWidgetWrapper } from "@kl-engineering/kidsloop-px";
 import WidgetWrapperError from "@/components/WidgetWrapperError";
-import { Context } from "@/components/models/widgetContext";
-import { WidgetType } from "@/components/models/widget.model";
+import { BaseWidgetProps } from "@/components/models/widget.model";
 import React from "react";
 
 export interface UniqueSkillConversionType {
@@ -22,17 +21,12 @@ export interface SkillTypeForGraph {
     achieved: number;
     notAchieved: number;
 }
-export interface LearningOutcomeSummaryProps { 
-    widgetContext: Context;
-}
+export interface LearningOutcomeSummaryProps extends BaseWidgetProps {};
 
 const LearningOutcomeSummary: React.FC<LearningOutcomeSummaryProps> = (props) => {
     const intl = useIntl();
     const currentOrganization = useGlobalStateValue(currentOrganizationState);
     const organizationId = currentOrganization?.id ?? ``;
-    const { editing = false, removeWidget, layouts, widgets } = props.widgetContext;
-    const onRemove = () => removeWidget(WidgetType.LEARNINGOUTCOME, widgets, layouts);
-
     const {
         data,
         isLoading: isLearingOutcomeLoading,
@@ -87,8 +81,8 @@ const LearningOutcomeSummary: React.FC<LearningOutcomeSummaryProps> = (props) =>
             errorScreen={<WidgetWrapperError reload={refetch}/>}
             noData={!data?.successful}
             noDataScreen={<LearningOutcomeSummaryNoData />}
-            editing={editing}
-            onRemove={onRemove}
+            editing={props.editing}
+            onRemove={props.onRemove}
         >
             <ParentSize>
                 {({ width, height }: { width: number, height: number }) => (

@@ -1,6 +1,6 @@
 import render from "../../../../tests/utils/render";
 import PendingAssessments from "./PendingAssessments";
-import { defaultContext as defaultWidgetContext } from "../../models/widgetContext";
+import { BaseWidgetProps } from "../../models/widget.model";
 import { screen } from "@testing-library/react";
 import { teacherPendingAssessmentsMockData } from "../../../../tests/widgetsMockData";
 import React from "react";
@@ -18,6 +18,12 @@ reportsApi.useGetPendingAssignments = jest.fn() as jest.Mock;
 describe(`PendingAssessments`, () => {
 
     describe(`Render`, () => {
+        
+        const defaultProps: BaseWidgetProps = {
+            editing: false,
+            onRemove: jest.fn(),
+        }
+
         test(`Pending Assessments widget without error`, () => {
             reportsApi.useGetPendingAssignments = (() => ({
                 data: teacherPendingAssessmentsMockData,
@@ -26,11 +32,7 @@ describe(`PendingAssessments`, () => {
                 refetch: jest.fn(),
             }));
 
-            render((
-                <PendingAssessments
-                    widgetContext={defaultWidgetContext}
-                />
-            ));
+            render(<PendingAssessments {...defaultProps}/>);
 
             expect(screen.getByText("All time")).toBeInTheDocument();
             expect(screen.getByText("Live")).toBeInTheDocument();
@@ -47,11 +49,7 @@ describe(`PendingAssessments`, () => {
                 refetch: jest.fn(),
             }));
 
-            render((
-                <PendingAssessments
-                    widgetContext={defaultWidgetContext}
-                />
-            ));
+            render(<PendingAssessments {...defaultProps}/>);
 
             expect(screen.getByText("Oops!")).toBeInTheDocument();
             expect(screen.getByText("The data cannot be loaded, please try again later!")).toBeInTheDocument();
@@ -69,11 +67,7 @@ describe(`PendingAssessments`, () => {
                 refetch: jest.fn(),
             }));
 
-            render((
-                <PendingAssessments
-                    widgetContext={defaultWidgetContext}
-                />
-            ));
+            render(<PendingAssessments {...defaultProps}/>);
 
             expect(screen.getByText("Schedule classes to start an assessment of your students.")).toBeInTheDocument();
             expect(screen.getByText("Schedule a class")).toBeInTheDocument();

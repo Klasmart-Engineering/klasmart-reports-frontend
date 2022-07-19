@@ -22,8 +22,7 @@ import {
 import { currentOrganizationState, useGlobalStateValue } from "@kl-engineering/frontend-state";
 import AttendanceRateNoData from "./AttendanceRateNoData/AttendanceRateNoData";
 import WidgetWrapperError from "@/components/WidgetWrapperError";
-import { Context } from "@/components/models/widgetContext";
-import { WidgetType } from "@/components/models/widget.model";
+import { BaseWidgetProps } from "@/components/models/widget.model";
 import React from "react";
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -56,9 +55,7 @@ const useStyles = makeStyles((theme: Theme) =>
         },
     }));
 
-export interface AttendanceRateWidgetProps {
-    widgetContext: Context;
-}
+export interface AttendanceRateWidgetProps extends BaseWidgetProps {};
 
 const AttendanceRateWidget: React.VFC<AttendanceRateWidgetProps> = (props) => {
     const intl = useIntl();
@@ -68,9 +65,6 @@ const AttendanceRateWidget: React.VFC<AttendanceRateWidgetProps> = (props) => {
     const defaultView = width !== `xs`;
     const currentOrganization = useGlobalStateValue(currentOrganizationState);
     const organizationId = currentOrganization?.id ?? ``;
-    const { editing = false, removeWidget, layouts, widgets } = props.widgetContext;
-    const onRemove = () => removeWidget(WidgetType.ATTENDANCERATE, widgets, layouts);
-
     const {
         data,
         isFetching,
@@ -109,8 +103,8 @@ const AttendanceRateWidget: React.VFC<AttendanceRateWidgetProps> = (props) => {
             errorScreen={<WidgetWrapperError reload={refetch} />}
             noData={!data?.successful}
             noDataScreen={<AttendanceRateNoData />}
-            editing={editing}
-            onRemove={onRemove}
+            editing={props.editing}
+            onRemove={props.onRemove}
         >
             <div className={classes.titleWrapper}>
                 <FiberManualRecord className={classes.icon} />

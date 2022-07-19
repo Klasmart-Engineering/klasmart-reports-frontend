@@ -16,8 +16,7 @@ const Template: ComponentStory<typeof AdaptiveLearningWidget> = (args) => (
 
 export const Story = Template.bind({});
 Story.args = {
-  widgetContext: {
-    editing: false
-  }
+  editing: false,
+  onRemove: () => {return;},
 };
 Story.storyName = "AdaptiveLearningWidget"

@@ -1,6 +1,6 @@
 import render from "../../../../tests/utils/render";
 import AttendanceRate from "./AttendanceRate";
-import { defaultContext as defaultWidgetContext } from "../../models/widgetContext";
+import { BaseWidgetProps } from "../../models/widget.model";
 import { teacherAttendanceMockData } from "../../../../tests/widgetsMockData";
 import { screen } from "@testing-library/react";
 import React from "react";
@@ -17,6 +17,12 @@ reportsApi.useGetClassAttendanceRateGroup = jest.fn() as jest.Mock;
 describe(`AttendanceRate`, () => {
     
     describe(`Render`, () => {
+        
+        const defaultProps: BaseWidgetProps = {
+            editing: false,
+            onRemove: jest.fn(),
+        }
+
         test(`Attendance Rate widget without error`, () => {
             reportsApi.useGetClassAttendanceRateGroup = (() => ({
                 data: teacherAttendanceMockData,
@@ -25,11 +31,7 @@ describe(`AttendanceRate`, () => {
                 refetch: jest.fn(),
             }));
 
-            render((
-                <AttendanceRate
-                    widgetContext={defaultWidgetContext}
-                />
-            ));
+            render(<AttendanceRate {...defaultProps}/>);
 
             expect(screen.getByText("Last 7 days")).toBeInTheDocument();
             expect(screen.getByText("Students with low attendance")).toBeInTheDocument();
@@ -48,11 +50,7 @@ describe(`AttendanceRate`, () => {
                 refetch: jest.fn(),
             }));
 
-            render((
-                <AttendanceRate
-                    widgetContext={defaultWidgetContext}
-                />
-            ));
+            render(<AttendanceRate {...defaultProps}/>);
 
             expect(screen.getByText("Oops!")).toBeInTheDocument();
             expect(screen.getByText("The data cannot be loaded, please try again later!")).toBeInTheDocument();
@@ -70,11 +68,7 @@ describe(`AttendanceRate`, () => {
                 refetch: jest.fn(),
             }));
 
-            render((
-                <AttendanceRate
-                    widgetContext={defaultWidgetContext}
-                />
-            ));
+            render(<AttendanceRate {...defaultProps}/>);
 
             expect(screen.getByText("High attendance")).toBeInTheDocument();
             expect(screen.getByText("Medium attendance")).toBeInTheDocument();

@@ -25,8 +25,7 @@ import { currentOrganizationState, useGlobalStateValue } from "@kl-engineering/f
 import StudentAttendanceNoData from "./StudentAttendanceNoData/StudentAttendanceNoData";
 import { HomeScreenWidgetWrapper } from "@kl-engineering/kidsloop-px";
 import WidgetWrapperError from "@/components/WidgetWrapperError";
-import { Context } from "@/components/models/widgetContext";
-import { WidgetType } from "@/components/models/widget.model";
+import { BaseWidgetProps } from "@/components/models/widget.model";
 import React from "react";
 
 const useStyles = makeStyles((theme: Theme) => createStyles({
@@ -59,9 +58,7 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
 
 const PRIMARY_THEME_COLOR = `#0094FF`;
 
-export interface StudentAttendanceWidgetProps {
-    widgetContext: Context;
-}
+export interface StudentAttendanceWidgetProps extends BaseWidgetProps {};
 
 const StudentAttendanceWidget: React.FC<StudentAttendanceWidgetProps> = (props) => {
     const intl = useIntl();
@@ -72,8 +69,6 @@ const StudentAttendanceWidget: React.FC<StudentAttendanceWidgetProps> = (props) 
     const organizationPrimaryColor = currentOrganization?.branding?.primaryColor ?? (organizationName ? utils.stringToColor(organizationName) : PRIMARY_THEME_COLOR);
     const [attendanceData, setAttendanceData] = useState<LineChartData[]>([]);
     const [averageAttendance, setAverageAttendance] = useState(0);
-    const { editing = false, removeWidget, layouts, widgets } = props.widgetContext;
-    const onRemove = () => removeWidget(WidgetType.STUDENTATTENDANCE, widgets, layouts);
     const {
         data,
         isFetching: isStudentAttendanceLoading,
@@ -101,8 +96,8 @@ const StudentAttendanceWidget: React.FC<StudentAttendanceWidgetProps> = (props) 
             error={!isStudentAttendanceSuccess}
             errorScreen={<WidgetWrapperError reload={refetch} />}
             noDataScreen={<StudentAttendanceNoData />}
-            editing={editing}
-            onRemove={onRemove}
+            editing={props.editing}
+            onRemove={props.onRemove}
         >
             <Box className={classes.widgetContent}>
                 <Box className={classes.banner}>

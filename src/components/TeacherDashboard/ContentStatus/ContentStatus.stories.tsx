@@ -16,8 +16,7 @@ const Template: ComponentStory<typeof ContentStatus> = (args) => (
 
 export const Story = Template.bind({});
 Story.args = {
-  widgetContext: {
-    editing: false
-  }
+  editing: false,
+  onRemove: () => {return;},
 };
 Story.storyName = "ContentStatus"

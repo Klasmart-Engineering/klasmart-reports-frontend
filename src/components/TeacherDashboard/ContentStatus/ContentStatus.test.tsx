@@ -1,6 +1,6 @@
 import render from "../../../../tests/utils/render";
 import ContentStatus from "./ContentStatus";
-import { defaultContext as defaultWidgetContext } from "../../models/widgetContext";
+import { BaseWidgetProps } from "../../models/widget.model";
 import { screen } from "@testing-library/react";
 import { teacherContentStatusMockData } from "../../../../tests/widgetsMockData";
 import React from "react";
@@ -18,6 +18,12 @@ reportsApi.useGetContentTeacher = jest.fn() as jest.Mock;
 describe(`ContentStatus`, () => {
 
     describe(`Render`, () => {
+        
+        const defaultProps: BaseWidgetProps = {
+            editing: false,
+            onRemove: jest.fn(),
+        }
+
         test(`Content Status widget without error`, () => {
             reportsApi.useGetContentTeacher = (() => ({
                 data: teacherContentStatusMockData,
@@ -26,11 +32,7 @@ describe(`ContentStatus`, () => {
                 refetch: jest.fn(),
             }));
 
-            render((
-                <ContentStatus
-                    widgetContext={defaultWidgetContext}
-                />
-            ));
+            render(<ContentStatus {...defaultProps}/>);
 
             expect(screen.getByText("Learning Material")).toBeInTheDocument();
             expect(screen.getByText("Total Approved")).toBeInTheDocument();
@@ -47,11 +49,7 @@ describe(`ContentStatus`, () => {
                 refetch: jest.fn(),
             }));
 
-            render((
-                <ContentStatus
-                    widgetContext={defaultWidgetContext}
-                />
-            ));
+            render(<ContentStatus {...defaultProps}/>);
 
             expect(screen.getByText("Oops!")).toBeInTheDocument();
             expect(screen.getByText("The data cannot be loaded, please try again later!")).toBeInTheDocument();
@@ -69,11 +67,7 @@ describe(`ContentStatus`, () => {
                 refetch: jest.fn(),
             }));
 
-            render((
-                <ContentStatus
-                    widgetContext={defaultWidgetContext}
-                />
-            ));
+            render(<ContentStatus {...defaultProps}/>);
 
             expect(screen.getByText("Create lesson plan")).toBeInTheDocument();
             expect(screen.getByText("Learning Material")).toBeInTheDocument();

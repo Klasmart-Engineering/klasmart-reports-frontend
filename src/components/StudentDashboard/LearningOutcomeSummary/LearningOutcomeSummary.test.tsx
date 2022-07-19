@@ -1,6 +1,6 @@
 import render from "../../../../tests/utils/render";
 import LearningOutcomeSummary from "./LearningOutcomeSummary";
-import { defaultContext as defaultWidgetContext } from "../../models/widgetContext";
+import { BaseWidgetProps } from "../../models/widget.model";
 import { studentLearningOutcomeSummaryMockData } from "../../../../tests/widgetsMockData";
 import { screen } from "@testing-library/react";
 import React from "react";
@@ -17,6 +17,12 @@ reportsApi.useGetStudentLearningOutcome = jest.fn() as jest.Mock;
 describe(`LearningOutcomeSummary`, () => {
 
     describe(`Render`, () => {
+
+        const defaultProps: BaseWidgetProps = {
+            editing: false,
+            onRemove: jest.fn(),
+        }
+
         test(`Learning Outcome Summary widget without error`, () => {
             reportsApi.useGetStudentLearningOutcome = (() => ({
                 data: studentLearningOutcomeSummaryMockData,
@@ -25,11 +31,7 @@ describe(`LearningOutcomeSummary`, () => {
                 refetch: jest.fn(),
             }));
             
-            render((
-                <LearningOutcomeSummary
-                    widgetContext={defaultWidgetContext}
-                />
-            ));
+            render(<LearningOutcomeSummary {...defaultProps}/>);
 
             expect(screen.getByText(39)).toBeInTheDocument();
             expect(screen.getByText(25)).toBeInTheDocument();
@@ -50,11 +52,7 @@ describe(`LearningOutcomeSummary`, () => {
                 refetch: jest.fn(),
             }));
             
-            render((
-                <LearningOutcomeSummary
-                    widgetContext={defaultWidgetContext}
-                />
-            ));
+            render(<LearningOutcomeSummary {...defaultProps}/>);
 
             expect(screen.getByText("Oops!")).toBeInTheDocument();
             expect(screen.getByText("The data cannot be loaded, please try again later!")).toBeInTheDocument();
@@ -72,11 +70,7 @@ describe(`LearningOutcomeSummary`, () => {
                 refetch: jest.fn(),
             }));
             
-            render((
-                <LearningOutcomeSummary
-                    widgetContext={defaultWidgetContext}
-                />
-            ));
+            render(<LearningOutcomeSummary {...defaultProps}/>);
 
             expect(screen.getByText("Cognitive Skill")).toBeInTheDocument();
             expect(screen.getByText("Physical")).toBeInTheDocument();

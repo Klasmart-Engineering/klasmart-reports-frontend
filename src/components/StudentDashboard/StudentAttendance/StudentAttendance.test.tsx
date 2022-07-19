@@ -1,6 +1,6 @@
 import render from "../../../../tests/utils/render";
 import StudentAttendance from "./StudentAttendance";
-import { defaultContext as defaultWidgetContext } from "../../models/widgetContext";
+import { BaseWidgetProps } from "../../models/widget.model";
 import { studentAttendanceMockData } from "../../../../tests/widgetsMockData";
 import { screen } from "@testing-library/react";
 import React from "react";
@@ -17,6 +17,12 @@ reportsApi.useGetStudentAttendanceRate = jest.fn() as jest.Mock;
 describe(`StudentAttendance`, () => {
 
     describe(`Render`, () => {
+
+        const defaultProps: BaseWidgetProps = {
+            editing: false,
+            onRemove: jest.fn(),
+        }
+
         test(`Student Attendance widget without error`, () => {
             reportsApi.useGetStudentAttendanceRate = (() => ({
                 data: studentAttendanceMockData,
@@ -25,11 +31,7 @@ describe(`StudentAttendance`, () => {
                 refetch: jest.fn(),
             }));
             
-            render((
-                <StudentAttendance
-                    widgetContext={defaultWidgetContext}
-                />
-            ));
+            render(<StudentAttendance {...defaultProps}/>);
 
             expect(screen.getByText("Average attendance for 1 week")).toBeInTheDocument();
             expect(screen.getByText("66%")).toBeInTheDocument();
@@ -43,11 +45,7 @@ describe(`StudentAttendance`, () => {
                 refetch: jest.fn(),
             }));
             
-            render((
-                <StudentAttendance
-                    widgetContext={defaultWidgetContext}
-                />
-            ));
+            render(<StudentAttendance {...defaultProps}/>);
 
             expect(screen.getByText("Oops!")).toBeInTheDocument();
             expect(screen.getByText("The data cannot be loaded, please try again later!")).toBeInTheDocument();
@@ -65,11 +63,7 @@ describe(`StudentAttendance`, () => {
                 refetch: jest.fn(),
             }));
             
-            render((
-                <StudentAttendance
-                    widgetContext={defaultWidgetContext}
-                />
-            ));
+            render(<StudentAttendance {...defaultProps}/>);
 
             expect(screen.getByText("Monitor your attendance within a two weeks period.")).toBeInTheDocument();
             expect(screen.getByText("Average attendance for 1 week")).toBeInTheDocument();

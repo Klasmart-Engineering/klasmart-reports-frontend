@@ -1,6 +1,6 @@
 import render from "../../../../tests/utils/render";
 import TeacherLoadWidget from "./TeacherLoadWidget";
-import { defaultContext as defaultWidgetContext } from "../../models/widgetContext";
+import { BaseWidgetProps } from "../../models/widget.model";
 import { screen } from "@testing-library/react";
 import { teacherLoadSchedulesMockData, teacherLoadTeacherMockData } from "../../../../tests/widgetsMockData";
 import React from "react";
@@ -25,6 +25,12 @@ cmsApi.usePostSchedulesTimeViewList = jest.fn() as jest.Mock;
 describe(`TeacherLoadWidget`, () => {
 
     describe(`Render`, () => {
+        
+        const defaultProps: BaseWidgetProps = {
+            editing: false,
+            onRemove: jest.fn(),
+        }
+
         test(`Teacher Load widget without error`, () => {
             reportsApi.useClassTeacherLoad = (() => ({
                 data: teacherLoadTeacherMockData,
@@ -39,11 +45,7 @@ describe(`TeacherLoadWidget`, () => {
                 refetch: jest.fn(),
             }));
 
-            render((
-                <TeacherLoadWidget
-                    widgetContext={defaultWidgetContext}
-                />
-            ));
+            render(<TeacherLoadWidget {...defaultProps}/>);
 
             expect(screen.getByText("Total Classes")).toBeInTheDocument();
             expect(screen.getByText("Total Students")).toBeInTheDocument();
@@ -66,11 +68,7 @@ describe(`TeacherLoadWidget`, () => {
                 refetch: jest.fn(),
             }));
 
-            render((
-                <TeacherLoadWidget
-                    widgetContext={defaultWidgetContext}
-                />
-            ));
+            render(<TeacherLoadWidget {...defaultProps}/>);
 
             expect(screen.getByText("Oops!")).toBeInTheDocument();
             expect(screen.getByText("The data cannot be loaded, please try again later!")).toBeInTheDocument();
@@ -97,11 +95,7 @@ describe(`TeacherLoadWidget`, () => {
                 refetch: jest.fn(),
             }));
 
-            render((
-                <TeacherLoadWidget
-                    widgetContext={defaultWidgetContext}
-                />
-            ));
+            render(<TeacherLoadWidget {...defaultProps}/>);
 
             expect(screen.getByText(`Add classes and class rosters to keep track of your load.`)).toBeInTheDocument();
             expect(screen.getByText(`List`)).toBeInTheDocument();

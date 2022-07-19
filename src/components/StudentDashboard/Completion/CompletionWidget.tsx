@@ -16,8 +16,7 @@ import {
     FormattedMessage,
     useIntl,
 } from "react-intl";
-import { WidgetType } from "@/components/models/widget.model";
-import { Context } from "@/components/models/widgetContext"
+import { BaseWidgetProps } from "@/components/models/widget.model";
 import WidgetWrapperError from "@/components/WidgetWrapperError";
 import React from "react";
 
@@ -134,17 +133,14 @@ const useStyles = makeStyles(((theme: Theme) => createStyles({
         color: theme.palette.info.light,
     },
 })));
-export interface CompletionWidgetProps {
-    widgetContext: Context;
-}
+
+export interface CompletionWidgetProps extends BaseWidgetProps {};
 
 const CompletionWidget: React.VFC<CompletionWidgetProps> = (props) => {
     const intl = useIntl();
     const classes = useStyles();
     const currentOrganization = useGlobalStateValue(currentOrganizationState);
     const organizationId = currentOrganization?.id ?? ``;
-    const { editing = false, removeWidget, layouts, widgets } = props.widgetContext;
-    const onRemove = () => removeWidget(WidgetType.COMPLETION, widgets, layouts);
     const {
         data,
         isLoading: isAssignmentCompletionLoading,
@@ -175,8 +171,8 @@ const CompletionWidget: React.VFC<CompletionWidgetProps> = (props) => {
             errorScreen={<WidgetWrapperError reload={refetch}/>}
             noData={!data?.successful}
             noDataScreen={<CompletionNoData />}
-            editing={editing}
-            onRemove={onRemove}
+            editing={props.editing}
+            onRemove={props.onRemove}
         >
             {completionData &&
                 <div className={classes.widgetContent}>

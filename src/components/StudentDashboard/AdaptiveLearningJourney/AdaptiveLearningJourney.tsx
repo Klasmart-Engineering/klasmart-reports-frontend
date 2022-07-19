@@ -24,8 +24,7 @@ import { useIntl } from "react-intl";
 import { useResizeDetector } from "react-resize-detector";
 import { HomeScreenWidgetWrapper } from "@kl-engineering/kidsloop-px";
 import WidgetWrapperError from "@/components/WidgetWrapperError";
-import { Context } from "@/components/models/widgetContext";
-import { WidgetType } from "@/components/models/widget.model";
+import { BaseWidgetProps } from "@/components/models/widget.model";
 import React from "react";
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -133,9 +132,7 @@ export interface DataObj {
     slides: number;
 }
 
-export interface AdaptiveLearningJourneyProps {
-    widgetContext: Context;
-}
+export interface AdaptiveLearningJourneyProps extends BaseWidgetProps {};
 
 const AdaptiveLearningJourney: React.FC<AdaptiveLearningJourneyProps> = (props) => {
     const {
@@ -156,8 +153,6 @@ const AdaptiveLearningJourney: React.FC<AdaptiveLearningJourneyProps> = (props) 
     const [isVerticalMode, setIsverticalMode] = useState(width ? width < VERTICAL_MODE_BREAKPOINT : false);
     const [open, setOpen] = useState(false);
     const [noData, setNoData] = useState(true);
-    const { editing = false, removeWidget, layouts, widgets } = props.widgetContext;
-    const onRemove = () => removeWidget(WidgetType.ADAPTIVELEARNINGJOURNEY, widgets, layouts);
 
     const scroll = (scrollOffset: number) => {
         if (isVerticalMode) {
@@ -215,8 +210,8 @@ const AdaptiveLearningJourney: React.FC<AdaptiveLearningJourneyProps> = (props) 
             background={`transparent`}
             noData={noData}
             noDataScreen={<AdaptiveLearningJourneyNoData />}
-            editing={editing}
-            onRemove={onRemove}
+            editing={props.editing}
+            onRemove={props.onRemove}
         >
             <Box
                 ref={ref}

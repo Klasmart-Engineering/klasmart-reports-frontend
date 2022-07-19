@@ -1,4 +1,4 @@
-import { WidgetType } from "../../models/widget.model";
+import { BaseWidgetProps } from "../../models/widget.model";
 import contentStatusDataFormatter from "./contentStatusDataFormatter";
 import { useGetContentTeacher } from "@kl-engineering/reports-api-client";
 import { Theme, Typography } from "@mui/material";
@@ -15,7 +15,6 @@ import { currentOrganizationState, useGlobalStateValue } from "@kl-engineering/f
 import ContentStatusNoData from "./ContentStatusNoData/ContentStatusNoData";
 import { HomeScreenWidgetWrapper } from "@kl-engineering/kidsloop-px";
 import WidgetWrapperError from "@/components/WidgetWrapperError";
-import { Context } from "@/components/models/widgetContext";
 import React from "react";
 
 const useStyles = makeStyles(((theme: Theme) => createStyles({
@@ -76,18 +75,14 @@ const useStyles = makeStyles(((theme: Theme) => createStyles({
         color: theme.palette.error.light,
     },
 })));
-export interface ContentStatusWidgetProps {
-    widgetContext: Context;
-}
+
+export interface ContentStatusWidgetProps extends BaseWidgetProps {};
 
 const ContentStatusWidget: React.VFC<ContentStatusWidgetProps> = (props) => {
     const classes = useStyles();
     const intl = useIntl();
     const currentOrganization = useGlobalStateValue(currentOrganizationState);
     const organizationId = currentOrganization?.id ?? ``;
-    const { editing = false, removeWidget, layouts, widgets } = props.widgetContext;
-    const onRemove = () => removeWidget(WidgetType.CONTENTSTATUS, widgets, layouts);
-
     const {
         data,
         isFetching,
@@ -120,8 +115,8 @@ const ContentStatusWidget: React.VFC<ContentStatusWidgetProps> = (props) => {
             errorScreen={<WidgetWrapperError reload={refetch} />}
             noData={!data?.successful}
             noDataScreen={<ContentStatusNoData />}
-            editing={editing}
-            onRemove={onRemove}
+            editing={props.editing}
+            onRemove={props.onRemove}
         >
             <div className={classes.widgetContent}>
                 <div className={classes.titleWrapper}>
